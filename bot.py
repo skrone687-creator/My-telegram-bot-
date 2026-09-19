@@ -112,54 +112,60 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import qrcode
 from io import BytesIO
 
-# 1. Add Balance Menu Keyboard
-def add_balance_kb() -> InlineKeyboardMarkup:
-    kb = InlineKeyboardMarkup(row_width=2)
+# 3. Payment Method Selection Keyboard
+def payment_method_kb() -> InlineKeyboardMarkup:
+    kb = InlineKeyboardMarkup(row_width=1)
     kb.add(
-        InlineKeyboardButton(text="₹100", callback_data="amt_100"),
-        InlineKeyboardButton(text="₹200", callback_data="amt_200"),
-        InlineKeyboardButton(text="₹500", callback_data="amt_500"),
-        InlineKeyboardButton(text="₹1000", callback_data="amt_1000")
+        InlineKeyboardButton(text="PAY UPI", callback_data="pay_upi")
     )
-    kb.add(InlineKeyboardButton(text="⌨️ TYPE CUSTOM AMOUNT", callback_data="amt_custom"))
-    kb.add(InlineKeyboardButton(text="⬅️ Back to Menu", callback_data="menu_back"))
+    kb.add(InlineKeyboardButton(text="Cancel Request", callback_data="menu_add_balance"))
+    kb.inline_keyboard[0][0].style = "success"
+    kb.inline_keyboard[1][0].style = "danger"
     return kb
 
-# 2. Handler for 'Add Balance' button
-@dp.callback_query(F.data == "menu_add_balance")
-async def process_add_balance(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    await callback_query.message.edit_text(
-        "ADD FUNDS TO WALLET\n\nChoose a quick amount to add or type/use a custom one below:",
-        reply_markup=add_balance_kb()
+@dp.callback_query(F.data.in_(["num_confirm", "amt_custom"])) 
+async def process_payment_method(call: types.CallbackQuery):
+    await call.message.edit_text(
+        text="💳 SELECT GATEWAY MODE 💸\n\nDeposit Amount: ₹1.00",
+        reply_markup=payment_method_kb(),
+        parse_mode="Markdown"
     )
+    await call.answer()
 
-# 3. Handler for amount selection (Generates QR)
-@dp.callback_query(F.data.startswith('amt_'))
-async def process_amount(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    amount = callback_query.data.split('_')[1]
+# 4. UPI Payment & QR Generation
+@dp.callback_query(F.data == "pay_upi")
+async def process_pay_upi(call: types.CallbackQuery):
+    upi_id = "7318748360@fam" 
+    amount = "1.00"
+    pay_string = f"upi://pay?pn=BotOwner&pa={upi_id}&am={amount}&cu=INR"
     
-    if amount == "custom":
-        await callback_query.message.edit_text("Please enter the custom amount:")
-        return
-
-    # UPI QR Code Generation Logic
-    upi_id = "7318748360@fam"
-    payee_name = "Sahil"
-    tx_ref = "TXN12345"
+    qr = qrcode.QRCode(box_size=3, border=2)
+    qr.add_data(pay_string)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
     
-    upi_string = f"upi://pay?pa={upi_id}&pn={payee_name}&am={amount}&cu=INR&tr={tx_ref}"
-    
-    img = qrcode.make(upi_string)
     buf = BytesIO()
-    img.save(buf, format='PNG')
+    img.save(buf, format="PNG")
     buf.seek(0)
     
-    await callback_query.message.answer_photo(
-        photo=buf,
-        caption=f"Scan & pay exactly ₹{amount} to add balance.",
-        reply_markup=InlineKeyboardMarkup().add(InlineKeyboardButton(text="Verify Payment", callback_data="verify_pay"))
+    kb = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="VERIFY PAYMENT", callback_data="verify_payment")],
+        [InlineKeyboardButton(text="Cancel Order", callback_data="menu_add_balance")]
+    ])
+    kb.inline_keyboard[0][0].style = "success"
+    kb.inline_keyboard[1][0].style = "danger"
+    
+    await call.message.answer_photo(
+        photo=types.InputFile(buf, filename="qr.png"),
+        caption="""📲 Crazy Gaming UPI QR Active 🟢\n\n"""
+                f"""Scan & transfer exactly ₹{amount} via your UPI app terminal.\n\n"""
+                """Tap verify below after completing the core transaction transfer.\n\n"""
+                """⏳ QR Session TTL: expires in 5 minutes.""",
+        reply_markup=kb
+    )
+    await call.message.delete()
+    await call.answer()
+
     )
 # 1. Profile Dashboard Menu Keyboard
 def profile_kb() -> InlineKeyboardMarkup:
