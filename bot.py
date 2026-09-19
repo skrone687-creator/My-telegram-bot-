@@ -228,6 +228,11 @@ async def menu_add_balance(callback: types.CallbackQuery):
          reply_markup=add_balance_kb()
     )
     await callback.answer()
+@router.callback_query(F.data.in_(["add_100", "add_200", "add_500", "add_1000"]))
+async def process_add_amount(callback: types.CallbackQuery):
+ amount = callback.data.split("_")[1]
+ await callback.message.edit_text(
+ f"You selected ₹{amount}. Proceeding 
 
 if __name__ == '__main__':
     dp.include_router(router)
