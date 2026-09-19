@@ -166,7 +166,6 @@ async def process_pay_upi(call: types.CallbackQuery):
     await call.message.delete()
     await call.answer()
 
-    )
 # 1. Profile Dashboard Menu Keyboard
 def profile_kb() -> InlineKeyboardMarkup:
     kb = InlineKeyboardMarkup(row_width=2)
