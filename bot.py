@@ -100,8 +100,9 @@ async def process_check_update(callback_query: types.CallbackQuery):
     kb = InlineKeyboardMarkup(inline_keyboard=[])
     kb.add(
         InlineKeyboardButton(
-            text="◀️ Back",
+            text="🔙 Back",
             callback_data="menu_back",
+            style="danger"
         )
     )
     
@@ -111,14 +112,6 @@ async def process_check_update(callback_query: types.CallbackQuery):
         parse_mode="Markdown"
     )
 
-
-
-    await callback_query.message.edit_text(
-        text=text,
-        reply_markup=check_update_kb(),
-        parse_mode="Markdown",
-        disable_web_page_preview=True
-    )
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import qrcode
