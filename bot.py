@@ -80,8 +80,8 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 @dp.message(Command("start"))
 async def send_welcome(message: types.Message):
     await message.reply("नमस्ते! मेन्यू देखने के लिए बटन दबाएँ:", reply_markup=main_menu_kb())
-    @dp.callback_query(F.data == "menu_shop")
-    async def process_shop(callback_query: types.CallbackQuery):
+@dp.callback_query(F.data == "menu_shop")
+async def process_shop(callback_query: types.CallbackQuery):
     await callback_query.answer()
     await callback_query.message.edit_text(
         "यहाँ हमारे प्रोडक्ट्स की लिस्ट है:",
