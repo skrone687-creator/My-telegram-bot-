@@ -5,12 +5,37 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram import F
+import qrcode
+from io import BytesIO
+from aiogram import types
 # बोट सेटअप
 API_TOKEN = '8955117111:AAGGqUdqe4AtpkAXlzfNQXb6UfC264EDT5g'
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
-
+async def send_payment_qr(message: types.Message, amount: str):
+ # यहाँ अपनी UPI ID डालें
+ upi_id = "7318748360@fam"
+ upi_url = f"upi://pay?pa={upi_id}&am={amount}&cu=INR"
+ 
+ qr = qrcode.QRCode(version=1, box_size=10, border=4)
+ qr.add_data(upi_url)
+ qr.make(fit=True)
+ img = qr.make_image(fill_color="black", back_color="white")
+ 
+ buffer = BytesIO()
+ img.save(buffer, format="PNG")
+ buffer.seek(0)
+ 
+ keyboard = InlineKeyboardMarkup(inline_keyboard=[
+ [
+ InlineKeyboardButton(text="Verify Payment", callback_data="verify_payment", style="success"),
+ InlineKeyboardButton(text="Cancel Order", callback_data="cancel_order", style="danger")
+ ]
+ ])
+ 
+ caption = f"Scan & transfer exactly ₹{amount} via your UPI app terminal."
+ await message.answer_photo(photo=types.BufferedInputFile(buffer.getvalue(), filename="qr.png"), caption=caption, reply_markup=keyboard)
 def main_menu_kb() -> InlineKeyboardMarkup:
     kb = InlineKeyboardMarkup(inline_keyboard=[])
 
