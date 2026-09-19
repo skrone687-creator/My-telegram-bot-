@@ -79,8 +79,8 @@ def main_menu_kb() -> InlineKeyboardMarkup:
             style="success"
         ),
         InlineKeyboardButton(
-            text="menu How To Use ",
-            callback_data="_how_to_bot",
+            text="How To Use bot ",
+            callback_data="how_to_bot",
             style="primary"
         )
     ])
