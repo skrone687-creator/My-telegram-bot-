@@ -224,19 +224,21 @@ router = Router()
 
 
 def support_kb():
-    button = InlineKeyboardButton(text="Back", callback_data="menu_back")
-    kb = InlineKeyboardMarkup(inline_keyboard=[[button]])
-    return kb
+ button = InlineKeyboardButton(text="Back", callback_data="menu_back")
+ kb = InlineKeyboardMarkup(inline_keyboard=[[button]])
+ kb.inline_keyboard[0][0].style = "danger"
+ return kb
 
 
 @router.callback_query(F.data == "menu_support")
 async def menu_support(call: types.CallbackQuery):
-    await call.message.edit_text(
-        text="Contact admin support:\n\n@golubhai10k",
-        parse_mode="HTML",
-        reply_markup=support_kb(),
-    )
-    await call.answer()
+ await call.message.edit_text(
+ text="Contact admin support:\n\n@sahilxd78",
+ parse_mode="HTML",
+ reply_markup=support_kb(),
+ )
+ await call.answer()
+
 
 import random
 
