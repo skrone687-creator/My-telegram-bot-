@@ -256,7 +256,7 @@ async def menu_add_balance(callback: types.CallbackQuery):
 @router.callback_query(F.data.in_(["add_100", "add_200", "add_500", "add_1000"]))
 async def process_add_amount(callback: types.CallbackQuery):
  amount = callback.data.split("_")[1]
- await send_payment_qr(callback.message, amount)
+ await send_payment_qr(callback, amount)
  await callback.answer()
 
 if __name__ == '__main__':
