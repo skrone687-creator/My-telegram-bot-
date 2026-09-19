@@ -91,26 +91,30 @@ async def send_welcome(message: types.Message):
     )
 @dp.callback_query(F.data == "menu_check_update")
 async def process_check_update(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    text = (
-        "📢 **Follow our updates channel!** \n\n"
-        "🔗 [Click Here For Setup & Updates](https://t.me/sahilbhaiiallupdate)"
-    )
-    
-    kb = InlineKeyboardMarkup(inline_keyboard=[])
-    kb.add(
-        InlineKeyboardButton(
-            text="🔙 Back",
-            callback_data="menu_back",
-            style="danger"
+    try:
+        await callback_query.answer()
+        text = (
+            "📢 **Follow our updates channel!** 📢\n\n"
+            "🔗 [Click Here For Setup & Updates](https://t.me/sahilbhaiiallupdate)"
         )
-    )
-    
-    await callback_query.message.edit_text(
-        text=text,
-        reply_markup=kb,
-        parse_mode="Markdown"
-    )
+        
+        kb = InlineKeyboardMarkup(inline_keyboard=[])
+        kb.add(
+            InlineKeyboardButton(
+                text="🔙 Back",
+                callback_data="menu_back",
+                style="danger"
+            )
+        )
+        
+        await callback_query.message.edit_text(
+            text=text,
+            reply_markup=kb,
+            parse_mode="Markdown"
+        )
+    except Exception as e:
+        print(f"Error processing update check: {e}")
+
 
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
