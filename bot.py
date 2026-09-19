@@ -259,7 +259,7 @@ async def process_daily_gift(callback_query: types.CallbackQuery):
         reply_markup=main_menu_kb()
     )
 @dp.callback_query(F.data == "menu_add_balance")
-  async def process_add_balance(call: types.CallbackQuery):
+async def process_add_balance(call: types.CallbackQuery):
     await call.message.answer("Add balance functionality goes here!")
     await call.answer()
 
