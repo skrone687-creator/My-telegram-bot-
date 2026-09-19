@@ -79,7 +79,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
             style="success"
         ),
         InlineKeyboardButton(
-            text=" How To Use Bot",
+            text="menu How To Use ",
             callback_data="_how_to_bot",
             style="primary"
         )
@@ -258,8 +258,7 @@ async def process_add_amount(callback: types.CallbackQuery):
  amount = callback.data.split("_")[1]
  await send_payment_qr(callback, amount)
  await callback.answer()
-from aiogram import types, F
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
 
 @router.callback_query(F.data == "how_to_use_bot")
 async def process_how_to_use(callback_query: types.CallbackQuery):
