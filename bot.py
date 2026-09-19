@@ -257,7 +257,6 @@ async def menu_add_balance(callback: types.CallbackQuery):
 async def process_add_amount(callback: types.CallbackQuery):
  amount = callback.data.split("_")[1]
  await send_payment_qr(callback.message, amount, "7318748360@fam")
- f"You selected {amount}. Proceeding to payment..."
  await callback.answer()
 
 if __name__ == '__main__':
