@@ -6,7 +6,7 @@ from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram import F
 # बोट सेटअप
-API_TOKEN = '8584466413:AAFG-ILmhkOeow-beocU5TRbK_8F9lKK55s'
+API_TOKEN = '8955117111:AAGGqUdqe4AtpkAXlzfNQXb6UfC264EDT5g'
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
