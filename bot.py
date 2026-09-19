@@ -233,7 +233,7 @@ async def process_add_amount(callback: types.CallbackQuery):
  amount = callback.data.split("_")[1]
  await callback.message.edit_text(
  f"You selected {amount}. Proceeding to payment..."
-
+ )
 if __name__ == '__main__':
     dp.include_router(router)
     asyncio.run(dp.start_polling(bot))
