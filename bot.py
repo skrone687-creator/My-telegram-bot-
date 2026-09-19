@@ -28,12 +28,12 @@ def main_menu_kb() -> InlineKeyboardMarkup:
         InlineKeyboardButton(
             text=" Check Update",
             callback_data="menu_check_update",
-            style="primary"
+            style="success"
         ),
         InlineKeyboardButton(
             text=" Add Balance",
             callback_data="menu_add_balance",
-            style="success"
+            style="primary"
         )
     ])
 
@@ -42,7 +42,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
         InlineKeyboardButton(
             text=" My Profile + All History",
             callback_data="menu_profile",
-            style="primary"
+            style="success"
         )
     ])
 
@@ -56,7 +56,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
         InlineKeyboardButton(
             text=" How To Use Bot",
             callback_data="menu_how_to",
-            style="danger"
+            style="primary"
         )
     ])
 
