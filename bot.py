@@ -106,7 +106,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 async def send_welcome(message: types.Message):
         await message.answer(
         r"""<blockquote>🏪 SAHIL BHAIL STORE 🔒
-~~~~~~~~~~~~~~~~~~~~~~~
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️</blockquote>""",
 
 ┝ 🛍️ Buy Now : All Key Purchase & Instant Delivery
 ┝ 📢 Check Update : Check Setup Video And Update Apk
@@ -115,7 +115,7 @@ async def send_welcome(message: types.Message):
 ┝ 👥 Refer And Earn : Share Refer Link & Earn Money
 ┝ 🎬 How To Use Bot : View Tutorial And Work This Bot
 ┝ 📨 Support : Bot Problem Fixed For Support Admin
-┝ 🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours</blockquote>""",
+┝ 🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours
         parse_mode="HTML",
         reply_markup=main_menu_kb(),
     )
