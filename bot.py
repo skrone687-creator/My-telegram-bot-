@@ -168,6 +168,25 @@ def support_kb():
  kb.inline_keyboard[0][0].style = "danger"
  return kb
 
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
+def add_balance_kb() -> InlineKeyboardMarkup:
+    kb = InlineKeyboardMarkup(inline_keyboard=[[]])
+    kb.inline_keyboard.append([
+        InlineKeyboardButton(text="₹100", callback_data="add_100", style="success"),
+        InlineKeyboardButton(text="₹200", callback_data="add_200", style="success"),
+    ])
+    kb.inline_keyboard.append([
+        InlineKeyboardButton(text="₹500", callback_data="add_500", style="success"),
+        InlineKeyboardButton(text="₹1000", callback_data="add_1000", style="success"),
+    ])
+    kb.inline_keyboard.append([
+        InlineKeyboardButton(text="TYPE CUSTOM AMOUNT", callback_data="custom_amount", style="primary"),
+    ])
+    kb.inline_keyboard.append([
+        InlineKeyboardButton(text="Back to Menu", callback_data="menu_back", style="danger"),
+    ])
+    return kb
 
 @router.callback_query(F.data == "menu_support")
 async def menu_support(call: types.CallbackQuery):
@@ -202,6 +221,13 @@ async def process_daily_gift(callback_query: types.CallbackQuery):
         f"₹{gift_amount} मिले हैं।",
         reply_markup=main_menu_kb()
     )
+@router.callback_query(F.data == "menu_add_balance")
+async def menu_add_balance(callback: types.CallbackQuery):
+    await callback.message.edit_text(
+        "ADD FUNDS TO WALLET\n\nChoose an amount:",
+         reply_markup=add_balance_kb()
+    )
+    await callback.answer()
 
 if __name__ == '__main__':
     dp.include_router(router)
