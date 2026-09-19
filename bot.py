@@ -89,31 +89,20 @@ async def send_welcome(message: types.Message):
         "यहाँ हमारे प्रोडक्ट्स की लिस्ट है:",
         reply_markup=your_products_kb()
     )
-@dp.callback_query(F.data == "menu_check_update")
-async def process_check_update(callback_query: types.CallbackQuery):
-    try:
-        await callback_query.answer()
-        text = (
-            "📢 **Follow our updates channel!** 📢\n\n"
-            "🔗 [Click Here For Setup & Updates](https://t.me/sahilbhaiiallupdate)"
-        )
-        
-        kb = InlineKeyboardMarkup(inline_keyboard=[])
-        kb.add(
-            InlineKeyboardButton(
-                text="🔙 Back",
-                callback_data="menu_back",
-                style="danger"
-            )
-        )
-        
-        await callback_query.message.edit_text(
-            text=text,
-            reply_markup=kb,
-            parse_mode="Markdown"
-        )
-    except Exception as e:
-        print(f"Error processing update check: {e}")
+def update_kb():
+    button = InlineKeyboardButton(text="Back", callback_data="menu_back")
+    kb = InlineKeyboardMarkup(inline_keyboard=[[button]])
+    kb.inline_keyboard[0][0].style = "danger"
+    return kb
+
+@router.callback_query(F.data == "menu_check_update")
+async def process_check_update(call: types.CallbackQuery):
+    await call.message.edit_text(
+        text="Follow our updates channel:\n\n🔗 Click Here For Setup & Updates",
+        reply_markup=update_kb()
+    )
+    await call.answer()
+
 
 
 
