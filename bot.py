@@ -1,3 +1,4 @@
+import logging
 import asyncio
 from typing import Optional
 from aiogram import Bot, Dispatcher
