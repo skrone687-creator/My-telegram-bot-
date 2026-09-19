@@ -4,7 +4,7 @@ from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 # बोट सेटअप
-API_TOKEN = 'YOUR_BOT_TOKEN'
+API_TOKEN = '8636450751:AAF8USFk5_A4ejnM_tPKFzLOviwzjC9wud8'
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
