@@ -99,10 +99,22 @@ async def process_check_update(callback_query: types.CallbackQuery):
         "🆔 **Telegram**\n\n"
         "🗓️ **SAHIL BHAI AII UPDATE**"
     )
+    
+    kb = InlineKeyboardMarkup(inline_keyboard=[])
+    kb.add(
+        InlineKeyboardButton(
+            text="🔙 Back",
+            callback_data="menu_back",
+            style="danger"
+        )
+    )
+    
     await callback_query.message.edit_text(
         text=text,
+        reply_markup=kb,
         parse_mode="Markdown"
     )
+
 
     await callback_query.message.edit_text(
         text=text,
