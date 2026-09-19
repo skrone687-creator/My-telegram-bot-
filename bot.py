@@ -87,7 +87,7 @@ async def process_shop(callback_query: types.CallbackQuery):
         "यहाँ हमारे प्रोडक्ट्स की लिस्ट है:",
         reply_markup=your_products_kb()
     )
-@dp.callback_query_handler(text="menu_check_update")
+@dp.callback_query(F.data == "menu_check_update")
 async def process_check_update(callback_query: types.CallbackQuery):
     await callback_query.answer()
     # यहाँ अपना अपडेट चैनल का लिंक डालें
@@ -114,7 +114,7 @@ def add_balance_kb() -> InlineKeyboardMarkup:
     return kb
 
 # 2. Handler for 'Add Balance' button
-@dp.callback_query_handler(text="menu_add_balance")
+@dp.callback_query(F.data == "menu_add_balance")
 async def process_add_balance(callback_query: types.CallbackQuery):
     await callback_query.answer()
     await callback_query.message.edit_text(
@@ -123,7 +123,7 @@ async def process_add_balance(callback_query: types.CallbackQuery):
     )
 
 # 3. Handler for amount selection (Generates QR)
-@dp.callback_query_handler(lambda c: c.data.startswith('amt_'))
+@dp.callback_query(F.data.startswith('amt_'))
 async def process_amount(callback_query: types.CallbackQuery):
     await callback_query.answer()
     amount = callback_query.data.split('_')[1]
@@ -160,7 +160,7 @@ def profile_kb() -> InlineKeyboardMarkup:
     return kb
 
 # 2. Handler for 'My Profile + All History' button
-@dp.callback_query_handler(text="menu_profile")
+@dp.callback_query(F.data == "menu_profile")
 async def process_profile(callback_query: types.CallbackQuery):
     await callback_query.answer()
     
@@ -184,7 +184,7 @@ async def process_profile(callback_query: types.CallbackQuery):
         profile_text,
         reply_markup=profile_kb()
     )
-@dp.callback_query_handler(text="menu_refer")
+@dp.callback_query(F.data == "menu_refer")
 async def process_refer(callback_query: types.CallbackQuery):
     await callback_query.answer()
     
@@ -196,7 +196,7 @@ async def process_refer(callback_query: types.CallbackQuery):
         f"आपका रेफरल लिंक: {referral_link}",
         reply_markup=main_menu_kb()
     )
-@dp.callback_query_handler(text="menu_support")
+@dp.callback_query(F.data == "menu_support")
 async def process_support(callback_query: types.CallbackQuery):
     await callback_query.answer()
     
@@ -210,7 +210,7 @@ async def process_support(callback_query: types.CallbackQuery):
     )
 import random
 
-@dp.callback_query_handler(text="menu_daily_gift")
+@dp.callback_query(F.data == "menu_daily_gift")
 async def process_daily_gift(callback_query: types.CallbackQuery):
     await callback_query.answer()
     
