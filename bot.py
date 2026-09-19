@@ -95,13 +95,15 @@ def update_kb():
     kb.inline_keyboard[0][0].style = "danger"
     return kb
 
-@router.callback_query(F.data == "menu_check_update")
+@dp.callback_query(F.data == "menu_check_update")
 async def process_check_update(call: types.CallbackQuery):
     await call.message.edit_text(
-        text="Follow our updates channel:\n\n🔗 Click Here For Setup & Updates",
-        reply_markup=update_kb()
+        text="Follow our updates channel:\n\n🔗 [Click Here For Setup & Updates](https://t.me/Sahilbhaiallupdate)",
+        reply_markup=update_kb(),
+        parse_mode="Markdown"
     )
     await call.answer()
+
 
 
 
