@@ -111,7 +111,7 @@ async def process_check_update(call: types.CallbackQuery):
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import qrcode
 from io import BytesIO
-
+frm aiogram import F
 # 3. Payment Method Selection Keyboard
 def payment_method_kb() -> InlineKeyboardMarkup:
     kb = InlineKeyboardMarkup(row_width=1)
