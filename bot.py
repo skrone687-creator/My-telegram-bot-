@@ -244,6 +244,24 @@ async def process_daily_gift(callback_query: types.CallbackQuery):
         f"₹{gift_amount} मिले हैं।",
         reply_markup=main_menu_kb()
     )
-    
+  from aiogram import Bot, Dispatcher, types
+from aiogram.filters import Command
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
+API_TOKEN = '8955117111:AAGGqUdqe4AtpkAXlzfNQXb6UfC264EDT5g'
+ADMIN_ID = 839533259
+
+bot = Bot(token=API_TOKEN)
+dp = Dispatcher()
+
+@dp.message(Command("admin"))
+async def admin_panel(message: types.Message):
+    if message.from_user.id == ADMIN_ID:
+        markup = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="📢 Broadcast", callback_data="admin_broadcast")],
+            [InlineKeyboardButton(text="➕ Add Product", callback_data="admin_add_product")]
+        ])
+        await message.reply("Welcome, Admin! Choose an action:", reply_markup=markup)
+  
 if __name__ == '__main__':
     asyncio.run(dp.start_polling(bot))
