@@ -80,7 +80,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
         ),
         InlineKeyboardButton(
             text=" How To Use Bot",
-            callback_data="menu_how_to",
+            callback_data="_how_to_bot",
             style="primary"
         )
     ])
