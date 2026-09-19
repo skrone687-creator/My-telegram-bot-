@@ -91,18 +91,17 @@ async def send_welcome(message: types.Message):
     )
 @dp.callback_query(F.data == "menu_check_update")
 async def process_check_update(callback_query: types.CallbackQuery):
+    await callback_query.answer()
     text = (
         "📢 **Follow our updates channel!** 📢\n\n"
-        "👉 [Click Here For Setup & Updates](https://t.me/sahilbhaiallupdate)\n"
-        "➖➖➖➖➖➖➖➖➖➖\n"
-        "🆔 **Telegram**\n"
-        "🤖 **SAHIL BHAI AII UPDATE**"
+        "👉 [Click Here For Setup & Updates](https://t.me/sahilbhaiiallupdate)\n"
+        "---------------------------\n"
+        "🆔 **Telegram**\n\n"
+        "🗓️ **SAHIL BHAI AII UPDATE**"
     )
     await callback_query.message.edit_text(
         text=text,
-        reply_markup=check_update_kb(),
-        parse_mode="Markdown",
-        disable_web_page_preview=True
+        parse_mode="Markdown"
     )
 
     await callback_query.message.edit_text(
