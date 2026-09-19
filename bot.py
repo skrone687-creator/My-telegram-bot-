@@ -17,7 +17,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
     # Row 1: Buy Now (Large)
     kb.inline_keyboard.append([
         InlineKeyboardButton(
-            text="🛒 Buy Now",
+            text=" Buy Now",
             callback_data="menu_shop",
             style="danger"
         )
@@ -26,12 +26,12 @@ def main_menu_kb() -> InlineKeyboardMarkup:
     # Row 2: Check Update & Add Balance
     kb.inline_keyboard.append([
         InlineKeyboardButton(
-            text="🔄 Check Update",
+            text=" Check Update",
             callback_data="menu_check_update",
             style="primary"
         ),
         InlineKeyboardButton(
-            text="💰 Add Balance",
+            text=" Add Balance",
             callback_data="menu_add_balance",
             style="success"
         )
@@ -40,7 +40,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
     # Row 3: My Profile + All History
     kb.inline_keyboard.append([
         InlineKeyboardButton(
-            text="👤 My Profile + All History",
+            text=" My Profile + All History",
             callback_data="menu_profile",
             style="primary"
         )
@@ -49,12 +49,12 @@ def main_menu_kb() -> InlineKeyboardMarkup:
     # Row 4: Refer And Earn & How To Use Bot
     kb.inline_keyboard.append([
         InlineKeyboardButton(
-            text="🔗 Refer And Earn",
+            text=" Refer And Earn",
             callback_data="menu_refer",
             style="success"
         ),
         InlineKeyboardButton(
-            text="❓ How To Use Bot",
+            text=" How To Use Bot",
             callback_data="menu_how_to",
             style="danger"
         )
@@ -63,12 +63,12 @@ def main_menu_kb() -> InlineKeyboardMarkup:
     # Row 5: Support & Daily Gift
     kb.inline_keyboard.append([
         InlineKeyboardButton(
-            text="🎧 Support",
+            text=" Support",
             callback_data="menu_support",
-            style="primary"
+            style="danger"
         ),
         InlineKeyboardButton(
-            text="🎁 Daily Gift",
+            text=" Daily Gift",
             callback_data="menu_daily_gift",
             style="success"
         )
@@ -80,7 +80,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 @dp.message(Command("start"))
 async def send_welcome(message: types.Message):
     await message.reply(
-        "## SAHIL BHAI STORE 🤖\n\n🛍️ Buy Now : All Key Purchases &\ Instant Delivery\n🆙 Check Update : Check Setup Video And Update Apk\n💰 Add Balance : Deposit Balance &\ Secure Auto-Add Payment System\n🆔 My Profile + All History : Check Your Account Information + All History\n🔄 Refer And Earn : Share Refer Link &\ Earn Money\n❓ How To Use Bot : View Tutorial And Work This Bot\n🎧 Support : Bot Problem Fixed For Support Admin\n🎁 Daily Gift : Free Spin and win random balance daily. Only one spin every 24 hours.\n\nYour Balance: ₹0.00",
+        "🏪 SAHIL BHAI STORE 🔓\n\n🛍️ Buy Now : All Key Purchases &\ Instant Delivery\n🆙 Check Update : Check Setup Video And Update Apk\n💰 Add Balance : Deposit Balance &\ Secure Auto-Add Payment System\n🆔 My Profile + All History : Check Your Account Information + All History\n🔄 Refer And Earn : Share Refer Link &\ Earn Money\n❓ How To Use Bot : View Tutorial And Work This Bot\n🎧 Support : Bot Problem Fixed For Support Admin\n🎁 Daily Gift : Free Spin and win random balance daily. Only one spin every 24 hours.\n\nYour Balance: ₹0.00",
         reply_markup=main_menu_kb()
     )
 
