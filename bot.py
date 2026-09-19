@@ -244,6 +244,21 @@ async def process_daily_gift(callback_query: types.CallbackQuery):
         f"₹{gift_amount} मिले हैं।",
         reply_markup=main_menu_kb()
     )
+ADMIN_ID = 839533259 # यहाँ अपनी टेलीग्राम आईडी लिखें
+
+@dp.callback_query(F.data == "admin_panel")
+async def admin_menu(callback_query: types.CallbackQuery):
+    if callback_query.from_user.id == ADMIN_ID:
+        markup = types.InlineKeyboardMarkup(row_width=2)
+        markup.add(
+            types.InlineKeyboardButton("📢 Broadcast", callback_data="admin_broadcast"),
+            types.InlineKeyboardButton("➕ Add Product", callback_data="admin_add_product"),
+            types.InlineKeyboardButton("🗑️ Delete Product", callback_data="admin_delete_product"),
+            types.InlineKeyboardButton("✏️ Edit Product", callback_data="admin_edit_product")
+        )
+        await callback_query.message.edit_text("Welcome, Admin! Choose an action:", reply_markup=markup)
+    else:
+        await callback_query.answer("You are not authorized.", show_alert=True)
 
 if __name__ == '__main__':
     asyncio.run(dp.start_polling(bot))
