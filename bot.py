@@ -106,7 +106,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 async def send_welcome(message: types.Message):
         await message.answer(
         r"""<blockquote>🏪 SAHIL BHAIL STORE 🔒</blockquote>
-~~~~~~~~~~~~~~~~~~~~~~~
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
 
 ┝ 🛍️ Buy Now : All Key Purchase & Instant Delivery
 ┝ 📢 Check Update : Check Setup Video And Update Apk
