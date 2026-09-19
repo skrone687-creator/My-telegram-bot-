@@ -107,63 +107,7 @@ async def process_check_update(call: types.CallbackQuery):
 
 
 
-from aiogram import F
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-import qrcode
-from io import BytesIO
-# 3. Payment Method Selection Keyboard
-def payment_method_kb() -> InlineKeyboardMarkup:
-    kb = InlineKeyboardMarkup(row_width=1)
-    kb.add(
-        InlineKeyboardButton(text="PAY UPI", callback_data="pay_upi")
-    )
-    kb.add(InlineKeyboardButton(text="Cancel Request", callback_data="menu_add_balance"))
-    kb.inline_keyboard[0][0].style = "success"
-    kb.inline_keyboard[1][0].style = "danger"
-    return kb
 
-@dp.callback_query(F.data.in_(["num_confirm", "amt_custom"])) 
-async def process_payment_method(call: types.CallbackQuery):
-    await call.message.edit_text(
-        text="💳 SELECT GATEWAY MODE 💸\n\nDeposit Amount: ₹1.00",
-        reply_markup=payment_method_kb(),
-        parse_mode="Markdown"
-    )
-    await call.answer()
-
-# 4. UPI Payment & QR Generation
-@dp.callback_query(F.data == "pay_upi")
-async def process_pay_upi(call: types.CallbackQuery):
-    upi_id = "7318748360@fam" 
-    amount = "1.00"
-    pay_string = f"upi://pay?pn=BotOwner&pa={upi_id}&am={amount}&cu=INR"
-    
-    qr = qrcode.QRCode(box_size=3, border=2)
-    qr.add_data(pay_string)
-    qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="white")
-    
-    buf = BytesIO()
-    img.save(buf, format="PNG")
-    buf.seek(0)
-    
-    kb = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="VERIFY PAYMENT", callback_data="verify_payment")],
-        [InlineKeyboardButton(text="Cancel Order", callback_data="menu_add_balance")]
-    ])
-    kb.inline_keyboard[0][0].style = "success"
-    kb.inline_keyboard[1][0].style = "danger"
-    
-    await call.message.answer_photo(
-        photo=types.InputFile(buf, filename="qr.png"),
-        caption="""📲 Crazy Gaming UPI QR Active 🟢\n\n"""
-                f"""Scan & transfer exactly ₹{amount} via your UPI app terminal.\n\n"""
-                """Tap verify below after completing the core transaction transfer.\n\n"""
-                """⏳ QR Session TTL: expires in 5 minutes.""",
-        reply_markup=kb
-    )
-    await call.message.delete()
-    await call.answer()
 
 # 1. Profile Dashboard Menu Keyboard
 def profile_kb() -> InlineKeyboardMarkup:
@@ -258,10 +202,6 @@ async def process_daily_gift(callback_query: types.CallbackQuery):
         f"₹{gift_amount} मिले हैं।",
         reply_markup=main_menu_kb()
     )
-@dp.callback_query(F.data == "menu_add_balance")
-async def process_add_balance(call: types.CallbackQuery):
-    await call.message.answer("Add balance functionality goes here!")
-    await call.answer()
 
 if __name__ == '__main__':
     dp.include_router(router)
