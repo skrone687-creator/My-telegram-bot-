@@ -105,8 +105,6 @@ async def process_check_update(callback_query: types.CallbackQuery):
         disable_web_page_preview=True
     )
 
-    )
-
     await callback_query.message.edit_text(
         text=text,
         reply_markup=check_update_kb(),
