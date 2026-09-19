@@ -256,4 +256,5 @@ async def process_daily_gift(callback_query: types.CallbackQuery):
 
   
 if __name__ == '__main__':
+    dp.include_router(router)
     asyncio.run(dp.start_polling(bot))
