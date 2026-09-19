@@ -258,8 +258,11 @@ async def process_daily_gift(callback_query: types.CallbackQuery):
         f"₹{gift_amount} मिले हैं।",
         reply_markup=main_menu_kb()
     )
+@dp.callback_query(F.data == "menu_add_balance")
+  async def process_add_balance(call: types.CallbackQuery):
+    await call.message.answer("Add balance functionality goes here!")
+    await call.answer()
 
-  
 if __name__ == '__main__':
     dp.include_router(router)
     asyncio.run(dp.start_polling(bot))
