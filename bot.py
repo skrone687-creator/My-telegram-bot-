@@ -258,6 +258,32 @@ async def process_add_amount(callback: types.CallbackQuery):
  amount = callback.data.split("_")[1]
  await send_payment_qr(callback, amount)
  await callback.answer()
+from aiogram import types, F
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
+@router.callback_query(F.data == "how_to_use_bot")
+async def process_how_to_use(callback_query: types.CallbackQuery):
+    url = "https://t.me/sahil_bhai_69/6"
+    
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [
+            InlineKeyboardButton(text=">> VIEW TUTORIAL VIDEO", url=url, style="success")
+        ],
+        [
+            InlineKeyboardButton(text="Back", callback_data="menu_back", style="danger")
+        ]
+    ])
+    
+    text = (
+        "How to use this bot:\n\n"
+        "• Add balance via Sahil bhai Secure QR System or Binance Pay\n"
+        "• Tap Buy Now and pick your desired product\n"
+        "• Key is delivered instantly to this chat screen\n"
+        "• Browse plans and checkout seamlessly"
+    )
+    
+    await callback_query.message.edit_text(text, reply_markup=keyboard)
+    await callback_query.answer()
 
 if __name__ == '__main__':
     dp.include_router(router)
