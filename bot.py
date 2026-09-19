@@ -238,6 +238,13 @@ async def menu_support(call: types.CallbackQuery):
  reply_markup=support_kb(),
  )
  await call.answer()
+@router.callback_query(F.data == "menu_back")
+async def process_menu_back(call: types.CallbackQuery):
+    await call.message.edit_text(
+        "यह रहा आपका मुख्य मेन्यू:",
+        reply_markup=main_menu_kb()
+    )
+    await call.answer()
 
 
 import random
