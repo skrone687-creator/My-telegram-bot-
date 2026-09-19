@@ -13,7 +13,7 @@ API_TOKEN = '8955117111:AAGGqUdqe4AtpkAXlzfNQXb6UfC264EDT5g'
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
-async def send_payment_qr(message: types.Message, amount: str):
+async def send_payment_qr(call: types.CallbackQuery, amount: str):
  # यहाँ अपनी UPI ID डालें
  upi_id = "7318748360@fam"
  upi_url = f"upi://pay?pa={upi_id}&am={amount}&cu=INR"
@@ -34,7 +34,7 @@ async def send_payment_qr(message: types.Message, amount: str):
  ]
  ])
  
- caption = f"Scan & transfer exactly ₹{amount} via your UPI app terminal."
+ await call.message.answer_photo(photo=types.BufferedInputFile(buffer.getvalue(), filename="qr.png"), caption=caption, reply_markup=keyboard)
  await message.answer_photo(photo=types.BufferedInputFile(buffer.getvalue(), filename="qr.png"), caption=caption, reply_markup=keyboard)
 def main_menu_kb() -> InlineKeyboardMarkup:
     kb = InlineKeyboardMarkup(inline_keyboard=[])
@@ -224,7 +224,7 @@ async def menu_support(call: types.CallbackQuery):
 @router.callback_query(F.data == "menu_back")
 async def process_menu_back(call: types.CallbackQuery):
     await call.message.edit_text(
-        " 🎁 SAHIL BHAI STORE 🏠\n\n🛍️ Buy Now : All Key Purchases &\ Instant Delivery\n🆙 Check Update : Check Setup Video And Update Apk\n💰 Add Balance : Deposit Balance &\ Secure Auto-Add Payment System\n🆔 My Profile + All History : Check Your Account Information + All History\n🔄 Refer And Earn : Share Refer Link &\ Earn Money\n❓ How To Use Bot : View Tutorial And Work This Bot\n🛡️ Support : Bot Problem Fixed For Support Admin\n🎁 Daily Gift : Free Spin and win random balance daily. Only one spin every 24 hours.\n\n👇 Select an option from the menu below:",
+        " 🏪 SAHIL BHAI STORE  🔓\n\n🛍️ Buy Now : All Key Purchases &\ Instant Delivery\n🆙 Check Update : Check Setup Video And Update Apk\n💰 Add Balance : Deposit Balance &\ Secure Auto-Add Payment System\n🆔 My Profile + All History : Check Your Account Information + All History\n🔄 Refer And Earn : Share Refer Link &\ Earn Money\n❓ How To Use Bot : View Tutorial And Work This Bot\n🛡️ Support : Bot Problem Fixed For Support Admin\n🎁 Daily Gift : Free Spin and win random balance daily. Only one spin every 24 hours.\n\n👇 Select an option from the menu below:",
         reply_markup=main_menu_kb()
     )
     await call.answer()
