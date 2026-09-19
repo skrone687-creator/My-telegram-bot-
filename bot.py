@@ -244,7 +244,7 @@ async def process_daily_gift(callback_query: types.CallbackQuery):
         f"₹{gift_amount} मिले हैं।",
         reply_markup=main_menu_kb()
     )
-  from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
