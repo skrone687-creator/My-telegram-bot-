@@ -217,18 +217,27 @@ async def process_refer(callback_query: types.CallbackQuery):
         f"आपका रेफरल लिंक: {referral_link}",
         reply_markup=main_menu_kb()
     )
-@dp.callback_query(F.data == "menu_support")
-async def process_support(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    
-    # यहाँ अपना सपोर्ट यूजरनेम डालें
-    support_username = "@SAHILXD78"
-    await callback_query.message.edit_text(
-        f"🎧 Support\n\n"
-        f"अगर आपको कोई प्रॉब्लम है, तो आप हमें DM कर सकते हैं:\n"
-        f"@{support_username}",
-        reply_markup=main_menu_kb()
+from aiogram import F, Router, types
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
+router = Router()
+
+
+def support_kb():
+    button = InlineKeyboardButton(text="Back", callback_data="menu_back")
+    kb = InlineKeyboardMarkup(inline_keyboard=[[button]])
+    return kb
+
+
+@router.callback_query(F.data == "menu_support")
+async def menu_support(call: types.CallbackQuery):
+    await call.message.edit_text(
+        text="Contact admin support:\n\n@golubhai10k",
+        parse_mode="HTML",
+        reply_markup=support_kb(),
     )
+    await call.answer()
+
 import random
 
 @dp.callback_query(F.data == "menu_daily_gift")
