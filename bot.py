@@ -235,24 +235,19 @@ async def menu_support(call: types.CallbackQuery):
 @router.callback_query(F.data == "menu_back")
 async def process_menu_back(call: types.CallbackQuery):
     await call.message.edit_text(
-    f"<blockquote>"
-    f"<b>🏪 SAHIL BHAIL STORE 🔒</b>\n"
+    f"<blockquote><b>🏪 SAHIL BHAIL STORE 🔒</b>\n</blockquote>"
     f"~~~~~~~~~~~~~~~~~~~~~~~\n\n"
-    f"┝ 🛍 Buy Now : All Key Purchase & Instant Delivery\n"
-    f"┝ 🆙 Check Update : Check Setup Video And Update Apk\n"
-    f"┝ 💰 Add Balance : Deposit Balance & Secure Auto-Add Payment System\n"
-    f"┝ 🆔 My Profile + All History : Check Your Account Information + All History\n"
-    f"┝ 👥 Refer And Earn : Share Refer Link & Earn Money\n"
-    f"┝ ❓ How To Use Bot : View Tutorial And Work This Bot\n"
-    f"┝ 🛠 Support : Bot Problem Fixed For Support Admin\n"
-    f"┝ 🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours."
-    f"</blockquote>",
+    f"┝🛍 Buy Now : All Key Purchase & Instant Delivery\n"
+    f"┝📢 Check Update : Check Setup Video And Update Apk\n"
+    f"┝🪙 Add Balance : Deposit Balance & Secure Auto-Add Payment System\n"
+    f"┝🆔 My Profile + All History : Check Your Account Information + All History\n"
+    f"┝👥 Refer And Earn : Share Refer Link & Earn Money\n"
+    f"┝🎬 How To Use Bot : View Tutorial And Work This Bot\n"
+    f"┝📨 Support : Bot Problem Fixed For Support Admin\n"
+    f"┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.",
     parse_mode="HTML",
     reply_markup=main_menu_kb(),
 )
-
-
-
 
 
 import random
