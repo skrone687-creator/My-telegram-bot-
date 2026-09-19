@@ -1,6 +1,6 @@
-import logging
+import asyncio
 from typing import Optional
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, Dispatcher
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 # बोट सेटअप
@@ -223,4 +223,4 @@ async def process_daily_gift(callback_query: types.CallbackQuery):
     )
 
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+    asyncio.run(dp.start_polling(bot))
