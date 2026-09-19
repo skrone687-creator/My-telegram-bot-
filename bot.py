@@ -91,12 +91,20 @@ async def send_welcome(message: types.Message):
     )
 @dp.callback_query(F.data == "menu_check_update")
 async def process_check_update(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    # यहाँ अपना अपडेट चैनल का लिंक डालें
-    channel_url = "https://t.me/YOUR_CHANNEL_USERNAME"
+    text = (
+        "📢 **Follow our updates channel!** 📢\n\n"
+        "👉 [Click Here For Setup & Updates](https://t.me/Sahilbhaiallupdate)\n"
+        "➖➖➖➖➖➖➖➖➖➖\n"
+        "🆔 **Telegram**\n"
+        "🤖 **SAHIL BHAI All UPDATE**"
+    )
     await callback_query.message.edit_text(
-        f"हमारे अपडेट चैनल से जुड़ें: {channel_url}",
-        reply_markup=main_menu_kb()
+        text=text,
+        reply_markup=check_update_kb(),
+        parse_mode="Markdown",
+        disable_web_page_preview=True
+    )
+
     )
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import qrcode
