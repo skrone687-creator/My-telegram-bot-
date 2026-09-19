@@ -112,7 +112,6 @@ async def process_check_update(callback_query: types.CallbackQuery):
         disable_web_page_preview=True
     )
 
-    )
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import qrcode
 from io import BytesIO
