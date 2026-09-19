@@ -235,9 +235,19 @@ async def menu_support(call: types.CallbackQuery):
 @router.callback_query(F.data == "menu_back")
 async def process_menu_back(call: types.CallbackQuery):
     await call.message.edit_text(
-        " 🏪 SAHIL BHAI STORE  🔓\n\n🛍️ Buy Now : All Key Purchases &\ Instant Delivery\n🆙 Check Update : Check Setup Video And Update Apk\n💰 Add Balance : Deposit Balance &\ Secure Auto-Add Payment System\n🆔 My Profile + All History : Check Your Account Information + All History\n🔄 Refer And Earn : Share Refer Link &\ Earn Money\n❓ How To Use Bot : View Tutorial And Work This Bot\n🛡️ Support : Bot Problem Fixed For Support Admin\n🎁 Daily Gift : Free Spin and win random balance daily. Only one spin every 24 hours.\n\n👇 Select an option from the menu below:",
-        reply_markup=main_menu_kb()
-    )
+    f"<b>🔒 SAHIL BHAIL STORE 🔒</b>\n"
+    f"~~~~~~~~~~~~~~~~~~~~~~~\n\n"
+    f"🛍 Buy Now : All Key Purchase & Instant Delivery\n"
+    f"🆙 Check Update : Check Setup Video And Update Apk\n"
+    f"💰 Add Balance : Deposit Balance & Secure Auto-Add Payment System\n"
+    f"🆔 My Profile + All History : Check Your Account Information + All History\n"
+    f"👥 Refer And Earn : Share Refer Link & Earn Money\n"
+    f"❓ How To Use Bot : View Tutorial And Work This Bot\n"
+    f"🛠 Support : Bot Problem Fixed For Support Admin\n"
+    f"🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.",
+    parse_mode="HTML",
+    reply_markup=main_menu_kb(),
+)
     await call.answer()
 
 
