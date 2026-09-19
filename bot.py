@@ -89,7 +89,7 @@ async def send_welcome(message: types.Message):
         "यहाँ हमारे प्रोडक्ट्स की लिस्ट है:",
         reply_markup=your_products_kb()
     )
-    @dp.callback_query(F.data == "menu_check_update")
+@dp.callback_query(F.data == "menu_check_update")
 async def process_check_update(callback_query: types.CallbackQuery):
     text = (
         "📢 **Follow our updates channel!** 📢\n\n"
@@ -103,6 +103,8 @@ async def process_check_update(callback_query: types.CallbackQuery):
         reply_markup=check_update_kb(),
         parse_mode="Markdown",
         disable_web_page_preview=True
+    )
+
     )
 
     await callback_query.message.edit_text(
