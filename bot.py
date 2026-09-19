@@ -2,10 +2,11 @@ import logging
 import asyncio
 from typing import Optional
 from aiogram import Bot, Dispatcher
+from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 # बोट सेटअप
-API_TOKEN = '8636450751:AAF8USFk5_A4ejnM_tPKFzLOviwzjC9wud8'
+API_TOKEN = '8584466413:AAFG-ILmhkOeow-beocU5TRbK_8F9lKK55s'
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
@@ -76,7 +77,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
     return kb
 
 # यहाँ आप अपने कमान्ड हैंडर्स जोड़ सकते हैं
-@dp.message_handler(commands=['start'])
+@dp.message(Command("start"))
 async def send_welcome(message: types.Message):
     await message.reply("नमस्ते! मेन्यू देखने के लिए बटन दबाएँ:", reply_markup=main_menu_kb())
 @dp.callback_query_handler(text="menu_shop")
