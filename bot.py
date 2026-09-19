@@ -102,7 +102,6 @@ async def process_check_update(callback_query: types.CallbackQuery):
         InlineKeyboardButton(
             text="◀️ Back",
             callback_data="menu_back",
-            style="danger"
         )
     )
     
