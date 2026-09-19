@@ -105,7 +105,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 @dp.message(Command("start"))
 async def send_welcome(message: types.Message):
         await message.answer(
-        "<blockquote>🔒24 SAHIL BHAI STORE 🏠\n\n Buy Now : All Key Purchases &\ Instant Delivery\n</blockquote>",
+        r"<blockquote>🔒24 SAHIL BHAI STORE 🏠\n\n Buy Now : All Key Purchases &\ Instant Delivery\n</blockquote>",
         parse_mode="HTML",
         reply_markup=main_menu_kb(),
     )
