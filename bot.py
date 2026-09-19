@@ -8,7 +8,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 API_TOKEN = '8636450751:AAF8USFk5_A4ejnM_tPKFzLOviwzjC9wud8'
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
-dp = Dispatcher(bot)
+dp = Dispatcher()
 
 def main_menu_kb() -> InlineKeyboardMarkup:
     kb = InlineKeyboardMarkup(inline_keyboard=[])
