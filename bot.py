@@ -134,11 +134,11 @@ def update_kb():
 @dp.callback_query(F.data == "menu_check_update")
 async def process_check_update(call: types.CallbackQuery):
     await call.message.delete()
-await call.message.answer_photo(
-photo="AgACAgUAAxkBAA—u621xOxS3DNMRK6j0TRvuqx1j8XAACSrJrGWABUnhVfq",
-caption="<blockquote>Follow our updates channel:</blockquote>\n\n🔗 [Click Here For Setup & Updates](https://t.me/sahilbhaiallupdate)",
-reply_markup=update_kb(),
-parse_mode="HTML"
+    await call.message.answer_photo(
+    photo="AgACAgUAAxkBAA—u621xOxS3DNMRK6j0TRvuqx1j8XAACSrJrGWABUnhVfq",
+    caption="<blockquote>Follow our updates channel:</blockquote>\n\n🔗 <a href='https://t.me/sahilbhaiallupdate'>Click Here For Setup & Updates</a>",
+    reply_markup=update_kb(),
+    parse_mode="HTML"
 )
 await call.answer()
 
