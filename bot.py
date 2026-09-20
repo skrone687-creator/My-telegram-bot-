@@ -147,13 +147,13 @@ async def send_welcome(message: types.Message):
         "~~~~~~~~~~~~~~~~~~~~~\n"
         "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
         "┝  🛍️ Buy Now : All Key Purchase & Instant Delivery\n"
-        "┝  💸 Check Update : Check Setup Video And Update Apk\n"
-        "┝  Add Balance : Deposit Balance & Secure Auto-Add Payment System\n"
-        "┝  My Profile + All History : Check Your Account Information + All History\n"
-        "┝  Refer And Earn : Share Refer Link & Earn Money\n"
-        "┝  How To Use Bot : View Tutorial And Work This Bot\n"
-        "┝  Support : Bot Problem Fixed For Support Admin\n"
-        "┝  Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.",
+        "┝  📢 Check Update : Check Setup Video And Update Apk\n"
+        "┝  🪙 Add Balance : Deposit Balance & Secure Auto-Add Payment System\n"
+        "┝  🆔 My Profile + All History : Check Your Account Information + All History\n"
+        "┝  👥 Refer And Earn : Share Refer Link & Earn Money\n"
+        "┝  🎬 How To Use Bot : View Tutorial And Work This Bot\n"
+        "┝  📨 Support : Bot Problem Fixed For Support Admin\n"
+        "┝  🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.",
         parse_mode="HTML",
         reply_markup=main_menu_kb(),
     )
