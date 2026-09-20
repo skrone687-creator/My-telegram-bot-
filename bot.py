@@ -375,24 +375,32 @@ async def process_pay_upi(call: types.CallbackQuery, state: FSMContext):
         reply_markup=verify_kb(), # Yahan apka verify button keyboard hai
     )
     await call.answer()
-# Payment method selection handler
-@router.callback_query(F.data.startswith("add_"))
-async def select_gateway(call: types.CallbackQuery, state: FSMContext):
-    amount = call.data.split("_")[1]
-    await state.update_data(amount=amount)
-    text = (
-        "<blockquote>"
-        "<b>SELECT GATEWAY MODE</b>"
-        "</blockquote>\n\n"
-        f"Deposit Amount: 💰 <b>₹{amount}</b>\n\n"
-        "<i>Cancel Request</i>"
-    )
-    # Keyboard with PAY UPI and BINANCE buttons
-    await call.message.edit_text(
-        text=text,
-        parse_mode="HTML",
-        reply_markup=gateway_kb(),
-    )
+@router.callback_query(F.data == "add_100")
+async def process_add_100(call: types.CallbackQuery, state: FSMContext):
+    await state.update_data(amount="100")
+    text = "<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\nDeposit Amount: 💰 <b>₹100.00</b>\n\n<i>Cancel Request</i>"
+    await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb())
+    await call.answer()
+
+@router.callback_query(F.data == "add_200")
+async def process_add_200(call: types.CallbackQuery, state: FSMContext):
+    await state.update_data(amount="200")
+    text = "<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\nDeposit Amount: 💰 <b>₹200.00</b>\n\n<i>Cancel Request</i>"
+    await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb())
+    await call.answer()
+
+@router.callback_query(F.data == "add_500")
+async def process_add_500(call: types.CallbackQuery, state: FSMContext):
+    await state.update_data(amount="500")
+    text = "<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\nDeposit Amount: 💰 <b>₹500.00</b>\n\n<i>Cancel Request</i>"
+    await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb())
+    await call.answer()
+
+@router.callback_query(F.data == "add_1000")
+async def process_add_1000(call: types.CallbackQuery, state: FSMContext):
+    await state.update_data(amount="1000")
+    text = "<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\nDeposit Amount: 💰 <b>₹1000.00</b>\n\n<i>Cancel Request</i>"
+    await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb())
     await call.answer()
 
 
