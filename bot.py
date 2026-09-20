@@ -296,7 +296,7 @@ async def menu_add_balance(call: types.CallbackQuery):
     await call.answer()
 
 
-@router.callback_query(F.data == "how_to_use_bot")
+@router.callback_query(F.data == "how_to_bot")
 async def process_how_to_use(call: types.CallbackQuery):
     text = (
         "! How to use this bot: \n\n"
