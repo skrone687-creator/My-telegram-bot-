@@ -150,11 +150,22 @@ def update_kb():
     kb.inline_keyboard[0][0].style = "danger"
     return kb
 
-@dp.callback_query(F.data == "menu_check_update")
+@router.callback_query(F.data == "menu_check_update")
 async def process_check_update(call: types.CallbackQuery):
-    
     await call.answer()
-
+    update_text = (
+        "<blockquote>📢 Follow our updates channel:</blockquote>\n"
+        "👇 <a href='https://t.me/Sahilbhaiallupdate'>Click Here For Setup & Updates</a>\n\n"
+        "Telegram\n<b>SAHIL BHAI</b>"
+    )
+    photo_id = "AgACAgUAAxkBAAeu-rpqr7Tc40Vz718pLmy1nB_0h7jpVwACYXJrGwazgFuR7sROTtqLiAEAIAAX3gAAz0E"
+    
+    await call.message.answer_photo(
+        photo=photo_id,
+        caption=update_text,
+        parse_mode="HTML",
+        reply_markup=update_kb()
+    )
 
 
 # 1. Profile Dashboard Menu Keyboard
