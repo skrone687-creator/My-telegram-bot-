@@ -142,8 +142,11 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 # यहाँ आप अपने कमान्ड हैंडर्स जोड़ सकते हैं
 @dp.message(Command("start"))
 async def send_welcome(message: types.Message):
-        await message.answer(
-        r"""<blockquote>🏪 SAHIL BHAI STORE 🔒</blockquote>
+    await message.answer(
+        "<blockquote>🛍️ SAHIL BHAI STORE 🛍️</blockquote>",
+        parse_mode="HTML",
+        reply_markup=main_menu_kb(),
+    )
 〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
 
 ┝ 🛍️ Buy Now : All Key Purchase & Instant Delivery
