@@ -131,7 +131,7 @@ def update_kb():
     kb.inline_keyboard[0][0].style = "danger"
     return kb
 
-@dp.callback_query(F.data == "menu_check_update")
+@router.callback_query(F.data == "menu_check_update")
 async def process_check_update(call: types.CallbackQuery):
     await call.message.edit_message_media(
     media=InputMediaPhoto(
