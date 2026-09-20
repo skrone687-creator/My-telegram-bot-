@@ -279,12 +279,10 @@ async def process_daily_gift(callback_query: types.CallbackQuery):
 @router.callback_query(F.data == "menu_add_balance")
 async def menu_add_balance(call: types.CallbackQuery):
     text = (
-        "<blockquote>"
-        "💰 <b>ADD FUNDS TO WALLET</b> 💰"
-        "</blockquote>\n\n"
-        "<blockquote>"
+        "<blockquote>\n"
+        "💰 <b>ADD FUNDS TO WALLET</b> \n\n"
         "Choose a quick amount to add or type/use a custom one below.\n\n"
-        "🚀 <i>Predefined amounts are faster to process!</i>"
+        "🚀 <i>Predefined amounts are faster to process!</i>\n"
         "</blockquote>"
     )
     await call.message.edit_text(
