@@ -277,17 +277,25 @@ async def process_daily_gift(callback_query: types.CallbackQuery):
         reply_markup=main_menu_kb()
     )
 @router.callback_query(F.data == "menu_add_balance")
-async def menu_add_balance(callback: types.CallbackQuery):
-    await callback.message.edit_text(
-        "ADD FUNDS TO WALLET\n\nChoose an amount:",
-         reply_markup=add_balance_kb()
+async def menu_add_balance(call: types.CallbackQuery):
+    text = (
+        "<blockquote>\n"
+        "💰 Your Balance: ₹0.00\n\n"
+        "⚡ Select an option from the menu below:\n"
+        "</blockquote>\n\n"
+        "<blockquote>\n"
+        "💰 <b>ADD FUNDS TO WALLET</b> \n\n"
+        "Choose a quick amount to add or type/use a custom one below.\n\n"
+        "🚀 <i>Predefined amounts are faster to process!</i> 🚀\n"
+        "</blockquote>"
     )
-    await callback.answer()
-@router.callback_query(F.data.in_(["add_100", "add_200", "add_500", "add_1000"]))
-async def process_add_amount(callback: types.CallbackQuery):
- amount = callback.data.split("_")[1]
- await send_payment_qr(callback, amount)
- await callback.answer()
+    await call.message.edit_text(
+        text=text,
+        parse_mode="HTML",
+        reply_markup=add_balance_kb(),
+    )
+    await call.answer()
+
 
 
 @router.callback_query(F.data == "how_to_use_bot")
