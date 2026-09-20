@@ -227,7 +227,7 @@ def add_balance_kb() -> InlineKeyboardMarkup:
 @router.callback_query(F.data == "menu_support")
 async def menu_support(call: types.CallbackQuery):
  await call.message.edit_text(
- text="Contact admin support:\n\n@sahilxd78",
+ text="<blockquote>📨Contact admin support:</blockquote>\n\n📨@sahilxd78",
  parse_mode="HTML",
  reply_markup=support_kb(),
  )
