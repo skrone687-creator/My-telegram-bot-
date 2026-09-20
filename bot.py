@@ -228,7 +228,7 @@ def add_balance_kb() -> InlineKeyboardMarkup:
         InlineKeyboardButton(text="₹1000", callback_data="add_1000", style="success"),
     ])
     kb.inline_keyboard.append([
-        InlineKeyboardButton(text="TYPE CUSTOM AMOUNT", callback_data="custom_amount", style="primary"),
+        InlineKeyboardButton(text="TYPE CUSTOM AMOUNT", callback_data="custom_amount", style="success"),
     ])
     kb.inline_keyboard.append([
         InlineKeyboardButton(text="Back to Menu", callback_data="menu_back", style="danger"),
@@ -279,14 +279,12 @@ async def process_daily_gift(callback_query: types.CallbackQuery):
 @router.callback_query(F.data == "menu_add_balance")
 async def menu_add_balance(call: types.CallbackQuery):
     text = (
-        "<blockquote>\n"
-        "💰 Your Balance: ₹0.00\n\n"
-        "⚡ Select an option from the menu below:\n"
+        "<blockquote>"
+        "💰 <b>ADD FUNDS TO WALLET</b> 💰"
         "</blockquote>\n\n"
-        "<blockquote>\n"
-        "💰 <b>ADD FUNDS TO WALLET</b> \n\n"
+        "<blockquote>"
         "Choose a quick amount to add or type/use a custom one below.\n\n"
-        "🚀 <i>Predefined amounts are faster to process!</i> 🚀\n"
+        "🚀 <i>Predefined amounts are faster to process!</i>"
         "</blockquote>"
     )
     await call.message.edit_text(
@@ -295,7 +293,6 @@ async def menu_add_balance(call: types.CallbackQuery):
         reply_markup=add_balance_kb(),
     )
     await call.answer()
-
 
 
 @router.callback_query(F.data == "how_to_use_bot")
