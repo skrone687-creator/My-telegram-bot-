@@ -153,6 +153,7 @@ def update_kb():
 @dp.callback_query(F.data == "menu_check_update")
 async def process_check_update(call: types.CallbackQuery):
     await call.answer()
+    print("Check Update button pressed")
     update_text = (
         "<blockquote>📢 Follow our updates channel:</blockquote>\n"
         "👇 <a href='https://t.me/Sahilbhaiallupdate'>Click Here For Setup & Updates</a>\n\n"
