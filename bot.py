@@ -379,28 +379,28 @@ async def process_pay_upi(call: types.CallbackQuery, state: FSMContext):
 async def process_add_100(call: types.CallbackQuery, state: FSMContext):
     await state.update_data(amount="100")
     text = "<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\nDeposit Amount: 💰 <b>₹100.00</b>\n\n<i>Cancel Request</i>"
-    await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb()
+    await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb())
     await call.answer()
 
 @router.callback_query(F.data == "add_200")
 async def process_add_200(call: types.CallbackQuery, state: FSMContext):
     await state.update_data(amount="200")
     text = "<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\nDeposit Amount: 💰 <b>₹200.00</b>\n\n<i>Cancel Request</i>"
-    await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb()
+    await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb())
     await call.answer()
 
 @router.callback_query(F.data == "add_500")
 async def process_add_500(call: types.CallbackQuery, state: FSMContext):
     await state.update_data(amount="500")
     text = "<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\nDeposit Amount: 💰 <b>₹500.00</b>\n\n<i>Cancel Request</i>"
-    await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb()
+    await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb())
     await call.answer()
 
 @router.callback_query(F.data == "add_1000")
 async def process_add_1000(call: types.CallbackQuery, state: FSMContext):
     await state.update_data(amount="1000")
     text = "<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\nDeposit Amount: 💰 <b>₹1000.00</b>\n\n<i>Cancel Request</i>"
-    await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb()
+    await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb())
     await call.answer()
 
 
