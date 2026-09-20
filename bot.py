@@ -306,7 +306,7 @@ async def process_how_to_use(call: types.CallbackQuery):
         "• Browse plans and checkout seamlessly"
     )
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
- [InlineKeyboardButton(text="» VIEW TUTORIAL VIDEO «", url="https://t.me/sahil_bhai_69/6", style="success")],
+ [InlineKeyboardButton(text="🎬 VIEW TUTORIAL VIDEO ", url="https://t.me/sahil_bhai_69/6", style="success")],
  [InlineKeyboardButton(text="« Back", callback_data="menu_back", style="danger")]
 ])
     await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=keyboard)
