@@ -8,7 +8,6 @@ from aiogram import F
 import qrcode
 from io import BytesIO
 from aiogram import types
-from aiogram.types import lnputMediaPhoto
 # बोट सेटअप
 API_TOKEN = '8955117111:AAGGqUdqe4AtpkAXlzfNQXb6UfC264EDT5g'
 logging.basicConfig(level=logging.INFO)
