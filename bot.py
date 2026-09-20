@@ -157,13 +157,13 @@ async def process_check_update(call: types.CallbackQuery):
     print("Check Update button pressed")
     update_text = (
         "<blockquote>📢 Follow our updates channel:</blockquote>\n"
-        "👇 <a href='https://t.me/Sahilbhaiallupdate'>Click Here For Setup & Updates</a>\n\n"
+        "👇 <a href='https://t.me/Sahilbhaiallupdate'><b>CLICK here for support update</b></a>\n\n"
         "Telegram\n<b>SAIL BHAI</b>"
     )
-    photo_id = "AgACAgUAAxkBAAeu-rpqr7Tc40Vz718pLmy1nB_0h7jpVwACYXJrGwazgFuR7sROTtqLiAEAIAAX3gAAz0E"
     
-    await call.message.edit_media(
-        media=types.InputMediaPhoto(media=photo_id, caption=update_text, parse_mode="HTML"),
+    await call.message.edit_text(
+        text=update_text,
+        parse_mode="HTML",
         reply_markup=update_kb()
     )
 
