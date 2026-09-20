@@ -8,6 +8,24 @@ from aiogram import F
 import qrcode
 from io import BytesIO
 from aiogram import types
+from aiogram import F, Router, types
+import aiohttp
+products_db = {
+    "155": "XYZ CHEATS APKMOD FF NONROOT",
+    "153": "XYZ CHEATS PROXY APK SILENT FF NONROOT",
+    "151": "ABCD PANEL FF NONROOT",
+    "150": "DRIPCLIENT WIRE FF NONROOT ANDROID+IPHONE",
+    "156": "RAPID CARROM POOL NONROOT ANDROID",
+    "148": "SILENT CHEAT FF NONROOT PROXY",
+    "149": "XRAG FF ROOT+NONROOT+IOS IPHONE+PC",
+    "133": "AIM HACK FF",
+    "138": "KOS 8 BALL POOL MOD+ROOT",
+    "76": "KOS 8 BALL POOL VIRTUAL",
+    "78": "SNAKE SOCCER STARS NONROOT ANDROID",
+    "49": "BR MOD FF PC VERSION",
+    "67": "BR MOD FF ROOT ANDROID",
+}
+
 # बोट सेटअप
 API_TOKEN = '8955117111:AAGGqUdqe4AtpkAXlzfNQXb6UfC264EDT5g'
 logging.basicConfig(level=logging.INFO)
@@ -295,6 +313,31 @@ async def process_how_to_use(callback_query: types.CallbackQuery):
     
     await callback_query.message.edit_text(text, reply_markup=keyboard)
     await callback_query.answer()
+
+router = Router()
+
+
+@router.message(F.text.startswith("/buy_"))
+async def process_buy(message: types.Message):
+    product_id = message.text.split("_")[1]
+
+    api_url = "https://bantibhaiya.to/api/reseller_v1.php"
+    payload = {
+        "api_key": "c269687cb9bd332ca5f930bdb9a4d839",
+        "action": "Buy",
+        "product_id": product_id,
+        "duration": "1",
+        "android_id": "0b9b969bc2e7997b",
+    }
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(api_url, data=payload) as response:
+            if response.status == 200:
+                data = await response.json()
+                key = data.get("key")
+                await message.reply(f"आपकी प्रोडक्ट की डिलीवरी: {key}")
+            else:
+                await message.reply("प्रोडक्ट खरीदने में समस्या आई।")
 
 if __name__ == '__main__':
     dp.include_router(router)
