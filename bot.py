@@ -281,7 +281,7 @@ async def process_daily_gift(callback_query: types.CallbackQuery):
 async def menu_add_balance(call: types.CallbackQuery):
     text = (
         "<blockquote>"
-        "💰 <b>ADD FUNDS TO WALLET</b> 💰"
+        "💰 <b>ADD FUNDS TO WALLET</b> "
         "</blockquote>\n\n"
         "Choose a quick amount to add or type/use a custom one below.\n\n"
         "<blockquote>"
