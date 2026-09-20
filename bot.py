@@ -455,7 +455,7 @@ async def add_product(message: types.Message):
 from aiogram import F, types
 
 
-@router.callback_query(F.data == "buy_now")
+@router.callback_query(F.data == "menu_shop")
 async def process_buy_now(call: types.CallbackQuery):
  keyboard = InlineKeyboardMarkup(
  inline_keyboard=[
