@@ -159,8 +159,8 @@ async def send_welcome(message: types.Message):
     )
 
 
-        await callback_query.answer()
-        await callback_query.message.edit_text(
+    await callback_query.answer()
+    await callback_query.message.edit_text(
         "यहाँ हमारे प्रोडक्ट्स की लिस्ट है:",
         reply_markup=your_products_kb()
     )
