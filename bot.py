@@ -310,8 +310,8 @@ async def process_how_to_use(call: types.CallbackQuery):
         InlineKeyboardButton(text="🎬 VIEW TUTORIAL VIDEO ", url="https://t.me/sahil_bhai_69/6", style="success")
         [InlineKeyboardButton(text="Back", callback_data="menu_back", style="danger")]
     ])
-    await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=keyboard)
-    await call.answer()
+        await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=keyboard)
+        await call.answer()
 
 
 @router.message(F.text.startswith("/buy_"))
