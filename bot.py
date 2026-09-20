@@ -32,6 +32,7 @@ API_TOKEN = '8955117111:AAGGqUdqe4AtpkAXlzfNQXb6UfC264EDT5g'
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
+router = Router
 async def send_payment_qr(call: types.CallbackQuery, amount: str):
  # यहाँ अपनी UPI ID डालें
  upi_id = "7318748360@fam"
