@@ -150,7 +150,7 @@ def update_kb():
     kb.inline_keyboard[0][0].style = "danger"
     return kb
 
-@router.callback_query(F.data == "menu_check_update")
+@dp.callback_query(F.data == "menu_check_update")
 async def process_check_update(call: types.CallbackQuery):
     await call.answer()
     print("Check Update button pressed")
