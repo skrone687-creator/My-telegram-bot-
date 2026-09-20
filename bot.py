@@ -314,8 +314,6 @@ async def process_how_to_use(callback_query: types.CallbackQuery):
     await callback_query.message.edit_text(text, reply_markup=keyboard)
     await callback_query.answer()
 
-router = Router()
-
 
 @router.message(F.text.startswith("/buy_"))
 async def process_buy(message: types.Message):
