@@ -140,7 +140,7 @@ async def process_check_update(call: types.CallbackQuery):
     reply_markup=update_kb(),
     parse_mode="HTML"
 )
-await call.answer()
+    await call.answer()
 
 
 
