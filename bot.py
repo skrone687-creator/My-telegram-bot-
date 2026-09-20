@@ -1,3 +1,4 @@
+import sqlite3
 import logging
 import asyncio
 from typing import Optional
@@ -11,6 +12,23 @@ from io import BytesIO
 from aiogram import types
 from aiogram import F, Router, types
 import aiohttp
+def init_db():
+    conn = sqlite3.connect("products.db")
+    cursor = conn.cursor()
+    cursor.execute(
+        """
+        CREATE TABLE IF NOT EXISTS products (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            price REAL NOT NULL
+        )
+    """
+    )
+    conn.commit()
+    conn.close()
+
+
+
 products_db = {
     "155": "XYZ CHEATS APKMOD FF NONROOT",
     "153": "XYZ CHEATS PROXY APK SILENT FF NONROOT",
@@ -405,7 +423,38 @@ async def process_add_1000(call: types.CallbackQuery, state: FSMContext):
     await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb())
     await call.answer()
 
+from aiogram import types
+from aiogram.filters import Command
+import sqlite3
+
+ADMIN_ID = 8395533259  # यहाँ अपनी Telegram ID डालें
+
+
+@router.message(Command("add_product"))
+async def add_product(message: types.Message):
+    if message.from_user.id != ADMIN_ID:
+        return
+    args = message.text.split(maxsplit=3)
+    if len(args) < 4:
+        await message.reply("Usage: /add_product <id> <name> <price>")
+        return
+    _, prod_id, name, price = args
+    conn = sqlite3.connect("products.db")
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "INSERT INTO products (id, name, price) VALUES (?, ?, ?)",
+            (prod_id, name, price),
+        )
+        conn.commit()
+        await message.reply(f"Product {name} added successfully!")
+    except sqlite3.IntegrityError:
+        await message.reply("Product ID already exists.")
+    finally:
+        conn.close()
+
 
 if __name__ == '__main__':
     dp.include_router(router)
     asyncio.run(dp.start_polling(bot))
+    init_db()
