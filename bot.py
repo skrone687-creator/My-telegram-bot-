@@ -341,6 +341,40 @@ async def process_buy(message: types.Message):
                 await message.reply(f"आपकी प्रोडक्ट की डिलीवरी: {key}")
             else:
                 await message.reply("प्रोडक्ट खरीदने में समस्या आई।")
+# PAY UPI handler to generate QR
+@router.callback_query(F.data == "pay_upi")
+async def process_pay_upi(call: types.CallbackQuery, state: FSMContext):
+    user_data = await state.get_data()
+    amount = user_data.get("amount")
+    
+    # Apni UPI ID yahan dein
+    up_id = "7318748360@fam"
+    upi_url = f"upi://pay?pa={up_id}&am={amount}&cu=INR"
+    
+    # QR Generation logic
+    qr = qrcode.QRCode(version=1, box_size=10, border=4)
+    qr.add_data(upi_url)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
+    
+    buffer = io.BytesIO()
+    img.save(buffer, format="PNG")
+    buffer.seek(0)
+    
+    caption = (
+        "Scan & transfer exactly "
+        f"<b>₹{amount}.00</b> via your UPI app terminal.\n"
+        "Tap verify below after completing the core transaction transfer."
+    )
+    
+    await call.message.answer_photo(
+        photo=types.BufferedInputFile(buffer.getvalue(), filename="qr.png"),
+        caption=caption,
+        parse_mode="HTML",
+        reply_markup=verify_kb(), # Yahan apka verify button keyboard hai
+    )
+    await call.answer()
+
 
 if __name__ == '__main__':
     dp.include_router(router)
