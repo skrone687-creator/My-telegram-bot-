@@ -375,6 +375,25 @@ async def process_pay_upi(call: types.CallbackQuery, state: FSMContext):
         reply_markup=verify_kb(), # Yahan apka verify button keyboard hai
     )
     await call.answer()
+# Payment method selection handler
+@router.callback_query(F.data.startswith("add_"))
+async def select_gateway(call: types.CallbackQuery, state: FSMContext):
+    amount = call.data.split("_")[1]
+    await state.update_data(amount=amount)
+    text = (
+        "<blockquote>"
+        "<b>SELECT GATEWAY MODE</b>"
+        "</blockquote>\n\n"
+        f"Deposit Amount: 💰 <b>₹{amount}</b>\n\n"
+        "<i>Cancel Request</i>"
+    )
+    # Keyboard with PAY UPI and BINANCE buttons
+    await call.message.edit_text(
+        text=text,
+        parse_mode="HTML",
+        reply_markup=gateway_kb(),
+    )
+    await call.answer()
 
 
 if __name__ == '__main__':
