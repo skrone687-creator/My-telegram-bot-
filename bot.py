@@ -452,6 +452,30 @@ async def add_product(message: types.Message):
         await message.reply("Product ID already exists.")
     finally:
         conn.close()
+from aiogram import F, types
+
+
+@router.callback_query(F.data == "buy_now")
+async def process_buy_now(call: types.CallbackQuery):
+ keyboard = InlineKeyboardMarkup(
+ inline_keyboard=[
+ [
+ InlineKeyboardButton(
+ text="DRIP CLIENT APK-MOD", callback_data="drip_client"
+ )
+ ],
+ [
+ InlineKeyboardButton(
+ text="PRIME HOOK APK-MOD", callback_data="prime_hook"
+ )
+ ],
+ [InlineKeyboardButton(text="« Back", callback_data="main_menu")],
+ ]
+ )
+
+ await call.message.edit_text(
+ "Choose a product from the list below:", reply_markup=keyboard
+ )
 
 
 if __name__ == '__main__':
