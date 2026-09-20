@@ -453,29 +453,50 @@ async def add_product(message: types.Message):
     finally:
         conn.close()
 from aiogram import F, types
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
+
+@router.callback_query(F.data == "main_menu")
+async def process_main_menu(call: types.CallbackQuery):
+
+    # यहाँ आपका मेन मेन्यू कीबोर्ड कोड होना चाहिए
+    await call.message.edit_text(
+        "Welcome to Main Menu!", reply_markup=main_menu_kb()
+    )
 
 
 @router.callback_query(F.data == "menu_shop")
-async def process_buy_now(call: types.CallbackQuery):
- keyboard = InlineKeyboardMarkup(
- inline_keyboard=[
- [
- InlineKeyboardButton(
- text="DRIP CLIENT APK-MOD", callback_data="drip_client"
- )
- ],
- [
- InlineKeyboardButton(
- text="PRIME HOOK APK-MOD", callback_data="prime_hook"
- )
- ],
- [InlineKeyboardButton(text="« Back", callback_data="main_menu")],
- ]
- )
+async def process_menu_shop(call: types.CallbackQuery):
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text="DRIP CLIENT APK-MOD",
+                    callback_data="drip_client",
+                    style="success",
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text="PRIME HOOK APK-MOD",
+                    callback_data="prime_hook",
+                    style="success",
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text="« Back", callback_data="main_menu", style="danger"
+                )
+            ],
+        ]
+    )
 
- await call.message.edit_text(
- "Choose a product from the list below:", reply_markup=keyboard
- )
+    await call.message.edit_text(
+        "<blockquote>🛍️ Choose a product from the list below:</blockquote>",
+        reply_markup=keyboard,
+        parse_mode="HTML",
+    )
+
 
 
 if __name__ == '__main__':
