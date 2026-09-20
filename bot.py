@@ -299,15 +299,15 @@ async def menu_add_balance(call: types.CallbackQuery):
 @router.callback_query(F.data == "how_to_bot")
 async def process_how_to_use(call: types.CallbackQuery):
     text = (
-        "! How to use this bot: \n\n"
+        "<blockquote>❗ How to use this bot: \n\n"
         "• Add balance via Sahil bhai Secure QR System or Binance Pay\n"
         "• Tap Buy Now and pick your desired product\n"
         "• Key is delivered instantly to this chat screen\n"
-        "• Browse plans and checkout seamlessly"
+        "• Browse plans and checkout seamlessly</blockquote>"
     )
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="» VIEW TUTORIAL VIDEO «", url="https://t.me/sahil_bhai_69/6")],
-        [InlineKeyboardButton(text="Back", callback_data="menu_back")]
+        [InlineKeyboardButton(text="» VIEW TUTORIAL VIDEO «", url="https://t.me/sahil_bhai_69/6", style="success")],
+        [InlineKeyboardButton(text="Back", callback_data="menu_back", style="danger")]
     ])
     await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=keyboard)
     await call.answer()
