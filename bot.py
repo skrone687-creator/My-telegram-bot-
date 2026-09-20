@@ -8,6 +8,7 @@ from aiogram import F
 import qrcode
 from io import BytesIO
 from aiogram import types
+from aiogram.types import lnputMediaPhoto
 # बोट सेटअप
 API_TOKEN = '8955117111:AAGGqUdqe4AtpkAXlzfNQXb6UfC264EDT5g'
 logging.basicConfig(level=logging.INFO)
@@ -133,12 +134,13 @@ def update_kb():
 
 @dp.callback_query(F.data == "menu_check_update")
 async def process_check_update(call: types.CallbackQuery):
-    await call.message.delete()
-    await call.message.answer_photo(
-    photo="AgACAgUAAxkBAA—u621xOxS3DNMRK6j0TRvuqx1j8XAACSrJrGWABUnhVfq",
-    caption="<blockquote>Follow our updates channel:</blockquote>\n\n🔗 <a href='https://t.me/sahilbhaiallupdate'>Click Here For Setup & Updates</a>",
-    reply_markup=update_kb(),
-    parse_mode="HTML"
+    await call.message.edit_message_media(
+    media=InputMediaPhoto(
+        media="AgACAgUAAxkBAA—u621xOxS3DNMRK6j0TRvuqx1j8XAACSrJrGWABUnhVfq",
+        caption="<blockquote>Follow our updates channel:</blockquote>\n\n🔗 <a href='https://t.me/sahilbhaiallupdate'>Click Here For Setup & Updates</a>",
+        parse_mode="HTML"
+    ),
+    reply_markup=update_kb()
 )
     await call.answer()
 
