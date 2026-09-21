@@ -80,8 +80,8 @@ keyboard = InlineKeyboardMarkup(inline_keyboard=[
 ])
 
 
- await call.message.answer_photo(photo=types.BufferedInputFile(buffer.getvalue(), filename="qr.png"), caption=caption, reply_markup=keyboard)
- await message.answer_photo(photo=types.BufferedInputFile(buffer.getvalue(), filename="qr.png"), caption=caption, reply_markup=keyboard)
+await call.message.answer_photo(photo=types.BufferedInputFile(buffer.getvalue(), filename="qr.png"), caption=caption, reply_markup=keyboard)
+await message.answer_photo(photo=types.BufferedInputFile(buffer.getvalue(), filename="qr.png"), caption=caption, reply_markup=keyboard)
 def main_menu_kb() -> InlineKeyboardMarkup:
     kb = InlineKeyboardMarkup(inline_keyboard=[])
 
