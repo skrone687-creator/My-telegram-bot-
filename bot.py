@@ -172,7 +172,7 @@ async def expire_qr_message(message: types.Message):
     return kb
 
 # यहाँ आप अपने कमान्ड हैंडर्स जोड़ सकते हैं
-@dp.message(Command("start"))
+@router.message(Command("start"))
 async def send_welcome(message: types.Message):
      await message.answer(
      "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
