@@ -142,24 +142,26 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 # यहाँ आप अपने कमान्ड हैंडर्स जोड़ सकते हैं
 @dp.message(Command("start"))
 async def send_welcome(message: types.Message):
-    await message.answer(
-        "<blockquote>🏪 SAHIL BHAI STORE 🔓</blockquote>\n\n"
-        
-        "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-        "┝  🛍️ Buy Now : All Key Purchase & Instant Delivery\n"
-        "┝  📢 Check Update : Check Setup Video And Update Apk\n"
-        "┝  🪙 Add Balance : Deposit Balance & Secure Auto-Add Payment System\n"
-        "┝  🆔 My Profile + All History : Check Your Account Information + All History\n"
-        "┝  👥 Refer And Earn : Share Refer Link & Earn Money\n"
-        "┝  🎬 How To Use Bot : View Tutorial And Work This Bot\n"
-        "┝  📨 Support : Bot Problem Fixed For Support Admin\n"
-        "┝  🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.",
-        parse_mode="HTML",
-        reply_markup=main_menu_kb(),
-    )
+     await message.answer(
+     "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
+     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
+     "┝🛍️ Buy Now : All Key Purchase & Instant Delivery"
+     "┝📢 Check Update : Check Setup Video And Update Apk"
+     "┝🪙 Add Balance : Deposit Balance & Secure Auto-Add Payment System"
+     "┝🆔 My Profile + All History : Check Your Account Information + All History"
+     "┝👥 Refer And Earn : Share Refer Link & Earn Money\n"
+     "┝🎬  How To Use Bot : View Tutorial And Work This Bot"
+     "┝📨 Support : Bot Problem Fixed For Support Admin\n"
+     "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
+     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
+     "👶\n\n"
+     "<blockquote>👤 Your 💰 Balance: ₹0.00</blockquote>\n\n"
+     "<i>Select an option from the menu below:</i>",
+     parse_mode="HTML",
+     reply_markup=main_menu_kb(),
+ )
 
 
-    
 def update_kb():
     button = InlineKeyboardButton(text="Back", callback_data="menu_back")
     kb = InlineKeyboardMarkup(inline_keyboard=[[button]])
