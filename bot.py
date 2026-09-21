@@ -286,12 +286,12 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 def add_balance_kb() -> InlineKeyboardMarkup:
     kb = InlineKeyboardMarkup(inline_keyboard=[[]])
     kb.inline_keyboard.append([
-        InlineKeyboardButton(text="₹100", callback_data="add_100", style="success"),
-        InlineKeyboardButton(text="₹200", callback_data="add_200", style="success"),
+        InlineKeyboardButton(text="₹100", callback_data="amount_100", style="success"),
+        InlineKeyboardButton(text="₹200", callback_data="amount_200", style="success"),
     ])
     kb.inline_keyboard.append([
-        InlineKeyboardButton(text="₹500", callback_data="add_500", style="success"),
-        InlineKeyboardButton(text="₹1000", callback_data="add_1000", style="success"),
+        InlineKeyboardButton(text="₹500", callback_data="amount_500", style="success"),
+        InlineKeyboardButton(text="₹1000", callback_data="amount_1000", style="success"),
     ])
     kb.inline_keyboard.append([
         InlineKeyboardButton(text="TYPE CUSTOM AMOUNT", callback_data="custom_amount", style="success"),
