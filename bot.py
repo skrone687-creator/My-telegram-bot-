@@ -232,29 +232,29 @@ async def process_profile(callback_query: types.CallbackQuery):
     )
 router = Router()    
 
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.constants import ParseMode
+
 @router.callback_query(F.data == "menu_refer")
-async def process_refer(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    print("Referral button clicked")
-    bot_username = "Sahgggggfdbot"
-    referral_link = (
-    f"https://t.me/{Sahgggggfdbot}?start=ref{callback_query.from_user.id}"
+async def refer_and_earn(update, context):
+    user_id = update.effective_user.id
+    bot_username = "@Sahgggggfdbot"
+    referral_link = f"https://t.me/{bot_username}?start=ref{user_id}"
+
+    message_text = (
+        f"<blockquote>🔗 Share your referral link</blockquote>\n\n"
+        f"<code>{referral_link}</code>"
     )
 
-    referral_text = f"<blockquote>Share your referral link: </blockquote>\n\n<code>{referral_link}</code>"
+    keyboard = [
+        [InlineKeyboardButton("🛑 Back", callback_data="main_menu", style="danger")]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
 
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(
-                    text="Back", callback_data="menu_back", style="danger"
-                )
-            ]
-        ]
-    )
-
-    await callback_query.message.edit_text(
-        text=referral_text, reply_markup=keyboard, parse_mode="HTML"
+    await update.callback_query.message.edit_text(
+        text=message_text,
+        reply_markup=reply_markup,
+        parse_mode=ParseMode.HTML,
     )
 
 
