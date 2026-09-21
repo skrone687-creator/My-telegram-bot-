@@ -246,8 +246,16 @@ async def refer_and_earn(call: types.CallbackQuery):
         f"<code>{referral_link}</code>"
     )
 
-    keyboard = InlineKeyboardMarkup(row_width=1)
-    keyboard.addInlineKeyboardButton(text=" Back", callback_data="menu_back")
+    keyboard = InlineKeyboardMarkup(
+ inline_keyboard=[
+ [
+ InlineKeyboardButton(
+ text="Back", callback_data="menu_back", style="danger"
+ )
+ ]
+ ]
+)
+
     await call.message.edit_text(
     text=message_text, reply_markup=keyboard, parse_mode="HTML"
 )
