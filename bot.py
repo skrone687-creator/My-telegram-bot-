@@ -248,9 +248,6 @@ async def refer_and_earn(call: types.CallbackQuery):
 
     keyboard = InlineKeyboardMarkup(row_width=1)
     keyboard.addInlineKeyboardButton(text=" Back", callback_data="menu_back")
-from aiogram import 
-from aiogram import F, Router, types
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 
 
