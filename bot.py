@@ -232,13 +232,13 @@ async def process_profile(callback_query: types.CallbackQuery):
     )
 router = Router()    
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.constants import ParseMode
+from aiogram import types
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 @router.callback_query(F.data == "menu_refer")
-async def refer_and_earn(update, context):
-    user_id = update.effective_user.id
-    bot_username = "@Sahgggggfdbot"
+async def refer_and_earn(call: types.CallbackQuery):
+    user_id = call.from_user.id
+    bot_username = "Sahggggggfdbot"
     referral_link = f"https://t.me/{bot_username}?start=ref{user_id}"
 
     message_text = (
@@ -246,18 +246,10 @@ async def refer_and_earn(update, context):
         f"<code>{referral_link}</code>"
     )
 
-    keyboard = [
-        [InlineKeyboardButton("🛑 Back", callback_data="main_menu", style="danger")]
-    ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
-    await update.callback_query.message.edit_text(
-        text=message_text,
-        reply_markup=reply_markup,
-        parse_mode=ParseMode.HTML,
-    )
-
-
+    keyboard = InlineKeyboardMarkup(row_width=1)
+    keyboard.add(
+        InlineKeyboardButton(" Back", callback_data```python
+from aiogram import 
 from aiogram import F, Router, types
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -361,7 +353,7 @@ async def process_how_to_use(call: types.CallbackQuery):
     )
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
  [InlineKeyboardButton(text="🎬 VIEW TUTORIAL VIDEO ", url="https://t.me/sahil_bhai_69/6", style="success")],
- [InlineKeyboardButton(text="« Back", callback_data="menu_back", style="danger")]
+ [InlineKeyboardButton(text=" Back", callback_data="menu_back", style="danger")]
 ])
     await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=keyboard)
     await call.answer()
