@@ -155,7 +155,7 @@ async def send_welcome(message: types.Message):
      "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours."
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️"
      "<blockquote>💰 Your 🪙 Balance: ₹0.00</blockquote>\n"
-     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️"   
+     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"   
      "<i>Select an option from the menu below:</i>",
      parse_mode="HTML",
      reply_markup=main_menu_kb(),
