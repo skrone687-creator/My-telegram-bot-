@@ -248,8 +248,9 @@ async def refer_and_earn(call: types.CallbackQuery):
 
     keyboard = InlineKeyboardMarkup(row_width=1)
     keyboard.addInlineKeyboardButton(text=" Back", callback_data="menu_back")
-
-
+    await call.message.edit_text(
+    text=message_text, reply_markup=keyboard, parse_mode="HTML"
+)
 
 def support_kb():
  button = InlineKeyboardButton(text="Back", callback_data="menu_back")
