@@ -238,6 +238,7 @@ async def process_profile(callback_query: types.CallbackQuery):
 @router.callback_query(F.data == "menu_refer")
 async def process_refer(callback_query: types.CallbackQuery):
     await callback_query.answer()
+    print("Referral button clicked")
 
     # यूज़र की आईडी से यूनिक रेफरल लिंक जनरेट करें
     bot_username = "Sahgggggfdbot"
