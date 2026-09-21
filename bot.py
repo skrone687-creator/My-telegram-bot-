@@ -238,21 +238,21 @@ async def process_profile(callback_query: types.CallbackQuery):
 @dp.callback_query(F.data == "menu_refer")
 async def process_refer(callback_query: types.CallbackQuery):
     await callback_query.answer()
-    
-    referral_text = (
-    f"<blockquote>Share your referral link:</blockquote>\n\n{referral_link}"
-)
 
-keyboard = types.InlineKeyboardMarkup()
-keyboard.add(
-    types.InlineKeyboardButton(
-        text="Back", callback_data="menu_back", style="danger"
+    referral_text = (
+        f"<blockquote>Share your referral link:</blockquote>\n\n{referral_link}"
     )
-)
+
+    keyboard = types.InlineKeyboardMarkup()
+    keyboard.add(
+        types.InlineKeyboardButton(
+            text="Back", callback_data="menu_back", style="danger"
+        )
+    )
 
     await callback_query.message.edit_text(
-    text=referral_text, reply_markup=keyboard, parse_mode="HTML"
-)
+        text=referral_text, reply_markup=keyboard, parse_mode="HTML"
+    )
 
 from aiogram import F, Router, types
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
