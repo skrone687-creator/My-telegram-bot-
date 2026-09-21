@@ -209,14 +209,14 @@ async def process_profile(callback_query: types.CallbackQuery):
     active_referrals = "0"
     
     profile_text = (
-        f"👤 YOUR PROFILE DASHBOARD 👤\n\n"
-        f"🆔 Account ID: {account_id}\n"
-        f"💎 Account Tier: {account_tier}\n"
-        f"💰 Current Funds: {current_funds}\n"
-        f"👥 Active Referrals: {active_referrals} users\n\n"
-        f"Select history filter panel below to view records."
-    )
-    
+ f"<pre>👤 YOUR PROFILE DASHBOARD 👤</pre>\n\n"
+ f"<pre>🆔 Account ID: {account_id}</pre>\n"
+ f"<pre>💎 Account Tier: USER</pre>\n"
+ f"<pre>💰 Current Funds: {current_funds}</pre>\n"
+ f"<pre>👥 Active Referrals: {active_referrals} users</pre>\n\n"
+ f"<pre>Select history filter panel below to view records.</pre>"
+)
+
     keyboard = [
         [
             types.InlineKeyboardButton(text="🔑 Key History", callback_data="key_history", style="success"),
