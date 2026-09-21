@@ -181,9 +181,9 @@ async def process_check_update(call: types.CallbackQuery):
         parse_mode="HTML",
         reply_markup=update_kb()
     )
-@router.callback_query(F.data.startswith("amount_"))
+@dp.callback_query(F.data.startswith("amount_"))
 async def process_amount(callback_query: types.CallbackQuery):
-    amount = callback_query.data.split("_")[1]
+    amount = call.data.split("_")[1]
     print(call.data)
     text = (
         f"<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\n"
@@ -538,7 +538,7 @@ async def process_menu_shop(call: types.CallbackQuery):
             ],
             [
                 InlineKeyboardButton(
-                    text="« Back", callback_data="main_menu", style="danger"
+                    text=" Back", callback_data="main_menu", style="danger"
                 )
             ],
         ]
