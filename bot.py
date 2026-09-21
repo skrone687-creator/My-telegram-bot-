@@ -244,8 +244,8 @@ async def refer_and_earn(call: types.CallbackQuery):
     message_text = (
     f"<blockquote>🔗 Share your referral link</blockquote>\n\n"    
     f"<code>{referral_link}</code>\n\n"
-    f"┝  You earn 1% Commission whenever your referred friends purchase any plan!\n\n"
-    f"\n┝  Total referrals: 0"
+    f"┝  You earn 1% Commission whenever your referred friends purchase any plan!\n"
+    f"┝  Total referrals: 0"
 )
 
     keyboard = InlineKeyboardMarkup(
