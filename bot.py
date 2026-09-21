@@ -236,7 +236,6 @@ router = Router()
 async def process_refer(callback_query: types.CallbackQuery):
     await callback_query.answer()
     print("Referral button clicked")
-
     bot_username = "Sahgggggfdbot"
     referral_link = (
     f"https://t.me/{Sahgggggfdbot}?start=ref{callback_query.from_user.id}"
