@@ -250,8 +250,7 @@ keyboard.add(
         text="⬅️ Back", callback_data="menu_back", style="danger"
     )
 )
-
-   await callback_query.message.edit_text(
+    await callback_query.message.edit_text(
     text=referral_text, reply_markup=keyboard, parse_mode="HTML"
 )
 
