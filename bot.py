@@ -51,11 +51,66 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 router = Router()
+import asyncio
+from aiogram import types
 
+
+async def send_payment_qr(call: types.CallbackQuery, amount: str):
+    upi_id = "7318748360@fam"
+    up_url = f"upi://pay?pa={upi_id}&am={amount}.00&cu=INR"
+
+    # QR Code generation logic here...
+
+    caption = (
+        "<blockquote><b> Sahil bhai UPI QR Active </b></blockquote>\n\n"
+        "Scan & transfer exactly \n\n"
+        f"<b>₹{amount}.00</b> via your UPI app terminal.\n\n"
+        "Tap verify below after completing the core transaction transfer.\n"
+        f"<b>UPI ID: <code>{upi_id}</code></b>\n\n"
+        "<blockquote><b> QR Session TTL: expires in 5 minutes. </b></blockquote>\n"
+    )
+
+    keyboard = types.InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                types.InlineKeyboardButton(
+                    text="VERIFY PAYMENT",
+                    callback_data="verify_payment",
+                    style="success",
+                ),
+                types.InlineKeyboardButton(
+                    text="Cancel Order",
+                    callback_data="cancel_order",
+                    style="danger",
+                ),
+            ]
+        ]
+    )
+
+    msg = await call.message.answer_photo(
+        photo=types.InputFile(buffer.getvalue(), filename="qr.png"),
+        caption=caption,
+        reply_markup=keyboard,
+        parse_mode="HTML",
+    )
+
+    asyncio.create_task(expire_qr_message(msg))
+
+
+async def expire_qr_message(message: types.Message):
+    await asyncio.sleep(300)
+    try:
+        await message.delete()
+        await message.answer(
+            "❌ <b>Payment Failed:</b> Your QR for "
+            "₹100.00 expired because no payment was received within 5 minutes."
+        )
+    except Exception as e:
+        print(f"Error deleting QR message: {e}")
 
 
     # Row 1: Buy Now (Large)
-kb.inline_keyboard.append([
+    kb.inline_keyboard.append([
         InlineKeyboardButton(
             text=" Buy Now",
             callback_data="menu_shop",
@@ -64,7 +119,7 @@ kb.inline_keyboard.append([
     ])
 
     # Row 2: Check Update & Add Balance
-kb.inline_keyboard.append([
+    kb.inline_keyboard.append([
         InlineKeyboardButton(
             text=" Check Update",
             callback_data="menu_check_update",
@@ -78,7 +133,7 @@ kb.inline_keyboard.append([
     ])
 
     # Row 3: My Profile + All History
-kb.inline_keyboard.append([
+    kb.inline_keyboard.append([
         InlineKeyboardButton(
             text=" My Profile + All History",
             callback_data="menu_profile",
@@ -87,7 +142,7 @@ kb.inline_keyboard.append([
     ])
 
     # Row 4: Refer And Earn & How To Use Bot
-kb.inline_keyboard.append([
+    kb.inline_keyboard.append([
         InlineKeyboardButton(
             text=" Refer And Earn",
             callback_data="menu_refer",
@@ -101,7 +156,7 @@ kb.inline_keyboard.append([
     ])
 
     # Row 5: Support & Daily Gift
-kb.inline_keyboard.append([
+    kb.inline_keyboard.append([
         InlineKeyboardButton(
             text=" Support",
             callback_data="menu_support",
@@ -114,11 +169,12 @@ kb.inline_keyboard.append([
         )
     ])
 
+    return kb
+
 # यहाँ आप अपने कमान्ड हैंडर्स जोड़ सकते हैं
-@dp.message(Command("start"))
+@router.message(Command("start"))
 async def send_welcome(message: types.Message):
-    kb =lnlineKeyboardMarkup()
-    await message.answer(
+     await message.answer(
      "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
      "┝🛍️ Buy Now : All Key Purchase & Instant Delivery\n"
