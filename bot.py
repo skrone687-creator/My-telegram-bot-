@@ -183,7 +183,7 @@ async def process_check_update(call: types.CallbackQuery):
     )
 @dp.callback_query(F.data.startswith("amount_"))
 async def process_amount(callback_query: types.CallbackQuery):
-    amount = callback.data.split("_")[1]
+    amount = callback_query.data.split("_")[1]
     print(callback_query.data)
     text = (
         f"<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\n"
