@@ -154,7 +154,7 @@ async def send_welcome(message: types.Message):
      "┝📨 Support : Bot Problem Fixed For Support Admin\n"
      "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-     "<blockquote>💰 Your Balance 🪙: ₹0.00</blockquote>\n\n"  
+     "<blockquote>💰 Your Balance:🪙₹0.00</blockquote>\n\n"  
      "<i>👇 Select an option from the menu below:</i>",
      parse_mode="HTML",
      reply_markup=main_menu_kb(),
@@ -311,7 +311,7 @@ async def process_menu_back(call: types.CallbackQuery):
     "┝📨 Support : Bot Problem Fixed For Support Admin\n"
     "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-    "<blockquote>💰 Your  Balance 🪙: ₹0.00</blockquote>\n\n"  
+    "<blockquote>💰 Your  Balance:🪙₹0.00</blockquote>\n\n"  
     "<i>👇 Select an option from the menu below:</i>",
     parse_mode="HTML",
     reply_markup=main_menu_kb(),
