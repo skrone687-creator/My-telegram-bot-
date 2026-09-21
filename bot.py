@@ -240,26 +240,27 @@ async def process_refer(callback_query: types.CallbackQuery):
     await callback_query.answer()
     print("Referral button clicked")
 
-    # यूज़र की आईडी से यूनिक रेफरल लिंक जनरेट करें
     bot_username = "Sahgggggfdbot"
     referral_link = (
         f"https://t.me/{Sahgggggfdbot}?start=ref{callback_query.from_user.id}"
     )
 
-    referral_text = (
-        f"<blockquote>Share your referral link:</blockquote>\n\n{referral_link}"
-    )
+    referral_text = f"<blockquote>Share your referral link: </blockquote>\n\n<code>{referral_link}</code>"
 
-    keyboard = types.InlineKeyboardMarkup()
-    keyboard.add(
-        types.InlineKeyboardButton(
-            text="Back", callback_data="menu_back", style="danger"
-        )
+    keyboard = types.InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                types.InlineKeyboardButton(
+                    text="Back", callback_data="menu_back", style="danger"
+                )
+            ]
+        ]
     )
 
     await callback_query.message.edit_text(
         text=referral_text, reply_markup=keyboard, parse_mode="HTML"
     )
+
 
 from aiogram import F, Router, types
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
