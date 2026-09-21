@@ -55,7 +55,7 @@ router = Router()
 
 
     # Row 1: Buy Now (Large)
-      kb.inline_keyboard.append([
+kb.inline_keyboard.append([
         InlineKeyboardButton(
             text=" Buy Now",
             callback_data="menu_shop",
@@ -64,7 +64,7 @@ router = Router()
     ])
 
     # Row 2: Check Update & Add Balance
-      kb.inline_keyboard.append([
+kb.inline_keyboard.append([
         InlineKeyboardButton(
             text=" Check Update",
             callback_data="menu_check_update",
@@ -78,7 +78,7 @@ router = Router()
     ])
 
     # Row 3: My Profile + All History
-      kb.inline_keyboard.append([
+kb.inline_keyboard.append([
         InlineKeyboardButton(
             text=" My Profile + All History",
             callback_data="menu_profile",
@@ -87,7 +87,7 @@ router = Router()
     ])
 
     # Row 4: Refer And Earn & How To Use Bot
-      kb.inline_keyboard.append([
+kb.inline_keyboard.append([
         InlineKeyboardButton(
             text=" Refer And Earn",
             callback_data="menu_refer",
@@ -101,7 +101,7 @@ router = Router()
     ])
 
     # Row 5: Support & Daily Gift
-      kb.inline_keyboard.append([
+kb.inline_keyboard.append([
         InlineKeyboardButton(
             text=" Support",
             callback_data="menu_support",
