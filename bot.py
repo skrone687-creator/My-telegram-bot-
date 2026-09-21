@@ -301,7 +301,7 @@ async def menu_support(call: types.CallbackQuery):
 async def process_menu_back(call: types.CallbackQuery):
     await call.message.edit_text(
     "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
-    "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
+    "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
     "┝🛍️ Buy Now : All Key Purchase & Instant Delivery"
     "┝📢 Check Update : Check Setup Video And Update Apk"
     "┝🪙 Add Balance : Deposit Balance & Secure Auto-Add Payment System"
