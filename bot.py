@@ -197,7 +197,7 @@ def profile_kb() -> InlineKeyboardMarkup:
     return kb
 
 # 2. Handler for 'My Profile + All History' button
-@router.callback_query(F.data == "menu_profile")
+@dp.callback_query(F.data == "menu_profile")
 async def process_profile(callback_query: types.CallbackQuery):
     await callback_query.answer()
     
