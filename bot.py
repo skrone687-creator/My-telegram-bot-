@@ -542,6 +542,7 @@ async def process_menu_shop(call: types.CallbackQuery):
 
 
 if __name__ == '__main__':
+    init_db()
     dp.include_router(router)
     asyncio.run(dp.start_polling(bot))
-    init_db()
+    
