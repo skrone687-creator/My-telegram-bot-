@@ -239,7 +239,7 @@ async def process_refer(callback_query: types.CallbackQuery):
 
     bot_username = "Sahgggggfdbot"
     referral_link = (
-    f"https://t.me/{bot_usrname}?start=ref{callback_query.from_user.id}"
+    f"https://t.me/{Sahgggggfdbot}?start=ref{callback_query.from_user.id}"
     )
 
     referral_text = f"<blockquote>Share your referral link: </blockquote>\n\n<code>{referral_link}</code>"
