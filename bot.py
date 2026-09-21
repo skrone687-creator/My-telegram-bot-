@@ -191,7 +191,7 @@ async def process_amount(callback_query: types.CallbackQuery):
     )
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="PAY UPI", callback_data=f"pay_upi_{amount}", style="success")],
-        [InlineKeyboardButton(text="Cancel Request", callback_data="cancel_request", style="danger")]
+        [InlineKeyboardButton(text="Cancel Request", callback_data="main_menu", style="danger")]
     ])
     await callback_query.message.edit_text(text=text, parse_mode="HTML", reply_markup=keyboard)
 
@@ -538,7 +538,7 @@ async def process_menu_shop(call: types.CallbackQuery):
             ],
             [
                 InlineKeyboardButton(
-                    text=" Back", callback_data="menu_menu", style="danger"
+                    text=" Back", callback_data="main_menu", style="danger"
                 )
             ],
         ]
