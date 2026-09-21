@@ -302,7 +302,7 @@ async def process_menu_back(call: types.CallbackQuery):
     f"<blockquote><b>🏪 SAHIL BHAI STORE 🔒</b>\n</blockquote>\n\n"
         
     f"〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-    f"┝🛍 Buy Now : All Key Purchase & Instant Delivery\n"
+    f"┝🛍️ Buy Now : All Key Purchase & Instant Delivery\n"
     f"┝📢 Check Update : Check Setup Video And Update Apk\n"
     f"┝🪙 Add Balance : Deposit Balance & Secure Auto-Add Payment System\n"
     f"┝🆔 My Profile + All History : Check Your Account Information + All History\n"
