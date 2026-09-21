@@ -113,8 +113,7 @@ kb.inline_keyboard.append([
             style="success"
         )
     ])
-
-return kb
+    return kb
 
 # यहाँ आप अपने कमान्ड हैंडर्स जोड़ सकते हैं
 @dp.message(Command("start"))
