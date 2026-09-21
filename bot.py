@@ -197,30 +197,48 @@ def profile_kb() -> InlineKeyboardMarkup:
     return kb
 
 # 2. Handler for 'My Profile + All History' button
-@dp.callback_query(F.data == "menu_profile")
+@dp.callback_query_handler(F.data == "menu_profile")
 async def process_profile(callback_query: types.CallbackQuery):
     await callback_query.answer()
     
-    # यहाँ डेटाबेस से यूज़र की जानकारी निकालें
     user_id = callback_query.from_user.id
-    account_id = user_id  # उदाहरण के लिए ID का उपयोग
-    account_tier = "RESELLER" # उदाहरण के लिए टियर
-    current_funds = "₹0.27" # उदाहरण के लिए बैलेंस
-    active_referrals = 0 # उदाहरण के लिए रेफर्स
+    
+    # यहाँ आपको डेटाबेस से यूज़र की डिटेल्स फेच करनी होगी
+    account_id = user_id
+    account_tier = "RESELLER"
+    current_funds = "0.27"
+    active_referrals = "0"
     
     profile_text = (
-        f"👤 YOUR PROFILE DASHBOARD\n\n"
+        f"👤 YOUR PROFILE DASHBOARD 👤\n\n"
         f"🆔 Account ID: {account_id}\n"
-        f"🌟 Account Tier: {account_tier}\n"
-        f"💰 Current Funds: {current_funds}\n"
+        f"💎 Account Tier: {account_tier}\n"
+        f"💰 Current Funds: ₹{current_funds}\n"
         f"👥 Active Referrals: {active_referrals} users\n\n"
         f"Select history filter panel below to view records."
     )
     
+    # टेक्स्ट को HTML <pre> टैग्स में लपेटना
+    formatted_text = f"<pre>{profile_text}</pre>"
+    
+    keyboard = [
+        [
+            InlineKeyboardButton("🔑 Key History", callback_data="key_history", style="success"),
+            InlineKeyboardButton("💳 Deposit History", callback_data="deposit_history", style="success")
+        ],
+        [
+            InlineKeyboardButton("⬅️ Back to Main Terminal", callback_data="main_menu", style="danger")
+        ]
+    ]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
     await callback_query.message.edit_text(
-        profile_text,
-        reply_markup=profile_kb()
+        text=formatted_text, 
+        reply_markup=reply_markup,
+        parse_mode="HTML"
     )
+
 @dp.callback_query(F.data == "menu_refer")
 async def process_refer(callback_query: types.CallbackQuery):
     await callback_query.answer()
