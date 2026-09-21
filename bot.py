@@ -183,8 +183,8 @@ async def process_check_update(call: types.CallbackQuery):
     )
 @dp.callback_query(F.data.startswith("amount_"))
 async def process_amount(callback_query: types.CallbackQuery):
-    amount = call.data.split("_")[1]
-    print(call.data)
+    amount = callback.data.split("_")[1]
+    print(callback_query.data)
     text = (
         f"<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\n"
         f"💰 Deposit Amount: 🪙 {amount}.00"
