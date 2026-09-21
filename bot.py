@@ -140,7 +140,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
     return kb
 
 # यहाँ आप अपने कमान्ड हैंडर्स जोड़ सकते हैं
-@router.message(Command("start"))
+@dp.message(Command("start"))
 async def send_welcome(message: types.Message):
     await message.answer(
         "<blockquote>🏪 SAHIL BHAI STORE 🔓</blockquote>\n"
