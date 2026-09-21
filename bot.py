@@ -230,6 +230,7 @@ async def process_profile(callback_query: types.CallbackQuery):
         reply_markup=reply_markup,
         parse_mode="HTML"
     )
+router = Router()    
 
 @router.callback_query(F.data == "menu_refer")
 async def process_refer(callback_query: types.CallbackQuery):
@@ -261,7 +262,6 @@ async def process_refer(callback_query: types.CallbackQuery):
 from aiogram import F, Router, types
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-router = Router()
 
 
 def support_kb():
