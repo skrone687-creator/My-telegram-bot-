@@ -50,7 +50,7 @@ API_TOKEN = '8765527795:AAFisjaHc8G0imEQ1FlpSxDS790E1FpiqFA'
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
-router = Router
+router = Router()
 async def send_payment_qr(call: types.CallbackQuery, amount: str):
  # यहाँ अपनी UPI ID डालें
  upi_id = "7318748360@fam"
@@ -235,7 +235,7 @@ async def process_profile(callback_query: types.CallbackQuery):
         parse_mode="HTML"
     )
 
-@dp.callback_query(F.data == "menu_refer")
+@router.callback_query(F.data == "menu_refer")
 async def process_refer(callback_query: types.CallbackQuery):
     await callback_query.answer()
 
