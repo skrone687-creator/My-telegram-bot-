@@ -235,7 +235,7 @@ async def process_profile(callback_query: types.CallbackQuery):
         parse_mode="HTML"
     )
 
-@dp.callback_query(F.data == "menu_refer")
+@router.callback_query(F.data == "menu_refer")
 async def process_refer(callback_query: types.CallbackQuery):
     await callback_query.answer()
 
