@@ -145,7 +145,7 @@ async def send_welcome(message: types.Message):
      await message.answer(
      "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-     "┝🛍️ Buy Now : All Key Purchase & Instant Delivery"
+     "┝🛍️ Buy Now : All Key Purchase & Instant Delivery\n"
      "┝📢 Check Update : Check Setup Video And Update Apk"
      "┝🪙 Add Balance : Deposit Balance & Secure Auto-Add Payment System"
      "┝🆔 My Profile + All History : Check Your Account Information + All History"
@@ -155,7 +155,7 @@ async def send_welcome(message: types.Message):
      "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours."
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
      "<blockquote>💰 Your 🪙 Balance: ₹0.00</blockquote>\n"  
-     "<i>Select an option from the menu below:</i>",
+     "<i>👇 Select an option from the menu below:</i>",
      parse_mode="HTML",
      reply_markup=main_menu_kb(),
  )
