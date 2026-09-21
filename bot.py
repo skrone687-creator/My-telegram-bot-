@@ -463,8 +463,21 @@ async def process_main_menu(call: types.CallbackQuery):
 
     # यहाँ आपका मेन मेन्यू कीबोर्ड कोड होना चाहिए
     await call.message.edit_text(
-        "Welcome to Main Menu!", reply_markup=main_menu_kb()
-    )
+    text="""<blockquote>🏪  SAHIL BHAI STORE 🔓</blockquote>
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+
+┝ 🛍️ Buy Now : All Key Purchase & Instant Delivery
+┝ ⏩ Check Update : Check Setup Video And Update Apk
+┝ 🔂 Add Balance : Deposit Balance & Secure Auto-Add Payment System
+┝ 🆔 My Profile + All History : Check Your Account Information + All History
+┝ 👥 Refer And Earn : Share Refer Link & Earn Money
+┝ 🔙 How To Use Bot : View Tutorial And Work This Bot
+┝ 🚀 Upgrade To Reseller : Become a reseller and get discount keys at low prices
+┝ 🎧 Support : Bot Problem Fixed For Support Admin
+┝ 📅 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.""",
+    parse_mode="HTML",
+    reply_markup=main_menu_kb(),
+)
 
 
 @router.callback_query(F.data == "menu_shop")
