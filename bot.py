@@ -143,8 +143,8 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 @dp.message(Command("start"))
 async def send_welcome(message: types.Message):
      await message.answer(
-     "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
-     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
+     "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>"
+     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️"
      "┝🛍️ Buy Now : All Key Purchase & Instant Delivery"
      "┝📢 Check Update : Check Setup Video And Update Apk"
      "┝🪙 Add Balance : Deposit Balance & Secure Auto-Add Payment System"
@@ -152,9 +152,9 @@ async def send_welcome(message: types.Message):
      "┝👥 Refer And Earn : Share Refer Link & Earn Money\n"
      "┝🎬  How To Use Bot : View Tutorial And Work This Bot"
      "┝📨 Support : Bot Problem Fixed For Support Admin\n"
-     "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
-     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-     "👇<blockquote>💰 Your 🪙 Balance: ₹0.00</blockquote>\n\n"
+     "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours."
+     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️"
+     "👇<blockquote>💰 Your 🪙 Balance: ₹0.00</blockquote>"
      "<i>Select an option from the menu below:</i>",
      parse_mode="HTML",
      reply_markup=main_menu_kb(),
@@ -300,8 +300,8 @@ async def menu_support(call: types.CallbackQuery):
 @router.callback_query(F.data == "menu_back")
 async def process_menu_back(call: types.CallbackQuery):
     await call.message.edit_text(
-    "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
-    "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
+    "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>"
+    "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️"
     "┝🛍️ Buy Now : All Key Purchase & Instant Delivery"
     "┝📢 Check Update : Check Setup Video And Update Apk"
     "┝🪙 Add Balance : Deposit Balance & Secure Auto-Add Payment System"
@@ -309,9 +309,9 @@ async def process_menu_back(call: types.CallbackQuery):
     "┝👥 Refer And Earn : Share Refer Link & Earn Money\n"
     "┝🎬  How To Use Bot : View Tutorial And Work This Bot"
     "┝📨 Support : Bot Problem Fixed For Support Admin\n"
-    "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
-    "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-    "<blockquote>💰 Your 🪙 Balance: ₹0.00</blockquote>\n\n"
+    "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours."
+    "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️"
+    "<blockquote>💰 Your 🪙 Balance: ₹0.00</blockquote>"
     "👇<i>Select an option from the menu below:</i>",
     parse_mode="HTML",
     reply_markup=main_menu_kb(),
