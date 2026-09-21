@@ -63,15 +63,23 @@ async def send_payment_qr(call: types.CallbackQuery, amount: str):
  
  buffer = BytesIO()
  img.save(buffer, format="PNG")
- buffer.seek(0)
- 
- keyboard = InlineKeyboardMarkup(inline_keyboard=[
- [
- InlineKeyboardButton(text="Verify Payment", callback_data="verify_payment", style="success"),
- InlineKeyboardButton(text="Cancel Order", callback_data="cancel_order", style="danger")
- ]
- ])
- 
+ caption = (
+    "<blockquote><b> Sahil bhai UPI QR Active </b></blockquote>\n\n"
+    "Scan & transfer exactly \n\n"
+    f"<b>₹{amount}.00</b> via your UPI app terminal.\n\n"
+    "Tap verify below after completing the core transaction transfer.\n"
+    f"<b>UPI ID: <code>{upi_id}</code></b>\n\n"
+    "<blockquote><b> QR Session TTL: expires in 5 minutes. </b></blockquote>\n"
+)
+
+keyboard = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        types.InlineKeyboardButton(text="VERIFY PAYMENT", callback_data="verify_payment", style="success"),
+        types.InlineKeyboardButton(text="Cancel Order", callback_data="cancel_order", style="danger"),
+    ]
+])
+
+
  await call.message.answer_photo(photo=types.BufferedInputFile(buffer.getvalue(), filename="qr.png"), caption=caption, reply_markup=keyboard)
  await message.answer_photo(photo=types.BufferedInputFile(buffer.getvalue(), filename="qr.png"), caption=caption, reply_markup=keyboard)
 def main_menu_kb() -> InlineKeyboardMarkup:
