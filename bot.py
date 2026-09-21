@@ -187,7 +187,7 @@ async def process_amount(callback_query: types.CallbackQuery):
     print(callback_query.data)
     text = (
         f"<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\n"
-        f"💰 Deposit Amount: 🪙 {amount}.00"
+        f"💰 Deposit Amount: 🪙₹ {amount}.00"
     )
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="PAY UPI", callback_data=f"pay_upi_{amount}", style="success")],
