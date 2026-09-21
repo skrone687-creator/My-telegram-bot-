@@ -242,9 +242,12 @@ async def refer_and_earn(call: types.CallbackQuery):
     referral_link = f"https://t.me/{bot_username}?start=ref{user_id}"
 
     message_text = (
-        f"<blockquote>🔗 Share your referral link</blockquote>\n\n"
-        f"<code>{referral_link}</code>"
-    )
+    f"<blockquote>🔗 Share your referral link</blockquote>\n\n"    
+    f"<b>Your referral link:</b>\n\n"
+    f"<code>{referral_link}</code>\n\n"
+    f"🔗 You earn 1% Commission whenever your referred friends purchase any plan!\n\n"
+    f"👥 Total referrals: 1"
+)
 
     keyboard = InlineKeyboardMarkup(
  inline_keyboard=[
