@@ -181,6 +181,18 @@ async def process_check_update(call: types.CallbackQuery):
         parse_mode="HTML",
         reply_markup=update_kb()
     )
+@router.callback_query(F.data.startswith("amount_"))
+async def process_amount(callback_query: types.CallbackQuery):
+    amount = callback_query.data.split("_")[1]
+    text = (
+        f"<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\n"
+        f"💰 Deposit Amount: 🪙 {amount}.00"
+    )
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="PAY UPI", callback_data=f"pay_upi_{amount}", style="success")],
+        [InlineKeyboardButton(text="Cancel Request", callback_data="cancel_request", style="danger")]
+    ])
+    await callback_query.message.edit_text(text=text, parse_mode="HTML", reply_markup=keyboard)
 
 
 # 1. Profile Dashboard Menu Keyboard
