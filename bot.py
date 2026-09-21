@@ -144,6 +144,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 async def send_welcome(message: types.Message):
     await message.answer(
         "<blockquote>🏪 SAHIL BHAI STORE 🔓</blockquote>\n"
+        
         "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
         "┝  🛍️ Buy Now : All Key Purchase & Instant Delivery\n"
         "┝  📢 Check Update : Check Setup Video And Update Apk\n"
@@ -276,6 +277,7 @@ async def menu_support(call: types.CallbackQuery):
 async def process_menu_back(call: types.CallbackQuery):
     await call.message.edit_text(
     f"<blockquote><b>🏪 SAHIL BHAI STORE 🔒</b>\n</blockquote>"
+        
     f"〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
     f"┝🛍 Buy Now : All Key Purchase & Instant Delivery\n"
     f"┝📢 Check Update : Check Setup Video And Update Apk\n"
