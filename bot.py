@@ -144,7 +144,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 async def send_welcome(message: types.Message):
      await message.answer(
      "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>"
-     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
+     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
      "┝🛍️ Buy Now : All Key Purchase & Instant Delivery"
      "┝📢 Check Update : Check Setup Video And Update Apk"
      "┝🪙 Add Balance : Deposit Balance & Secure Auto-Add Payment System"
@@ -154,7 +154,8 @@ async def send_welcome(message: types.Message):
      "┝📨 Support : Bot Problem Fixed For Support Admin\n"
      "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours."
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️"
-     "<blockquote>💰 Your 🪙 Balance: ₹0.00</blockquote>"
+     "<blockquote>💰 Your 🪙 Balance: ₹0.00</blockquote>\n"
+     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️"   
      "<i>Select an option from the menu below:</i>",
      parse_mode="HTML",
      reply_markup=main_menu_kb(),
@@ -355,7 +356,7 @@ async def menu_add_balance(call: types.CallbackQuery):
 async def process_how_to_use(call: types.CallbackQuery):
     text = (
         "<blockquote>❗ How to use this bot:</blockquote>\n\n"
-        "• Add balance via Sahil bhai Secure QR System or Binance Pay\n"
+        "• Add balance via  UIP QR System or Binance Pay\n"
         "• Tap Buy Now and pick your desired product\n"
         "• Key is delivered instantly to this chat screen\n"
         "• Browse plans and checkout seamlessly"
