@@ -144,8 +144,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 async def send_welcome(message: types.Message):
     await message.answer(
         "<blockquote>🏪 SAHIL BHAI STORE 🔓</blockquote>\n"
-        "~~~~~~~~~~~~~~~~~~~~~\n"
-        "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
+        "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
         "┝  🛍️ Buy Now : All Key Purchase & Instant Delivery\n"
         "┝  📢 Check Update : Check Setup Video And Update Apk\n"
         "┝  🪙 Add Balance : Deposit Balance & Secure Auto-Add Payment System\n"
