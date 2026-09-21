@@ -46,7 +46,7 @@ products_db = {
 }
 
 # बोट सेटअप
-API_TOKEN = '8765527795:AAFisjaHc8G0imEQ1FlpSxDS790E1FpiqFA'
+API_TOKEN = '8765527795:AAE5wsXi3Lr5wNNY1qZ03P3aVVzi73sWGzI'
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
