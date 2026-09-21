@@ -46,7 +46,7 @@ products_db = {
 }
 
 # बोट सेटअप
-API_TOKEN = '8765527795:AAE5wsXi3Lr5wNNY1qZ03P3aVVzi73sWGzI'
+API_TOKEN = '8785769820:AAE-qi336R4a1iCyb6wZJN46drDUpFPdLhw'
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
@@ -252,7 +252,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 @router.callback_query(F.data == "menu_refer")
 async def refer_and_earn(call: types.CallbackQuery):
     user_id = call.from_user.id
-    bot_username = "Sahggggggfdbot"
+    bot_username = "Sahil_bhai_store_bot"
     referral_link = f"https://t.me/{bot_username}?start=ref{user_id}"
 
     message_text = (
