@@ -203,38 +203,34 @@ async def process_profile(callback_query: types.CallbackQuery):
     
     user_id = callback_query.from_user.id
     
-    # यहाँ आपको डेटाबेस से यूज़र की डिटेल्स फेच करनी होगी
     account_id = user_id
     account_tier = "RESELLER"
-    current_funds = "0.27"
+    current_funds = "$0.27"
     active_referrals = "0"
     
     profile_text = (
         f"👤 YOUR PROFILE DASHBOARD 👤\n\n"
         f"🆔 Account ID: {account_id}\n"
         f"💎 Account Tier: {account_tier}\n"
-        f"💰 Current Funds: ₹{current_funds}\n"
+        f"💰 Current Funds: {current_funds}\n"
         f"👥 Active Referrals: {active_referrals} users\n\n"
         f"Select history filter panel below to view records."
     )
     
-    # टेक्स्ट को HTML <pre> टैग्स में लपेटना
-    formatted_text = f"<pre>{profile_text}</pre>"
-    
     keyboard = [
         [
-            InlineKeyboardButton("🔑 Key History", callback_data="key_history", style="success"),
-            InlineKeyboardButton("💳 Deposit History", callback_data="deposit_history", style="success")
+            types.InlineKeyboardButton(text="🔑 Key History", callback_data="key_history", style="success"),
+            types.InlineKeyboardButton(text="📁 Deposit History", callback_data="deposit_history", style="success"),
         ],
         [
-            InlineKeyboardButton("⬅️ Back to Main Terminal", callback_data="main_menu", style="danger")
+            types.InlineKeyboardButton(text="⬅️ Back to Main Terminal", callback_data="menu_back", style="danger"),
         ]
     ]
-
-    reply_markup = InlineKeyboardMarkup(keyboard)
-
+    
+    reply_markup = types.InlineKeyboardMarkup(inline_keyboard=keyboard)
+    
     await callback_query.message.edit_text(
-        text=formatted_text, 
+        text=profile_text,
         reply_markup=reply_markup,
         parse_mode="HTML"
     )
