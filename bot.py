@@ -239,14 +239,22 @@ async def process_profile(callback_query: types.CallbackQuery):
 async def process_refer(callback_query: types.CallbackQuery):
     await callback_query.answer()
     
-    referral_link = f"https://t.me/YOUR_BOT_USERNAME?start={callback_query.from_user.id}"
-    
-    await callback_query.message.edit_text(
-        f"🔗 Refer And Earn!\n\n"
-        f"अपने दोस्तों को आमंत्रित करें और पैसे कमाएँ।\n"
-        f"आपका रेफरल लिंक: {referral_link}",
-        reply_markup=main_menu_kb()
+    referral_text = (
+    "🔗 Share your referral link:\n\n"
+    f"<blockquote>{referral_link}</blockquote>"
+)
+
+keyboard = types.InlineKeyboardMarkup()
+keyboard.add(
+    types.InlineKeyboardButton(
+        text="⬅️ Back", callback_data="menu_back", style="danger"
     )
+)
+
+await callback_query.message.edit_text(
+    text=referral_text, reply_markup=keyboard, parse_mode="HTML"
+)
+
 from aiogram import F, Router, types
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
