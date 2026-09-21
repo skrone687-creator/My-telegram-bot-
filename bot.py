@@ -143,7 +143,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 @dp.message(Command("start"))
 async def send_welcome(message: types.Message):
     await message.answer(
-        "<blockquote>🏪 SAHIL BHAI STORE 🔓</blockquote>\n\n\n"
+        "<blockquote>🏪 SAHIL BHAI STORE 🔓</blockquote>\n\n"
         
         "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
         "┝  🛍️ Buy Now : All Key Purchase & Instant Delivery\n"
@@ -299,7 +299,7 @@ async def menu_support(call: types.CallbackQuery):
 @router.callback_query(F.data == "menu_back")
 async def process_menu_back(call: types.CallbackQuery):
     await call.message.edit_text(
-    f"<blockquote><b>🏪 SAHIL BHAI STORE 🔒</b>\n</blockquote>"
+    f"<blockquote><b>🏪 SAHIL BHAI STORE 🔒</b>\n</blockquote>\n\n"
         
     f"〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
     f"┝🛍 Buy Now : All Key Purchase & Instant Delivery\n"
