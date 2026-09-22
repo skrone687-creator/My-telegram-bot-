@@ -600,7 +600,7 @@ async def process_main_menu(call: types.CallbackQuery):
 @router.callback_query(F.data == "menu_shop")
 async def process_menu_shop(call: types.CallbackQuery):
     keyboard = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
-                keyboard_buttons = []
+    keyboard_buttons = []
 
     for id, name in products_db.items():
         keyboard_buttons.append(
