@@ -442,57 +442,6 @@ async def process_daily_gift(call: types.CallbackQuery):
     )
 
 
-user_last_spin = {}
-
-@dp.callback_query(F.data == "menu_daily_gift")
-async def process_daily_gift(call: types.CallbackQuery):
-    await call.answer()
-    user_id = call.from_user.id
-    now = datetime.datetime.now()
-
-    if user_id in user_last_spin:
-        last_spin = user_last_spin[user_id]
-        time_diff = now - last_spin
-        if time_diff.total_seconds() < 86400:
-            remaining = datetime.timedelta(seconds=86400) - time_diff
-            hours = remaining.seconds // 3600
-            minutes = (remaining.seconds % 3600) // 60
-            await call.message.edit_text(
-                f"⏳ Please wait {hours} hours and {minutes} minutes before your next spin.",
-                parse_mode="HTML"
-            )
-            return
-
-    keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-        [types.InlineKeyboardButton(text="Spin Now!", callback_data="spin_now", style="success")],
-        [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu", style="danger")]
-    ])
-
-    await call.message.edit_text(
-        text="<b>Daily Lucky Spin Wheel</b>\n\nSpin the wheel to win free balance!",
-        reply_markup=keyboard,
-        parse_mode="HTML"
-    )
-import random
-
-@router.callback_query(F.data == "spin_now")
-async def spin_now(call: types.CallbackQuery):
-    # 0 se 1 ke beech random amount generate karein
-    amount = round(random.uniform(0.0, 1.0), 2)
-    
-    # Yahan par amount ko user ke balance mein add karne ka logic aayega
-    # update_balance(call.from_user.id, amount)
-    
-    await call.message.answer(f"Mubarak ho! Aapne {amount} rupaye jeete hain.")
-    await call.answer()
-
-
-@dp.callback_query(F.data == "back_to_menu")
-async def process_back_to_menu(call: types.CallbackQuery):
-    await call.message.edit_text(
-        "Select an option from the menu below:", reply_markup=main_menu_kb()
-    )
-
 @router.callback_query(F.data == "menu_add_balance")
 async def menu_add_balance(call: types.CallbackQuery):
     text = (
