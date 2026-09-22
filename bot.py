@@ -332,7 +332,7 @@ async def process_menu_back(call: types.CallbackQuery):
 
 import random
 
-@dp.callback_query(F.data == "menu_daily_gift")
+@dp.callback_query(F.data == "menu_support")
 async def process_daily_gift(call: types.CallbackQuery):
     await call.answer()
     user_id = call.from_user.id
