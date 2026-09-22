@@ -345,17 +345,29 @@ async def process_daily_gift(call: types.CallbackQuery):
             remaining = datetime.timedelta(hours=24) - time_diff
             hours = remaining.seconds // 3600
             minutes = (remaining.seconds % 3600) // 60
+            keyboard = types.InlineKeyboardMarkup(
+                inline_keyboard=[
+                    [
+                        types.InlineKeyboardButton(
+                            text="Back to Menu",
+                            callback_data="back_to_menu",
+                            style="danger",
+                        )
+                    ]
+                ]
+            )
             await call.message.edit_text(
-                f"⏳ Please wait {hours} hours and {minutes} minutes before your next spin."
+                f"⏳ Please wait {hours} hours and {minutes} minutes before your next spin.",
+                reply_markup=keyboard,
             )
             return
 
     text = (
-        "<b>🎁 <i>Daily Lucky Spin Wheel</i> </b>\n\n"
+        "<blockquote><b>🎁 Daily Lucky Spin Wheel </b></blockquote>\n\n"
         "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
         "Spin the wheel once every 24 hours and win free balance credited instantly to your wallet!\n\n"
-        "🪙 Winning Range: ₹0.00 to ₹1.00\n"
-        "⏳ Spin Limit: 1 spin per 24 hours\n\n"
+        "┝🪙 Winning Range: ₹0.00 to ₹1.00\n"
+        "┝⏳ Spin Limit: 1 spin per 24 hours\n\n"
         "👇 Click the button below to try your luck:"
     )
 
@@ -387,6 +399,7 @@ async def process_spin(call: types.CallbackQuery):
     user_id = call.from_user.id
     user_last_spin[user_id] = datetime.datetime.now()
     gift_amount = round(random.uniform(0.0, 1.0), 2)
+
     keyboard = types.InlineKeyboardMarkup(
         inline_keyboard=[
             [
@@ -398,6 +411,7 @@ async def process_spin(call: types.CallbackQuery):
             ]
         ]
     )
+
     await call.message.edit_text(
         f"🎉 Congratulations! You won ₹{gift_amount}!", reply_markup=keyboard
     )
