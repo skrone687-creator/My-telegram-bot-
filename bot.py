@@ -60,6 +60,38 @@ plans_db = {
     "49": [{"plan_name": "6 HOURS", "price": 50.00}, {"plan_name": "7 DAYS", "price": 280.00}],
     "67": [{"plan_name": "1 DAYS", "price": 80.00}, {"plan_name": "30 DAYS", "price": 600.00}],
 }
+def init_db():
+    conn = sqlite3.connect("products.db")
+    cursor = conn.cursor()
+    # Users table create karna balance column ke saath
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            user_id INTEGER PRIMARY KEY,
+            balance REAL DEFAULT 0.0
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+# Balance update karne ka function
+def update_balance(user_id: int, amount: float):
+    conn = sqlite3.connect("products.db")
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO users (user_id, balance) VALUES (?, ?)
+        ON CONFLICT(user_id) DO UPDATE SET balance = balance + ?
+    """, (user_id, amount, amount))
+    conn.commit()
+    conn.close()
+
+# Balance fetch karne ka function
+def get_balance(user_id: int) -> float:
+    conn = sqlite3.connect("products.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT balance FROM users WHERE user_id = ?", (user_id,))
+    result = cursor.fetchone()
+    conn.close()
+    return result[0] if result else 0.0
 
 # बोट सेटअप
 API_TOKEN = '8899833892:AAGoffSxzSv9tbMnye5cHl8RaweKFg-i1Dw'
@@ -412,26 +444,23 @@ async def process_daily_gift(call: types.CallbackQuery):
 
 @dp.callback_query(F.data == "spin_now")
 async def process_spin(call: types.CallbackQuery):
+    await call.answer()
     user_id = call.from_user.id
     user_last_spin[user_id] = datetime.datetime.now()
+    
+    # Random amount generate karna (0 se 1 ke beech)
     gift_amount = round(random.uniform(0.0, 1.0), 2)
-
-    keyboard = types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                types.InlineKeyboardButton(
-                    text="Back to Menu",
-                    callback_data="back_to_menu",
-                    style="danger",
-                )
-            ]
-        ]
-    )
-
+    update_balance(user_id, gift_amount)
+    
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
+        [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu", style="danger")]
+    ])
+    
     await call.message.edit_text(
-        f"🎉 Congratulations! You won ₹{gift_amount}!", reply_markup=keyboard
+        text=f"🎉 Congratulations! You won ₹{gift_amount}!",
+        reply_markup=keyboard,
+        parse_mode="HTML"
     )
-
 
 @dp.callback_query(F.data == "back_to_menu")
 async def process_back_to_menu(call: types.CallbackQuery):
