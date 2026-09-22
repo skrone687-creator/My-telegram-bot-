@@ -45,6 +45,21 @@ products_db = {
     "49": "BR M",
     "67": "BR MOD ",
 }
+plans_db = {
+    "62": [{"plan_name": "1 HOURS", "price": 15.00}, {"plan_name": "3 HOURS", "price": 30.00}],
+    "54": [{"plan_name": "1 DAYS", "price": 70.00}, {"plan_name": "3 DAYS", "price": 150.00}],
+    "48": [{"plan_name": "1 HOURS", "price": 20.00}, {"plan_name": "12 HOURS", "price": 110.00}],
+    "150": [{"plan_name": "7 DAYS", "price": 200.00}, {"plan_name": "30 DAYS", "price": 500.00}],
+    "156": [{"plan_name": "1 HOURS", "price": 10.00}, {"plan_name": "6 HOURS", "price": 40.00}],
+    "148": [{"plan_name": "3 DAYS", "price": 180.00}, {"plan_name": "7 DAYS", "price": 300.00}],
+    "149": [{"plan_name": "12 HOURS", "price": 90.00}, {"plan_name": "1 DAYS", "price": 150.00}],
+    "133": [{"plan_name": "1 HOURS", "price": 25.00}, {"plan_name": "6 HOURS", "price": 75.00}],
+    "138": [{"plan_name": "1 DAYS", "price": 50.00}, {"plan_name": "7 DAYS", "price": 250.00}],
+    "76": [{"plan_name": "12 HOURS", "price": 60.00}, {"plan_name": "3 DAYS", "price": 200.00}],
+    "78": [{"plan_name": "1 HOURS", "price": 5.00}, {"plan_name": "1 DAYS", "price": 30.00}],
+    "49": [{"plan_name": "6 HOURS", "price": 50.00}, {"plan_name": "7 DAYS", "price": 280.00}],
+    "67": [{"plan_name": "1 DAYS", "price": 80.00}, {"plan_name": "30 DAYS", "price": 600.00}],
+}
 
 # बोट सेटअप
 API_TOKEN = '8899833892:AAGoffSxzSv9tbMnye5cHl8RaweKFg-i1Dw'
@@ -627,6 +642,35 @@ async def process_menu_shop(call: types.CallbackQuery):
         reply_markup=keyboard,
         parse_mode="HTML",
     )
+def get_plans_for_product(product_id):
+    return plans_db.get(product_id, [])
+
+@router.callback_query(lambda c: c.data.startswith("buy_product_"))
+async def process_buy_product(call: types.CallbackQuery):
+    product_id = call.data.split("_")[2]
+    plans = get_plans_for_product(product_id)
+
+    keyboard_buttons = []
+    for plan in plans:
+        keyboard_buttons.append([
+            types.InlineKeyboardButton(
+                text=f"{plan['plan_name']} - ₹{plan['price']}",
+                callback_data=f"select_plan_{plan['plan_name']}"
+            )
+        ])
+
+    keyboard_buttons.append([
+        types.InlineKeyboardButton(text="Back", callback_data="menu_shop")
+    ])
+
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
+
+    await call.message.edit_text(
+        "<b>Choose your access plan:</b>",
+        reply_markup=keyboard,
+        parse_mode="HTML"
+    )
+    await call.answer()
 
 
 if __name__ == '__main__':
