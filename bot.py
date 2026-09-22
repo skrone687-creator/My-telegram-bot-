@@ -623,7 +623,7 @@ async def process_menu_shop(call: types.CallbackQuery):
     keyboard = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
 
     await call.message.edit_text(
-        "<blockquote>~ PRODUCT STORE - SHOP ~</blockquote>\n\n<blockquote>🎁 Choose a product from the list below:</blockquote>",
+        "<blockquote>〰️ PRODUCT STORE — SHOP 〰️</blockquote>\n\n<blockquote>🎁 Choose a product from the list below:</blockquote>",
         reply_markup=keyboard,
         parse_mode="HTML",
     )
