@@ -335,16 +335,22 @@ import random
 @dp.callback_query(F.data == "menu_daily_gift")
 async def process_daily_gift(callback_query: types.CallbackQuery):
     await callback_query.answer()
+    await callback_query.message.answee
     
-    # ₹0 से ₹1 के बीच रैंडम अमाउंट
-    gift_amount = round(random.uniform(0.0, 1.0), 2)
-    
-    await callback_query.message.edit_text(
-        f"🎉 Daily Gift!\n\n"
-        f"बधाई हो! आपको डेली गिफ्ट के रूप में\n"
-        f"₹{gift_amount} मिले हैं।",
-        reply_markup=main_menu_kb()
-    )
+    {
+  "text": "🎁 डेली लकी स्पिन व्हील 🎁\n\n24 घंटे में एक बार स्पिन करें और मुफ़्त बैलेंस जीतें!\n\n💰 जीतने की रेंज: ₹0.00 से ₹1.00\n⏳ स्पिन लिमिट: हर 24 घंटे में 1 बार",
+  "reply_markup": {
+    "inline_keyboard": [
+      [
+        { "text": "Spin Now! [style: success]", "callback_data": "spin_now" }
+      ],
+      [
+        { "text": "Back to Menu [style: danger]", "callback_data": "back_to_menu" }
+      ]
+    ]
+  }
+}
+
 @router.callback_query(F.data == "menu_add_balance")
 async def menu_add_balance(call: types.CallbackQuery):
     text = (
