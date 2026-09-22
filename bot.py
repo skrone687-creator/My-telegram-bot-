@@ -600,31 +600,25 @@ async def process_main_menu(call: types.CallbackQuery):
 @router.callback_query(F.data == "menu_shop")
 async def process_menu_shop(call: types.CallbackQuery):
     keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
+                keyboard_buttons = []
+
+    for id, name in products_db.items():
+        keyboard_buttons.append(
             [
                 InlineKeyboardButton(
-                    text="DRIP CLIENT APK-MOD",
-                    callback_data="drip_client",
-                    style="success",
+                    text=name, callback_data=f"buy_product_{id}", style="success"
                 )
-            ],
-            [
-                InlineKeyboardButton(
-                    text="PRIME HOOK APK-MOD",
-                    callback_data="prime_hook",
-                    style="success",
-                )
-            ],
-            [
-                InlineKeyboardButton(
-                    text=" Back", callback_data="main_menu", style="danger"
-                )
-            ],
-        ]
+            ]
+        )
+
+    keyboard_buttons.append(
+        [InlineKeyboardButton(text="Back", callback_data="main_menu", style="danger")]
     )
 
+    keyboard = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
+
     await call.message.edit_text(
-        "<blockquote>🛍️ Choose a product from the list below:</blockquote>",
+        "<blockquote>🛍️ Choose a product from the list below: </blockquote>",
         reply_markup=keyboard,
         parse_mode="HTML",
     )
