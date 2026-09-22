@@ -334,40 +334,80 @@ import random
 
 @dp.callback_query(F.data == "menu_daily_gift")
 async def process_daily_gift(call: types.CallbackQuery):
- await call.answer()
+    await call.answer()
+    user_id = call.from_user.id
+    now = datetime.datetime.now()
 
- text = (
- "<blockquote><b>🎁 <i>Daily Lucky Spin Wheel</i> </b></blockquote>\n"
- "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
- "Spin the wheel once every 24 hours and win free balance credited instantly to your wallet!\n\n"
- "┝🪙 Winning Range: ₹0.00 to ₹1.00\n"
- "┝⏳ Spin Limit: 1 spin per 24 hours\n\n"
- "👇 Click the button below to try your luck:"
- )
- 
- keyboard = types.InlineKeyboardMarkup(
- inline_keyboard=[
- [types.InlineKeyboardButton(text="Spin Now!", callback_data="spin_now", style="success")],
- [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu", style="danger")]
- ]
- )
- await call.message.edit_text(text=text, reply_markup=keyboard, parse_mode="HTML")
-    
+    if user_id in user_last_spin:
+        last_spin = user_last_spin[user_id]
+        time_diff = now - last_spin
+        if time_diff < datetime.timedelta(hours=24):
+            remaining = datetime.timedelta(hours=24) - time_diff
+            hours = remaining.seconds // 3600
+            minutes = (remaining.seconds % 3600) // 60
+            await call.message.edit_text(
+                f"⏳ Please wait {hours} hours and {minutes} minutes before your next spin."
+            )
+            return
+
+    text = (
+        "<b>🎁 <i>Daily Lucky Spin Wheel</i> </b>\n\n"
+        "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
+        "Spin the wheel once every 24 hours and win free balance credited instantly to your wallet!\n\n"
+        "🪙 Winning Range: ₹0.00 to ₹1.00\n"
+        "⏳ Spin Limit: 1 spin per 24 hours\n\n"
+        "👇 Click the button below to try your luck:"
+    )
+
+    keyboard = types.InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                types.InlineKeyboardButton(
+                    text="Spin Now!",
+                    callback_data="spin_now",
+                    style="success",
+                )
+            ],
+            [
+                types.InlineKeyboardButton(
+                    text="Back to Menu",
+                    callback_data="back_to_menu",
+                    style="danger",
+                )
+            ],
+        ]
+    )
+    await call.message.edit_text(
+        text=text, reply_markup=keyboard, parse_mode="HTML"
+    )
+
+
 @dp.callback_query(F.data == "spin_now")
 async def process_spin(call: types.CallbackQuery):
- gift_amount = round(random.uniform(0.0, 1.0), 2)
- 
- keyboard = types.InlineKeyboardMarkup(
- inline_keyboard=[
- [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu", style="danger")]
- ]
- )
- 
- await call.message.edit_text(f"🎉 Congratulations! You won ₹{gift_amount}!", reply_markup=keyboard)
+    user_id = call.from_user.id
+    user_last_spin[user_id] = datetime.datetime.now()
+    gift_amount = round(random.uniform(0.0, 1.0), 2)
+    keyboard = types.InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                types.InlineKeyboardButton(
+                    text="Back to Menu",
+                    callback_data="back_to_menu",
+                    style="danger",
+                )
+            ]
+        ]
+    )
+    await call.message.edit_text(
+        f"🎉 Congratulations! You won ₹{gift_amount}!", reply_markup=keyboard
+    )
+
 
 @dp.callback_query(F.data == "back_to_menu")
 async def process_back_to_menu(call: types.CallbackQuery):
- await call.message.edit_text("You are back at the main menu.", reply_markup=main_menu_kb())
+    await call.message.edit_text(
+        "Select an option from the menu below:", reply_markup=main_menu_kb()
+    )
 
 @router.callback_query(F.data == "menu_add_balance")
 async def menu_add_balance(call: types.CallbackQuery):
