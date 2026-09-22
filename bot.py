@@ -31,9 +31,9 @@ def init_db():
 
 
 products_db = {
-    "155": "XYZ CHEATS ",
-    "153": "XYZ CHEATS ",
-    "151": "ABCD PANEL ",
+    "62": "DRIPCLIENT FF NONROOT",
+    "54": "PATO TEAM FF ALL",
+    "48": "PRIME HOOK FF NONROOT",
     "150": "DRIPCLIENT ",
     "156": "RAPID CARR ",
     "148": "SILENT CHE ",
