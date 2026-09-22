@@ -312,7 +312,7 @@ async def menu_support(call: types.CallbackQuery):
  await call.answer()
 @router.callback_query(F.data == "menu_back")
 async def process_menu_back(call: types.CallbackQuery):
-    await call.message.edit_text(
+    await call.message.delete(
     "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
     "┝🛍️ Buy Now : All Key Purchase & Instant Delivery\n"
