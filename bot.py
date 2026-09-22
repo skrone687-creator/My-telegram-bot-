@@ -605,19 +605,25 @@ async def process_menu_shop(call: types.CallbackQuery):
         keyboard_buttons.append(
             [
                 InlineKeyboardButton(
-                    text=name, callback_data=f"buy_product_{id}", style="success"
+                    text=name,
+                    callback_data=f"buy_product_{id}",
+                    style="success",
                 )
             ]
         )
 
     keyboard_buttons.append(
-        [InlineKeyboardButton(text="Back", callback_data="main_menu", style="danger")]
+        [
+            InlineKeyboardButton(
+                text="Back", callback_data="menu_main", style="danger"
+            )
+        ]
     )
 
     keyboard = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
 
     await call.message.edit_text(
-        "<blockquote>🛍️  Choose a product from the list below: </blockquote>",
+        "<blockquote>~ PRODUCT STORE - SHOP ~</blockquote>\n\n<blockquote>🛍️  Choose a product from the list below:</blockquote>",
         reply_markup=keyboard,
         parse_mode="HTML",
     )
