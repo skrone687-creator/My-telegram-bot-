@@ -615,7 +615,7 @@ async def process_menu_shop(call: types.CallbackQuery):
     keyboard_buttons.append(
         [
             InlineKeyboardButton(
-                text="Back", callback_data="menu_main", style="danger"
+                text="Back", callback_data="main_menu", style="danger"
             )
         ]
     )
