@@ -671,7 +671,7 @@ async def process_buy_product(call: types.CallbackQuery):
 
     message_text = (
         f"<blockquote><b>{product_name}</b></blockquote>\n"
-        f"<blockquote>Your Account Tier: {account_tier}</blockquote>\n\n"
+        f"<blockquote>Your Account Tier: {account_tier}</blockquote>\n"
         f"<blockquote><b>Choose your access plan:</b></blockquote>"
     )
 
