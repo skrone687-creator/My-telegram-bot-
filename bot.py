@@ -599,7 +599,6 @@ async def process_main_menu(call: types.CallbackQuery):
 
 @router.callback_query(F.data == "menu_shop")
 async def process_menu_shop(call: types.CallbackQuery):
-    keyboard = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
     keyboard_buttons = []
 
     for id, name in products_db.items():
@@ -618,11 +617,10 @@ async def process_menu_shop(call: types.CallbackQuery):
     keyboard = InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
 
     await call.message.edit_text(
-        "<blockquote>🛍️ Choose a product from the list below: </blockquote>",
+        "<blockquote>🛍️  Choose a product from the list below: </blockquote>",
         reply_markup=keyboard,
         parse_mode="HTML",
     )
-
 
 
 if __name__ == '__main__':
