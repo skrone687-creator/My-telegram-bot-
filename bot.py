@@ -52,6 +52,7 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 router = Router()
+"dp.include_router(router)
 async def send_payment_qr(call: types.CallbackQuery, amount: str):
  # यहाँ अपनी UPI ID डालें
  upi_id = "7318748360@fam"
@@ -633,6 +634,5 @@ async def process_menu_shop(call: types.CallbackQuery):
 
 if __name__ == '__main__':
     init_db()
-    dp.include_router(router)
     asyncio.run(dp.start_polling(bot))
     
