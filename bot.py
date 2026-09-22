@@ -442,25 +442,38 @@ async def process_daily_gift(call: types.CallbackQuery):
     )
 
 
-@dp.callback_query(F.data == "spin_now")
-async def process_spin(call: types.CallbackQuery):
+user_last_spin = {}
+
+@dp.callback_query(F.data == "menu_daily_gift")
+async def process_daily_gift(call: types.CallbackQuery):
     await call.answer()
     user_id = call.from_user.id
-    user_last_spin[user_id] = datetime.datetime.now()
-    
-    # Random amount generate karna (0 se 1 ke beech)
-    gift_amount = round(random.uniform(0.0, 1.0), 2)
-    update_balance(user_id, gift_amount)
-    
+    now = datetime.datetime.now()
+
+    if user_id in user_last_spin:
+        last_spin = user_last_spin[user_id]
+        time_diff = now - last_spin
+        if time_diff.total_seconds() < 86400:
+            remaining = datetime.timedelta(seconds=86400) - time_diff
+            hours = remaining.seconds // 3600
+            minutes = (remaining.seconds % 3600) // 60
+            await call.message.edit_text(
+                f"⏳ Please wait {hours} hours and {minutes} minutes before your next spin.",
+                parse_mode="HTML"
+            )
+            return
+
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
+        [types.InlineKeyboardButton(text="Spin Now!", callback_data="spin_now", style="success")],
         [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu", style="danger")]
     ])
-    
+
     await call.message.edit_text(
-        text=f"🎉 Congratulations! You won ₹{gift_amount}!",
+        text="<b>Daily Lucky Spin Wheel</b>\n\nSpin the wheel to win free balance!",
         reply_markup=keyboard,
         parse_mode="HTML"
     )
+
 
 @dp.callback_query(F.data == "back_to_menu")
 async def process_back_to_menu(call: types.CallbackQuery):
