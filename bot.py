@@ -352,6 +352,22 @@ async def process_daily_gift(call: types.CallbackQuery):
  ]
  )
  await call.message.edit_text(text=text, reply_markup=keyboard, parse_mode="HTML")
+    
+@dp.callback_query(F.data == "spin_now")
+async def process_spin(call: types.CallbackQuery):
+ gift_amount = round(random.uniform(0.0, 1.0), 2)
+ 
+ keyboard = types.InlineKeyboardMarkup(
+ inline_keyboard=[
+ [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu", style="danger")]
+ ]
+ )
+ 
+ await call.message.edit_text(f"🎉 Congratulations! You won ₹{gift_amount}!", reply_markup=keyboard)
+
+@dp.callback_query(F.data == "back_to_menu")
+async def process_back_to_menu(call: types.CallbackQuery):
+ await call.message.edit_text("You are back at the main menu.", reply_markup=main_menu_kb())
 
 @router.callback_query(F.data == "menu_add_balance")
 async def menu_add_balance(call: types.CallbackQuery):
