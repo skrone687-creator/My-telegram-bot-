@@ -333,23 +333,18 @@ async def process_menu_back(call: types.CallbackQuery):
 import random
 
 @dp.callback_query(F.data == "menu_daily_gift")
-async def process_daily_gift(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    await callback_query.message.answee
+async def process_daily_gift(call: types.CallbackQuery):
+    await call.answer()
+
+    text = "🎁 डेली लकी स्पिन व्हील 🎁\n\n24 घंटे में एक बार स्पिन करें और मुफ़्त बैलेंस जीतें!\n\n💰 जीतने की रेंज: ₹0.00 से ₹1.00\n⏳ स्पिन लिमिट: हर 24 घंटे में 1 बार"
     
-    {
-  "text": "🎁 डेली लकी स्पिन व्हील 🎁\n\n24 घंटे में एक बार स्पिन करें और मुफ़्त बैलेंस जीतें!\n\n💰 जीतने की रेंज: ₹0.00 से ₹1.00\n⏳ स्पिन लिमिट: हर 24 घंटे में 1 बार",
-  "reply_markup": {
-    "inline_keyboard": [
-      [
-        { "text": "Spin Now! [style: success]", "callback_data": "spin_now" }
-      ],
-      [
-        { "text": "Back to Menu [style: danger]", "callback_data": "back_to_menu" }
-      ]
-    ]
-  }
-}
+    keyboard = types.InlineKeyboardMarkup(
+        inline_keyboard=[
+            [types.InlineKeyboardButton(text="Spin Now!", callback_data="spin_now", style="success")],
+            [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu", style="danger")]
+        ]
+    )
+    await call.message.edit_text(text=text, reply_markup=keyboard)
 
 @router.callback_query(F.data == "menu_add_balance")
 async def menu_add_balance(call: types.CallbackQuery):
