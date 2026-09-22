@@ -473,6 +473,18 @@ async def process_daily_gift(call: types.CallbackQuery):
         reply_markup=keyboard,
         parse_mode="HTML"
     )
+import random
+
+@router.callback_query(F.data == "spin_now")
+async def spin_now(call: types.CallbackQuery):
+    # 0 se 1 ke beech random amount generate karein
+    amount = round(random.uniform(0.0, 1.0), 2)
+    
+    # Yahan par amount ko user ke balance mein add karne ka logic aayega
+    # update_balance(call.from_user.id, amount)
+    
+    await call.message.answer(f"Mubarak ho! Aapne {amount} rupaye jeete hain.")
+    await call.answer()
 
 
 @dp.callback_query(F.data == "back_to_menu")
