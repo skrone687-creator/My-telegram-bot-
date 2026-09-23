@@ -742,7 +742,7 @@ async def open_custom_amount_menu(callback: types.CallbackQuery, state: FSMConte
     await state.set_state(CustomAmountState.entering_amount)
     await state.update_data(amount="0")
     text = format_custom_amount_text("0")
-    markup = build_keypad_markup()
+    markup = CustomlnlineMarkup.build("custom")
     await callback.message.edit_text(text=text, reply_markup=markup, parse_mode="Markdown")
     await callback.answer()
 
