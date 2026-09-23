@@ -501,39 +501,51 @@ async def process_buy(message: types.Message):
                 await message.reply(f"आपकी प्रोडक्ट की डिलीवरी: {key}")
             else:
                 await message.reply("प्रोडक्ट खरीदने में समस्या आई।")
-# PAY UPI handler to generate QR
-@router.callback_query(F.data == "pay_upi")
-async def process_pay_upi(call: types.CallbackQuery, state: FSMContext):
-    user_data = await state.get_data()
-    amount = user_data.get("amount")
-    
-    # Apni UPI ID yahan dein
-    up_id = "7318748360@fam"
-    upi_url = f"upi://pay?pa={up_id}&am={amount}&cu=INR"
-    
-    # QR Generation logic
-    qr = qrcode.QRCode(version=1, box_size=10, border=4)
-    qr.add_data(upi_url)
-    qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="white")
-    
-    buffer = io.BytesIO()
+                
+@router.callback_query(F.data.startswith("pay_upi_"))
+async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext):
+    amount = callback_query.data.split("_")[2]
+    upi_id = "7318748360@fam"  # Apni UPI ID yahan dalein
+    upi_link = f"upi://pay?pa={upi_id}&am={amount}&cu=INR"
+
+    img = qrcode.make(upi_link)
+    buffer = BytesIO()
     img.save(buffer, format="PNG")
     buffer.seek(0)
-    
-    caption = (
-        "Scan & transfer exactly "
-        f"<b>₹{amount}.00</b> via your UPI app terminal.\n"
-        "Tap verify below after completing the core transaction transfer."
+
+    markup = types.InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                types.InlineKeyboardButton(
+                    text="VERIFY PAYMENT",
+                    callback_data="verify_payment",
+                    style="success",
+                )
+            ],
+            [
+                types.InlineKeyboardButton(
+                    text="CANCEL ORDER",
+                    callback_data="cancel_order",
+                    style="danger",
+                )
+            ],
+        ]
     )
-    
-    await call.message.answer_photo(
-        photo=types.BufferedInputFile(buffer.getvalue(), filename="qr.png"),
-        caption=caption,
+
+    caption_text = (
+        "<blockquote><b>Crazy Gaming UPI</b></blockquote>\n\n"
+        f"Scan & transfer exactly ₹{amount} via your UPI app terminal.\n\n"
+        "<blockquote><b>QR Session TTL: expires in 5 minutes.</b></blockquote>"
+    )
+
+    await callback_query.message.answer_photo(
+        types.BufferedInputFile(buffer.getvalue(), filename="qr.png"),
+        caption=caption_text,
         parse_mode="HTML",
-        reply_markup=verify_kb(), # Yahan apka verify button keyboard hai
+        reply_markup=markup,
     )
-    await call.answer()
+    await callback_query.answer()
+    
 @router.callback_query(F.data == "add_100")
 async def process_add_100(call: types.CallbackQuery, state: FSMContext):
     await state.update_data(amount="100")
