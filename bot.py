@@ -269,10 +269,10 @@ async def process_profile(callback_query: types.CallbackQuery):
     active_referrals = "0"
     
     profile_text = (
-    "<blockquote>👤 YOUR PROFILE DASHBOARD 👤</blockquote>\n\n"
+    "<blockquote>👑 YOUR PROFILE DASHBOARD </blockquote>\n\n"
     f"<blockquote>🆔 Account ID: <code>{account_id}</code></blockquote>\n"
-    "<blockquote>💎 Account Tier: USER</blockquote>\n"
-    f"<blockquote>💰 Current Funds: {current_funds}</blockquote>\n"
+    "<blockquote>✨ Account Tier: USER</blockquote>\n"
+    f"<blockquote>🪙 Current Funds: {current_funds}</blockquote>\n"
     f"<blockquote>👥 Active Referrals: {active_referrals} users</blockquote>\n\n"
     "Select history filter panel below to view records."
 )
