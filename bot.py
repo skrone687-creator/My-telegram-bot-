@@ -548,8 +548,17 @@ async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext
 
 @router.callback_query(F.data == "cancel_order")
 async def cancel_order(call: types.CallbackQuery):
-    await call.message.answer
-    await menu_add_balance(call)
+    await call.message.delete()
+    text = (
+        "<blockquote>\n"
+        "<b>ADD FUNDS TO WALLET</b>\n"
+        "</blockquote>\n\n"
+        "Choose a quick amount to add or type/use a custom one below.\n\n"
+        "<i>Predefined amounts are faster to process!</i>\n\n"
+    )
+    await call.message.answer(
+        text=text, parse_mode="HTML", reply_markup=add_balance_kb()
+    )
 
 
 @router.callback_query(F.data == "add_100")
