@@ -11,7 +11,6 @@ import qrcode
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 from io import BytesIO
-from aiogram.utils.keyboard import lnlineKeyboardBuilder
 from aiogram import types
 from aiogram import F, Router, types
 import aiohttp
