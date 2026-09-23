@@ -703,20 +703,29 @@ async def process_buy_product(call: types.CallbackQuery):
 class CustomAmountState(StatesGroup):
     entering_amount = State()
 
-def build_keypad_markup() -> types.InlineKeyboardMarkup:
-    builder = InlineKeyboardBuilder()
+class CustomInlineMarkup:
+    @staticmethod
+    def build(type_name: str) -> InlineKeyboardMarkup:
+        keyboard = []
+        for i in range(0, 9, 3):
+            row = [
+                InlineKeyboardButton(text=str(j), callback_data=f"custom_amount_add_{j}", style="success")
+                for j in range(i + 1, i + 4)
+            ]
+            keyboard.append(row)
 
-    for i in range(1, 10):
-        builder.button(text=str(i), callback_data=f"pad_{i}", style="success")
+        keyboard.append([
+            InlineKeyboardButton(text="Clear", callback_data="custom_amount_clear", style="success"),
+            InlineKeyboardButton(text="0", callback_data="custom_amount_add_0", style="success")
+        ])
 
-    builder.button(text="CLEAR", callback_data="pad_clear", style="danger")
-    builder.button(text="0", callback_data="pad_0", style="success")
-    builder.button(text="BACK", callback_data="pad_back", style="danger")
+        keyboard.append([
+            InlineKeyboardButton(text="← Back", callback_data="menu_add_balance", style="primary"),
+            InlineKeyboardButton(text="Pay 0.00$", callback_data="custom_amount_quick_pay", style="danger")
+        ])
 
-    builder.button(text="CONFIRM AMOUNT", callback_data="pad_confirm", style="success")
-    builder.button(text="Return to Quick Amounts", callback_data="amount_quick_menu", style="danger")
+        return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
-    builder.adjust(3, 3, 3, 3, 1, 1)
     return builder.as_markup()
 
 def format_custom_amount_text(amount_str: str) -> str:
