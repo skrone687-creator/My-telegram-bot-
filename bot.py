@@ -552,11 +552,11 @@ async def cancel_order(call: types.CallbackQuery):
     text = (
         "<blockquote>\n"
         "💰<b>ADD FUNDS TO WALLET</b>\n"
-        "</blockquote>\n\n"
+        "</blockquote>"
         "Choose a quick amount to add or type/use a custom one below.\n\n"
-        "<blockquote>\n"
-        "🚀<i>Predefined amounts are faster to process!</i>\n"
-        "</blockquote>\n\n"
+        "<blockquote>"
+        "🚀<i>Predefined amounts are faster to process!</i>"
+        "</blockquote>"
     )
     await call.message.answer(
         text=text, parse_mode="HTML", reply_markup=add_balance_kb()
