@@ -697,7 +697,77 @@ async def process_buy_product(call: types.CallbackQuery):
     )
     await call.answer()
 
+router = Router()
 
+class CustomAmountState(StatesGroup):
+    entering_amount = State()
+
+def build_keypad_markup() -> types.InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+
+    for i in range(1, 10):
+        builder.button(text=str(i), callback_data=f"pad_{i}", style="success")
+
+    builder.button(text="CLEAR", callback_data="pad_clear", style="danger")
+    builder.button(text="0", callback_data="pad_0", style="success")
+    builder.button(text="BACK", callback_data="pad_back", style="danger")
+
+    builder.button(text="CONFIRM AMOUNT", callback_data="pad_confirm", style="success")
+    builder.button(text="Return to Quick Amounts", callback_data="amount_quick_menu", style="danger")
+
+    builder.adjust(3, 3, 3, 3, 1, 1)
+    return builder.as_markup()
+
+def format_custom_amount_text(amount_str: str) -> str:
+    return (
+        "```\n"
+        "ENTER CUSTOM AMOUNT\n"
+        "```\n\n"
+        f"**Amount: ₹{amount_str}**\n\n"
+        "Use the keypad below to enter amount or type directly in chat.\n\n"
+        "**Min: ₹1.00 | Max: ₹50,000.00**"
+    )
+
+@router.callback_query(F.data == "custom_amount")
+async def open_custom_amount_menu(callback: types.CallbackQuery, state: FSMContext):
+    await state.set_state(CustomAmountState.entering_amount)
+    await state.update_data(amount="0")
+    text = format_custom_amount_text("0")
+    markup = build_keypad_markup()
+    await callback.message.edit_text(text=text, reply_markup=markup, parse_mode="Markdown")
+    await callback.answer()
+
+@router.callback_query(CustomAmountState.entering_amount, F.data.startswith("pad_"))
+async def handle_keypad_press(callback: types.CallbackQuery, state: FSMContext):
+    action = callback.data.split("_")[1]
+    data = await state.get_data()
+    current_amount = data.get("amount", "0")
+
+    if action.isdigit():
+        new_amount = action if current_amount == "0" else current_amount + action
+        if int(new_amount) > 50000:
+            await callback.answer("Maximum amount is ₹50,000!", show_alert=True)
+            return
+        current_amount = new_amount
+    elif action == "clear":
+        current_amount = "0"
+    elif action == "back":
+        current_amount = current_amount[:-1] if len(current_amount) > 1 else "0"
+    elif action == "confirm":
+        val = int(current_amount)
+        if val < 1:
+            await callback.answer("Minimum amount is ₹1!", show_alert=True)
+            return
+        await callback.answer(f"Amount ₹{val} confirmed!", show_alert=True)
+        await state.clear()
+        return
+
+    await state.update_data(amount=current_amount)
+    text = format_custom_amount_text(current_amount)
+    markup = build_keypad_markup()
+    if callback.message.text != text:
+        await callback.message.edit_text(text=text, reply_markup=markup, parse_mode="Markdown")
+    await callback.answer()
 
 if __name__ == '__main__':
     init_db()
