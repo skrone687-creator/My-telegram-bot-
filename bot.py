@@ -698,7 +698,7 @@ async def process_buy_product(call: types.CallbackQuery):
     )
     await call.answer()
 
-router = Router()
+
 
 class CustomAmountState(StatesGroup):
     entering_amount = State()
