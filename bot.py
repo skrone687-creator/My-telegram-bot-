@@ -545,11 +545,13 @@ async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext
         reply_markup=markup,
     )
     await callback_query.answer()
-    
+
 @router.callback_query(F.data == "cancel_order")
 async def cancel_order(call: types.CallbackQuery):
+    await call.message.delete()
     await menu_add_balance(call)
-    
+
+
 @router.callback_query(F.data == "add_100")
 async def process_add_100(call: types.CallbackQuery, state: FSMContext):
     await state.update_data(amount="100")
