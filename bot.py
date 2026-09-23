@@ -216,19 +216,22 @@ def update_kb():
     return kb
 
 @dp.callback_query(F.data == "menu_check_update")
-async def process_check_update(call: types.CallbackQuery):
-    await call.answer()
-    print("Check Update button pressed")
-    update_text = (
-        "<blockquote>📢 Follow our updates channel:</blockquote>\n"
-        "🔗 <a href='https://t.me/Sahilbhaiallupdate'><b> Click Here For Setup & Updates</b></a>"
-    )
+async def send_update_channel(message: types.Message):
+    channel_url = "https://t.me/Sahilbhaiallupdate"
+    photo_url = "https://ibb.co/k2KS2p4s"
     
-    await call.message.edit_text(
-        text=update_text,
-        parse_mode="HTML",
-        reply_markup=update_kb()
-    )
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="Update Channel", url=channel_url)],
+        [InlineKeyboardButton(text="Back", callback_data="menu_back", style="danger")]
+    ])
+    
+    await message.answer_photo(photo=photo_url, caption="Hamara Update Channel Join Karein!", reply_markup=keyboard)
+
+@dp.callback_query_handler(lambda c: c.data == 'menu_check_update')
+async def process_check_update(callback_query: types.CallbackQuery):
+    await callback_query.answer()
+    await send_update_channel(callback_query.message)
+
 @dp.callback_query(F.data.startswith("amount_"))
 async def process_amount(callback_query: types.CallbackQuery):
     amount = callback_query.data.split("_")[1]
