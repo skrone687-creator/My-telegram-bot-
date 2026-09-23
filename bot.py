@@ -550,9 +550,9 @@ async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext
 async def cancel_order(call: types.CallbackQuery):
     await call.message.delete()
     text = (
-        "<blockquote>\n"
-        "💰<b>ADD FUNDS TO WALLET</b>\n"
-        "</blockquote>"
+        "<blockquote>"
+        "💰<b>ADD FUNDS TO WALLET</b>"
+        "</blockquote>\n\n"
         "Choose a quick amount to add or type/use a custom one below.\n\n"
         "<blockquote>"
         "🚀<i>Predefined amounts are faster to process!</i>"
