@@ -551,14 +551,17 @@ async def cancel_order(call: types.CallbackQuery):
     await call.message.delete()
     text = (
         "<blockquote>\n"
-        "<b>ADD FUNDS TO WALLET</b>\n"
+        "💰<b>ADD FUNDS TO WALLET</b>\n"
         "</blockquote>\n\n"
         "Choose a quick amount to add or type/use a custom one below.\n\n"
-        "<i>Predefined amounts are faster to process!</i>\n\n"
+        "<blockquote>\n"
+        "🚀<i>Predefined amounts are faster to process!</i>\n"
+        "</blockquote>\n\n"
     )
     await call.message.answer(
         text=text, parse_mode="HTML", reply_markup=add_balance_kb()
     )
+
 
 
 @router.callback_query(F.data == "add_100")
