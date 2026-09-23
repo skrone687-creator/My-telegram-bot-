@@ -560,26 +560,18 @@ async def process_add_1000(call: types.CallbackQuery, state: FSMContext):
     text = "<blockquote><b>SELECT GATEWAY MODE</b></blockquote>\n\nDeposit Amount: 💰 <b>₹1000.00</b>\n\n<i>Cancel Request</i>"
     await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb())
     await call.answer()
-@router.callback_query(F.data == "pay_upi")
+    
+@router.callback_query(lambda c: c.data.startswith("pay_upi_"))
 async def process_pay_upi(call: types.CallbackQuery, state: FSMContext):
-    user_data = await state.get_data()
-    amount = user_data.get("amount")
+    amount = float(call.data.split("_")[2])
 
-    if not amount:
-        await call.message.answer(
-            "Amount not found. Please select amount again."
-        )
-        await call.answer()
-        return
-
-    amount = float(amount)
     await call.answer()
 
-    # Apni UPI ID yahan dein
     upi_id = "7318748360@fam"
     upi_url = f"upi://pay?pa={upi_id}&am={amount:.2f}&cu=INR"
 
     await send_upi_qr(call.message, upi_url, amount)
+    
 from aiogram import types
 from aiogram.filters import Command
 import sqlite3
