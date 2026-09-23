@@ -700,10 +700,10 @@ async def process_buy_product(call: types.CallbackQuery):
 
 
 
-class CustomAmountState(StatesGroup):
+classCustomAmountState(StatesGroup):
     entering_amount = State()
 
-class CustomInlineMarkup:
+classCustomInlineMarkup:
     @staticmethod
     def build(type_name: str) -> InlineKeyboardMarkup:
         keyboard = []
@@ -742,7 +742,7 @@ async def open_custom_amount_menu(callback: types.CallbackQuery, state: FSMConte
     await state.set_state(CustomAmountState.entering_amount)
     await state.update_data(amount="0")
     text = format_custom_amount_text("0")
-    markup = CustomlnlineMarkup.build("custom")
+markup = CustomlnlineMarkup.build("custom")
     await callback.message.edit_text(text=text, reply_markup=markup, parse_mode="Markdown")
     await callback.answer()
 
