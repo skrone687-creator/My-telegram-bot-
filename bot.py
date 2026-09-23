@@ -8,7 +8,7 @@ from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram import F
 import qrcode
-from aiogram.fsm.state import StatesGroup
+from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 from io import BytesIO
 from aiogram import types
