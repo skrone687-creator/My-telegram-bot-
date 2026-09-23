@@ -726,7 +726,6 @@ class CustomInlineMarkup:
 
         return InlineKeyboardMarkup(inline_keyboard=keyboard)
 
-    return builder.as_markup()
 
 def format_custom_amount_text(amount_str: str) -> str:
     return (
