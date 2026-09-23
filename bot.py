@@ -601,7 +601,6 @@ async def process_pay_upi(call: types.CallbackQuery, state: FSMContext):
     upi_url = f"upi://pay?pa={upi_id}&am={amount:.2f}&cu=INR"
 
     await send_upi_qr(call.message, upi_url, amount)
-    await call.message.delete()
     
 from aiogram import types
 from aiogram.filters import Command
