@@ -265,7 +265,7 @@ async def process_profile(callback_query: types.CallbackQuery):
     
     account_id = user_id
     account_tier = "RESELLER"
-    current_funds = "$0.27"
+    get_balance(user_id)
     active_referrals = "0"
     
     profile_text = (
