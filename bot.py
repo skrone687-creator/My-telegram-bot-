@@ -773,7 +773,7 @@ async def handle_keypad_press(callback: types.CallbackQuery, state: FSMContext):
 
     await state.update_data(amount=current_amount)
     text = format_custom_amount_text(current_amount)
-    markup = build_keypad_markup()
+    markup = CustomlnineMarkup.build("custom")
     if callback.message.text != text:
         await callback.message.edit_text(text=text, reply_markup=markup, parse_mode="Markdown")
     await callback.answer()
