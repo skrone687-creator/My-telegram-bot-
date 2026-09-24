@@ -1,6 +1,6 @@
 import sqlite3
 import logging
-import datetime
+from datetime import datetime
 import time
 import asyncio
 from typing import Optional
