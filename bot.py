@@ -708,7 +708,7 @@ async def process_buy_product(call: types.CallbackQuery):
     )
     await call.answer()
     
- import random
+import random
 
 def process_spin(user_id):
     current_time = time.time()
