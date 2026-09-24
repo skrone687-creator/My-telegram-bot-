@@ -198,6 +198,12 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 # यहाँ आप अपने कमान्ड हैंडर्स जोड़ सकते हैं
 @dp.message(Command("start"))
 async def send_welcome(message: types.Message):
+    user_id = message.from_user.id
+conn = sqlite3.connect("products.db")
+cursor = conn.cursor()
+cursor.execute("INSERT OR IGNORE INTO users (user_id) VALUES (?)", (user_id,))
+conn.commit()
+conn.close()
      await message.answer(
      "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
