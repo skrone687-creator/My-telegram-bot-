@@ -198,6 +198,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 # यहाँ आप अपने कमान्ड हैंडर्स जोड़ सकते हैं
 @dp.message(Command("start"))
 async def send_welcome(message: types.Message):
+    current_balance = get_balance(message.from_user.id)
     await message.answer(
      "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
@@ -210,7 +211,7 @@ async def send_welcome(message: types.Message):
      "┝📨 Support : Bot Problem Fixed For Support Admin\n"
      "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-     "<blockquote>💰 Your Balance:🪙₹0.00</blockquote>\n\n"  
+     "<blockquote>💰 Your Balance:🪙₹{current_balance}</blockquote>\n\n"  
      "<i>👇 Select an option from the menu below:</i>",
      parse_mode="HTML",
      reply_markup=main_menu_kb(),
@@ -369,6 +370,7 @@ async def menu_support(call: types.CallbackQuery):
  await call.answer()
 @router.callback_query(F.data == "menu_back")
 async def process_menu_back(call: types.CallbackQuery):
+    current_balance = get_balance(call.from_user.id)
     await call.message.edit_text(
     "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
@@ -381,7 +383,7 @@ async def process_menu_back(call: types.CallbackQuery):
     "┝📨 Support : Bot Problem Fixed For Support Admin\n"
     "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-    "<blockquote>💰 Your  Balance:🪙₹0.00</blockquote>\n\n"  
+    "<blockquote>💰 Your  Balance:🪙₹{current_balance}</blockquote>\n\n"  
     "<i>👇 Select an option from the menu below:</i>",
     parse_mode="HTML",
     reply_markup=main_menu_kb(),
