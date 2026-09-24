@@ -721,7 +721,7 @@ async def spin_handler(call: types.CallbackQuery):
 keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
     [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu", style="danger")]
 ])
-    await call.message.edit_text(text, parse_mode="HTML", reply_markup=keyboard)
+await call.message.edit_text(text, parse_mode="HTML", reply_markup=keyboard)
 
         
 
