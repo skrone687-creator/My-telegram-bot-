@@ -75,7 +75,7 @@ def init_db():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS daily_spin (
         user_id INTEGER PRIMARY KEY,
-        last_spin_time REAL
+        last_spin_time INTEGER
     )
 """)
     conn.commit()
@@ -706,6 +706,28 @@ async def process_buy_product(call: types.CallbackQuery):
         parse_mode="HTML"
     )
     await call.answer()
+@router.callback_query(F.data == "spin_now")
+async def spin_handler(call: types.CallbackQuery):
+    user_id = call.from_user.id
+    res = process_spin(user_id)
+
+    if res["status"] == "won":
+        text = (
+            f"<blockquote>🎉 <b>Daily Gift Spin Winner!</b> 🎉</blockquote>\n\n"
+            f"You won a randomized claim of: <b>₹{res['amount']}</b>\n\n"
+            f"Updated Wallet: ₹{get_balance(user_id)}"
+        )
+    else:
+        hours = int(res["remaining_time"] // 3600)
+        minutes = int((res["remaining_time"] % 3600) // 60)
+        text = (
+            f"<blockquote>⏳ <b>Wait before spinning again!</b> ⏳</blockquote>\n\n"
+            f"Please wait another {hours}h {minutes}m before trying to spin the wheel again."
+        )
+
+    await call.message.edit_text(text, parse_mode="HTML")
+    await call.answer()
+    
     
 import random
 
