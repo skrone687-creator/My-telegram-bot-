@@ -71,8 +71,6 @@ def init_db():
             balance REAL DEFAULT 0.0
         )
     """)
-    conn.commit()
-    conn.close()
     
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS daily_spin (
@@ -80,7 +78,8 @@ def init_db():
         last_spin_time REAL
     )
 """)
-
+    conn.commit()
+    conn.close()
 # Balance update karne ka function
 def update_balance(user_id: int, amount: float):
     conn = sqlite3.connect("products.db")
