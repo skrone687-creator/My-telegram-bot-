@@ -620,7 +620,8 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 async def process_main_menu(call: types.CallbackQuery):
 
     # यहाँ आपका मेन मेन्यू कीबोर्ड कोड होना चाहिए
-    await call.message.edit_text(
+    current_balance = get_balance(call.from_user.id)
+    await call.message.edit_text(   
     "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
      "┝🛍️ Buy Now : All Key Purchase & Instant Delivery\n"
@@ -632,7 +633,7 @@ async def process_main_menu(call: types.CallbackQuery):
      "┝📨 Support : Bot Problem Fixed For Support Admin\n"
      "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-     "<blockquote>💰 Your Balance:🪙₹0.00</blockquote>\n\n"  
+     "<blockquote>💰 Your Balance:🪙₹{current_balance}</blockquote>\n\n"  
      "<i>👇 Select an option from the menu below:</i>",
      parse_mode="HTML",
      reply_markup=main_menu_kb(),
