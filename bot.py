@@ -707,6 +707,7 @@ async def process_buy_product(call: types.CallbackQuery):
         parse_mode="HTML"
     )
     await call.answer()
+
 @router.callback_query(F.data == "spin_now")
 async def spin_handler(call: types.CallbackQuery):
     user_id = call.from_user.id
@@ -716,18 +717,27 @@ async def spin_handler(call: types.CallbackQuery):
         text = (
             f"<blockquote>🎉 <b>Daily Gift Spin Winner!</b> 🎉</blockquote>\n\n"
             f"You won a randomized claim of: <b>₹{res['amount']}</b>\n\n"
-            f"Updated Wallet: ₹{get_balance(user_id)}"
+            f"<b>Updated Wallet:</b> ₹{get_balance(user_id)}"
         )
+        keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
+            [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu")]
+        ])
+        await call.message.edit_text(text, parse_mode="HTML", reply_markup=keyboard)
     else:
         hours = int(res["remaining_time"] // 3600)
         minutes = int((res["remaining_time"] % 3600) // 60)
+        
         text = (
-            f"<blockquote>⏳ <b>Wait before spinning again!</b> ⏳</blockquote>\n\n"
+            f"<blockquote>❌ You have already claimed today's spin!</blockquote>\n\n"
             f"Please wait another {hours}h {minutes}m before trying to spin the wheel again."
         )
-
-    await call.message.edit_text(text, parse_mode="HTML")
+        keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
+            [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu")]
+        ])
+        await call.message.edit_text(text, parse_mode="HTML", reply_markup=keyboard)
+    
     await call.answer()
+
     
     
 import random
