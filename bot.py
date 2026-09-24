@@ -713,31 +713,17 @@ async def spin_handler(call: types.CallbackQuery):
     user_id = call.from_user.id
     res = process_spin(user_id)
 
-    if res["status"] == "won":
-        text = (
-            f"🎉 <b>Daily Gift Spin Winner!</b> 🎉\n\n"
-            f"You won a randomized claim of: <b>₹{res['amount']}</b>\n\n"
-            f"<b>Updated Wallet:</b> ₹{get_balance(user_id)}"
-        )
-        keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-            [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu")]
-        ])
-        await call.message.edit_text(text, parse_mode="HTML", reply_markup=keyboard)
-    else:
-        hours = int(res["remaining_time"] // 3600)
-        minutes = int((res["remaining_time"] % 3600) // 60)
+    text = (
+    "<blockquote>🎉 <b>Daily Gift Spin Winner!</b> 🎉</blockquote>\n\n"
+    f"You won a randomized claim of: <b>₹{res['amount']}</b>\n\n"
+    f"<b>Updated Wallet:</b> ₹{get_balance(user_id)}"
+)
+keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
+    [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu", style="danger")]
+])
+    await call.message.edit_text(text, parse_mode="HTML", reply_markup=keyboard)
+
         
-        text = (
-            f"❌ You have already claimed today's spin!\n\n"
-            f"Please wait another {hours}h {minutes}m before trying to spin the wheel again."
-        )
-        keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-            [types.InlineKeyboardButton(text=f"Lock ({hours}h {minutes}m)", callback_data="noop")],
-            [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu")]
-        ])
-        await call.message.edit_text(text, parse_mode="HTML", reply_markup=keyboard)
-    
-    await call.answer()
 
 
     
