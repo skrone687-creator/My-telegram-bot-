@@ -210,7 +210,7 @@ async def send_welcome(message: types.Message):
      "┝📨 Support : Bot Problem Fixed For Support Admin\n"
      "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-     "<blockquote>💰 Your Balance:🪙₹0.00</blockquote>\n\n"  
+     "<blockquote>💰 Your Balance:🪙₹{get_balance(user_id)}</blockquote>\n\n"  
      "<i>👇 Select an option from the menu below:</i>",
      parse_mode="HTML",
      reply_markup=main_menu_kb(),
@@ -381,7 +381,7 @@ async def process_menu_back(call: types.CallbackQuery):
     "┝📨 Support : Bot Problem Fixed For Support Admin\n"
     "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-    "<blockquote>💰 Your  Balance:🪙₹0.00</blockquote>\n\n"  
+    "<blockquote>💰 Your  Balance:🪙₹{get_balance(user_id)}</blockquote>\n\n"  
     "<i>👇 Select an option from the menu below:</i>",
     parse_mode="HTML",
     reply_markup=main_menu_kb(),
@@ -632,7 +632,7 @@ async def process_main_menu(call: types.CallbackQuery):
      "┝📨 Support : Bot Problem Fixed For Support Admin\n"
      "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-     "<blockquote>💰 Your Balance:🪙₹0.00</blockquote>\n\n"  
+     "<blockquote>💰 Your Balance:🪙₹{get_balance(user_id)}</blockquote>\n\n"  
      "<i>👇 Select an option from the menu below:</i>",
      parse_mode="HTML",
      reply_markup=main_menu_kb(),
@@ -708,20 +708,7 @@ async def process_buy_product(call: types.CallbackQuery):
     )
     await call.answer()
 
-@router.callback_query(F.data == "spin_now")
-async def spin_handler(call: types.CallbackQuery):
-    user_id = call.from_user.id
-    res = process_spin(user_id)
 
-    text = (
-    "<blockquote>🎉 <b>Daily Gift Spin Winner!</b> 🎉</blockquote>\n\n"
-    f"You won a randomized claim of: <b>₹{res['amount']}</b>\n\n"
-    f"<b>Updated Wallet:</b> ₹{get_balance(user_id)}"
-)
-keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-    [types.InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu", style="danger")]
-])
-await call.message.edit_text(text, parse_mode="HTML", reply_markup=keyboard)
 
         
 
