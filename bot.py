@@ -198,13 +198,7 @@ def main_menu_kb() -> InlineKeyboardMarkup:
 # यहाँ आप अपने कमान्ड हैंडर्स जोड़ सकते हैं
 @dp.message(Command("start"))
 async def send_welcome(message: types.Message):
-    user_id = message.from_user.id
-conn = sqlite3.connect("products.db")
-cursor = conn.cursor()
-cursor.execute("INSERT OR IGNORE INTO users (user_id) VALUES (?)", (user_id,))
-conn.commit()
-conn.close()
-   await message.answer(
+    await message.answer(
      "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
      "┝🛍️ Buy Now : All Key Purchase & Instant Delivery\n"
@@ -744,47 +738,7 @@ def process_spin(user_id):
         remaining_time = cooldown - (current_time - last_spin_time)
         return {"status": "cooldown", "remaining_time": remaining_time} 
         
-@router.callback_query(F.data == "spin_now")
-async def process_spin_now(call: types.CallbackQuery):
-    user_id = call.from_user.id
-    now = datetime.now()
-
-    conn = sqlite3.connect("products.db")
-    cursor = conn.cursor()
     
-    cursor.execute("SELECT last_spin_time FROM daily_spin WHERE user_id = ?", (user_id,))
-    result = cursor.fetchone()
-    
-    if result:
-        last_spin_time = datetime.fromtimestamp(result[0])
-        if now - last_spin_time < timedelta(hours=24):
-            await call.answer("Aap pichle 24 ghante mein pehle hi spin kar chuke hain!", show_alert=True)
-            conn.close()
-            return
-
-    spin_amount = round(random.uniform(0.01, 1.00), 2)
-    cursor.execute("UPDATE users SET balance = balance + ? WHERE user_id = ?", (spin_amount, user_id))
-    cursor.execute("INSERT OR REPLACE INTO daily_spin (user_id, last_spin_time) VALUES (?, ?)", (user_id, now.timestamp()))
-    
-    cursor.execute("SELECT balance FROM users WHERE user_id = ?", (user_id,))
-    new_balance = cursor.fetchone()[0]
-    
-    conn.commit()
-    conn.close()
-
-    text = (
-        "<blockquote>\n"
-        "🎁 Daily Gift Spin Winner! \n"
-        "</blockquote>\n\n"
-        f"Aapko mile: ₹{spin_amount:.2f}\n"
-        f"Updated Wallet: ₹{new_balance:.2f}"
-    )
-
-    keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu", style="danger")]
-    ])
-
-    await call.message.edit_text(text=text, reply_markup=keyboard, parse_mode="HTML")    
 
 if __name__ == '__main__':
     init_db()
