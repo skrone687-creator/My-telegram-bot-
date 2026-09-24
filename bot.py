@@ -73,6 +73,13 @@ def init_db():
     """)
     conn.commit()
     conn.close()
+    
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS daily_spin (
+        user_id INTEGER PRIMARY KEY,
+        last_spin_time REAL
+    )
+""")
 
 # Balance update karne ka function
 def update_balance(user_id: int, amount: float):
@@ -385,33 +392,6 @@ import random
 @router.callback_query(F.data == "menu_daily_gift")
 async def process_daily_gift(call: types.CallbackQuery):
     await call.answer()
-    user_id = call.from_user.id
-    now = datetime.datetime.now()
-
-    if user_id in user_last_spin:
-        last_spin = user_last_spin[user_id]
-        time_diff = now - last_spin
-        if time_diff < datetime.timedelta(hours=24):
-            remaining = datetime.timedelta(hours=24) - time_diff
-            hours = remaining.seconds // 3600
-            minutes = (remaining.seconds % 3600) // 60
-            keyboard = types.InlineKeyboardMarkup(
-                inline_keyboard=[
-                    [
-                        types.InlineKeyboardButton(
-                            text="Back to Menu",
-                            callback_data="back_to_menu",
-                            style="danger",
-                        )
-                    ]
-                ]
-            )
-            await call.message.edit_text(
-                f"⏳ Please wait {hours} hours and {minutes} minutes before your next spin.",
-                reply_markup=keyboard,
-            )
-            return
-
     text = (
         "<blockquote><b>🎁 Daily Lucky Spin Wheel </b></blockquote>\n\n"
         "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
@@ -727,6 +707,29 @@ async def process_buy_product(call: types.CallbackQuery):
         parse_mode="HTML"
     )
     await call.answer()
+    
+ import random
+
+def process_spin(user_id):
+    current_time = time.time()
+    conn = sqlite3.connect("products.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT last_spin_time FROM daily_spin WHERE user_id = ?", (user_id,))
+    result = cursor.fetchone()
+    last_spin_time = result[0] if result else 0
+    cooldown = 24 * 3600
+    
+    if current_time - last_spin_time >= cooldown:
+        amount = round(random.uniform(0.0, 1.0), 2)
+        update_balance(user_id=user_id, amount=amount)
+        cursor.execute("INSERT OR REPLACE INTO daily_spin (user_id, last_spin_time) VALUES (?, ?)", (user_id, current_time))
+        conn.commit()
+        conn.close()
+        return {"status": "won", "amount": amount}
+    else:
+        conn.close()
+        remaining_time = cooldown - (current_time - last_spin_time)
+        return {"status": "cooldown", "remaining_time": remaining_time}   
     
 if __name__ == '__main__':
     init_db()
