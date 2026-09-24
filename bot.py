@@ -741,6 +741,7 @@ def process_spin(user_id):
 @router.callback_query(F.data
 == "spin_now")
 async def spin_now(call: types.CallbackQuery):
+    update_balance(call.from_user.id, amount)
     amount = round(random.uniform(0, 1), 2)
     current_balance = get_balance(call.from_user.id)
     # यहाँ आप डेटाबेस में बैलेंस अपडेट कर सकते हैं
