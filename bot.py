@@ -635,7 +635,7 @@ async def process_main_menu(call: types.CallbackQuery):
      "┝📨 Support : Bot Problem Fixed For Support Admin\n"
      "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-     "<blockquote>💰 Your Balance:🪙₹{current_balance}</blockquote>\n\n"  
+     f"<blockquote>💰 Your Balance:🪙₹{current_balance:.2f}</blockquote>\n\n"  
      "<i>👇 Select an option from the menu below:</i>",
      parse_mode="HTML",
      reply_markup=main_menu_kb(),
