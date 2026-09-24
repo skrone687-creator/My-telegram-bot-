@@ -778,7 +778,7 @@ async def process_spin_now(call: types.CallbackQuery):
         [InlineKeyboardButton(text="Back to Menu", callback_data="back_to_menu", style="danger")]
     ])
 
-    await call.message.edit_text(text=text, reply_markup=keyboard        
+    await call.message.edit_text(text=text, reply_markup=keyboard, parse_mode="HTML")    
 
 if __name__ == '__main__':
     init_db()
