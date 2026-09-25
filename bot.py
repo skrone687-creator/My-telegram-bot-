@@ -44,7 +44,7 @@ products_db = {
     "151": "ABCD PANEL ",
     "76": "KOS 8 B",
     "78": "SNAKE SOCCE",
-    "49": "BR M",
+    "63": "DRIPCLIENT ROOT",
     "166": "TROLL MODZ ",
 }
 plans_db = {
@@ -59,7 +59,7 @@ plans_db = {
     "151": [{"plan_name": "1 DAYS", "price": 50.00}, {"plan_name": "7 DAYS", "price": 250.00}],
     "76": [{"plan_name": "12 HOURS", "price": 60.00}, {"plan_name": "3 DAYS", "price": 200.00}],
     "78": [{"plan_name": "1 HOURS", "price": 5.00}, {"plan_name": "1 DAYS", "price": 30.00}],
-    "49": [{"plan_name": "6 HOURS", "price": 50.00}, {"plan_name": "7 DAYS", "price": 280.00}],
+    "63": [{"plan_name": "6 HOURS", "price": 50.00}, {"plan_name": "7 DAYS", "price": 280.00}],
     "166": [{"plan_name": "1 DAYS", "price": 80.00}, {"plan_name": "30 DAYS", "price": 600.00}],
 }
 def init_db():
