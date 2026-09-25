@@ -425,7 +425,7 @@ async def process_daily_gift(call: types.CallbackQuery):
                 f"Please wait another {hours}h {minutes}m before trying to spin the wheel again.")
                 
         keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-            [types.InlineKeyboardButton(text=f"Lock [{hours}h] [{minutes}m]", callback_data="ignore", style="success")],
+            [types.InlineKeyboardButton(text=f"Lock ({hours}h {minutes}m)", callback_data="ignore", style="success")],
             [types.InlineKeyboardButton(text="Back to Menu", callback_data="menu_back", style="danger")]
         ])
 
@@ -760,7 +760,7 @@ async def spin_now(call: types.CallbackQuery):
         new_balance = current_balance + amount
         update_balance(user_id, amount)
         
-        text = (f"<blockquote><b>🎁  Daily Gift Spin Winner! 🎁</b></blockquote>\n\n"
+        text = (f"<blockquote><b>🎁  Daily Gift Spin Winner! </b></blockquote>\n\n"
                 f"You won a randomized claim of: <b>{amount}</b>\n\n"
                 f"Updated Wallet: <b>{new_balance}</b>")
                 
