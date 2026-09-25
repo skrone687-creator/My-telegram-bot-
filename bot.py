@@ -406,11 +406,12 @@ async def process_daily_gift(call: types.CallbackQuery):
     conn.close()
 
     if current_time - last_spin_time >= cooldown:
-        text = (f"<blockquote>🪙 Daily Lucky Spin Wheel 🪙</blockquote>\n\n"
+        text = (f"<blockquote><b>🎁 Daily Lucky Spin Wheel </b></blockquote>\n\n"
                 f"Spin the wheel once every 24 hours and win free balance credited instantly to your wallet!\n\n"
-                f"🎯 Winning Range: ₹0.00 to ₹1.00\n"
-                f"👤 Spin Limit: 1 spin per 24 hours\n\n"
+                f"┝ 🪙 Winning Range: ₹0.00 to ₹1.00\n"
+                f"┝ ⏳ Spin Limit: 1 spin per 24 hours\n\n"
                 f"👇 Click the button below to try your luck:")
+                
         keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
             [types.InlineKeyboardButton(text="Spin Now!", callback_data="spin_now", style="success")],
             [types.InlineKeyboardButton(text="Back to Menu", callback_data="menu_back", style="danger")]
@@ -419,16 +420,17 @@ async def process_daily_gift(call: types.CallbackQuery):
         remaining_time = cooldown - (current_time - last_spin_time)
         hours = int(remaining_time // 3600)
         minutes = int((remaining_time % 3600) // 60)
-        text = (f"<blockquote>YOU HAVE TO WAIT\n\n"
-                f"You have already claimed today's spin!\n"
-                f"You HAVE to wait.\n\n"
-                f"Please wait again {hours} hours and {minutes} minutes before trying to spin the wheel again.</blockquote>")
+        
+        text = (f"<blockquote><b>You have already claimed today's spin!</b></blockquote>\n\n"
+                f"Please wait another {hours}h {minutes}m before trying to spin the wheel again.")
+                
         keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-            [types.InlineKeyboardButton(text=f"🔒 {hours}h {minutes}m", callback_data="ignore", style="danger")],
+            [types.InlineKeyboardButton(text=f"🔒 {hours}h {minutes}m", callback_data="ignore")],
             [types.InlineKeyboardButton(text="Back to Menu", callback_data="menu_back", style="danger")]
         ])
 
     await call.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
+
 
 
 
