@@ -760,12 +760,12 @@ async def spin_now(call: types.CallbackQuery):
         new_balance = current_balance + amount
         update_balance(user_id, amount)
         
-        text = (f"<blockquote><b>🎁 daily gift spin winner! 🎁</b>\n\n"
-                f"you won a randomized claim of: <b>{amount}</b></blockquote>\n\n"
-                f"updated wallet: <b>{new_balance}</b>")
+        text = (f"<blockquote><b>🎁  Daily Gift Spin Winner! 🎁</b></blockquote>\n\n"
+                f"You won a randomized claim of: <b>{amount}</b>\n\n"
+                f"Updated Wallet: <b>{new_balance}</b>")
                 
         keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-            [types.InlineKeyboardButton(text="Back to Menu", callback_data="menu_back")]
+            [types.InlineKeyboardButton(text="Back to Menu", callback_data="menu_back", style="danger")]
         ])
     else:
         remaining_time = status_result["remaining_time"]
