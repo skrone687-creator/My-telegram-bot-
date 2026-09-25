@@ -772,14 +772,17 @@ async def spin_now(call: types.CallbackQuery):
         hours = int(remaining_time // 3600)
         minutes = int((remaining_time % 3600) // 60)
         
-        text = (f"<blockquote><b>you have already claimed today's spin!</b>\n"
-                f"please wait another {hours}h {minutes}m before trying to spin the wheel again.</blockquote>")
-                
-        keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-            [types.InlineKeyboardButton(text=f"Lock ({hours}h {minutes}m)", callback_data="menu_back")]
-        ])
+        text = (
+    f"<b><blockquote>🎁 Daily Lucky Spin Wheel </blockquote></b>\n"
+    "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
+    "Spin the wheel once every 24 hours and win free balance credited instantly to your wallet!\n\n"
+    "<b>┝🪙Winning Range:</b> ₹0.00 to ₹1.00\n"
+    "<b>┝⏳Spin Limit:</b> 1 spin per 24 hours\n\n"
+    f"<b><blockquote>⏳You have already claimed today's spin! </blockquote></b>\n"
+    "Please wait another ({hours}h {minutes}m) before trying to spin the wheel again."
+)
+await call.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
 
-    await call.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
 
 
 
