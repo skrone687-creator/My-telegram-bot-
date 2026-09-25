@@ -422,7 +422,7 @@ async def process_daily_gift(call: types.CallbackQuery):
         minutes = int((remaining_time % 3600) // 60)
         
         text = (
-        f"<b><blockquote>🎁 Daily Lucky Spin Wheel </blockquote></b>\n"
+        f"<b><blockquote>🎁 Daily Lucky Spin Wheel </blockquote></b>\n\n"
         "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
         "Spin the wheel once every 24 hours and win free balance credited instantly to your wallet!\n\n"
         "<b>┝🪙Winning Range:</b> ₹0.00 to ₹1.00\n"
@@ -780,7 +780,7 @@ async def spin_now(call: types.CallbackQuery):
         minutes = int((remaining_time % 3600) // 60)
         
         text = (
-    f"<b><blockquote>🎁 Daily Lucky Spin Wheel </blockquote></b>\n"
+    f"<b><blockquote>🎁 Daily Lucky Spin Wheel </blockquote></b>\n\n"
     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
     "Spin the wheel once every 24 hours and win free balance credited instantly to your wallet!\n\n"
     "<b>┝🪙Winning Range:</b> ₹0.00 to ₹1.00\n"
