@@ -741,7 +741,7 @@ def process_spin(user_id):
         remaining_time = cooldown - (current_time - last_spin_time)
         return {"status": "cooldown", "remaining_time": remaining_time} 
         
-@router.callback_query(f.data == "spin_now")
+@router.callback_query(F.data == "spin_now")
 async def spin_now(call: types.CallbackQuery):
     amount = round(random.uniform(0, 1), 2)
     current_balance = get_balance(call.from_user.id)
