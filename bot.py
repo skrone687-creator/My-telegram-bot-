@@ -749,11 +749,12 @@ async def spin_now(call: types.CallbackQuery):
     update_balance(call.from_user.id, amount)
     text = (f"<blockquote>🎁  Daily Gift Spin Winner!</blockquote>\n\n"
             f"You won a randomized claim of: 🪙{amount}\n\n"
-            f'<span style="color:white">Updated Wallet:</span> 🪙{new_balance}')
+            f"Updated Wallet: 🪙{new_balance}")
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-    [types.InlineKeyboardButton(text="Back to Menu", callback_data="main_menu", style="danger")]
-])
+        [types.InlineKeyboardButton(text="Back to Menu", callback_data="main_menu", style="danger")]
+    ])
     await call.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
+
 
     
 
