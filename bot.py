@@ -423,7 +423,7 @@ async def process_daily_gift(call: types.CallbackQuery):
         
         text = (
         f"<b><blockquote>🎁 Daily Lucky Spin Wheel </blockquote></b>\n\n"
-        "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
+        "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
         "Spin the wheel once every 24 hours and win free balance credited instantly to your wallet!\n\n"
         "<b>┝🪙Winning Range:</b> ₹0.00 to ₹1.00\n"
         "<b>┝⏳Spin Limit:</b> 1 spin per 24 hours\n\n"
@@ -768,8 +768,8 @@ async def spin_now(call: types.CallbackQuery):
         update_balance(user_id, amount)
         
         text = (f"<blockquote><b>🎁  Daily Gift Spin Winner! </b></blockquote>\n\n"
-                f"You won a randomized claim of: <b>{amount}</b>\n\n"
-                f"Updated Wallet: <b>{new_balance}</b>")
+                f"You won a randomized claim of: <b>₹{amount}</b>\n\n"
+                f"Updated Wallet: <b>₹{new_balance}</b>")
                 
         keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
             [types.InlineKeyboardButton(text="Back to Menu", callback_data="menu_back", style="danger")]
@@ -781,7 +781,7 @@ async def spin_now(call: types.CallbackQuery):
         
         text = (
     f"<b><blockquote>🎁 Daily Lucky Spin Wheel </blockquote></b>\n\n"
-    "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n"
+    "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
     "Spin the wheel once every 24 hours and win free balance credited instantly to your wallet!\n\n"
     "<b>┝🪙Winning Range:</b> ₹0.00 to ₹1.00\n"
     "<b>┝⏳Spin Limit:</b> 1 spin per 24 hours\n\n"
