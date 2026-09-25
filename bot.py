@@ -761,8 +761,8 @@ async def spin_now(call: types.CallbackQuery):
         update_balance(user_id, amount)
         
         text = (f"<blockquote><b>🎁 daily gift spin winner! 🎁</b>\n\n"
-                f"you won a randomized claim of: <b>{amount}</b>\n\n"
-                f"updated wallet: <b>{new_balance}</b></b></blockquote>")
+                f"you won a randomized claim of: <b>{amount}</b></blockquote>\n\n"
+                f"updated wallet: <b>{new_balance}</b>")
                 
         keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
             [types.InlineKeyboardButton(text="Back to Menu", callback_data="menu_back")]
@@ -776,10 +776,11 @@ async def spin_now(call: types.CallbackQuery):
                 f"please wait another {hours}h {minutes}m before trying to spin the wheel again.</blockquote>")
                 
         keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-            [types.InlineKeyboardButton(text="Back to Menu", callback_data="menu_back")]
+            [types.InlineKeyboardButton(text=f"Lock ({hours}h {minutes}m)", callback_data="menu_back")]
         ])
 
     await call.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
+
 
 
 
