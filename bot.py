@@ -741,20 +741,20 @@ def process_spin(user_id):
         remaining_time = cooldown - (current_time - last_spin_time)
         return {"status": "cooldown", "remaining_time": remaining_time} 
         
-@router.callback_query(F.data
-== "spin_now")
+@router.callback_query(f.data == "spin_now")
 async def spin_now(call: types.CallbackQuery):
-    amount = 0
     amount = round(random.uniform(0, 1), 2)
     current_balance = get_balance(call.from_user.id)
-    # यहाँ आप डेटाबेस में बैलेंस अपडेट कर सकते हैं
-    text = (f"<blockquote>🎁 Daily Gift Spin Winner!</blockquote>\n\n"
-            f"You won a randomized claim of: 🪙₹{amount}\n\n"
-            f"Updated Wallet: 🪙₹{current_balance}")
+    new_balance = current_balance + amount
+    update_balance(call.from_user.id, amount)
+    text = (f"<blockquote>🎁  Daily Gift Spin Winner!</blockquote>\n\n"
+            f"You won a randomized claim of: 🪙{amount}\n\n"
+            f'<span style="color:white">Updated Wallet:</span> 🪙{new_balance}')
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-        [types.InlineKeyboardButton(text="Back to Menu", callback_data="main_menu", style="danger")]
-    ])
+    [types.InlineKeyboardButton(text="Back to Menu", callback_data="main_menu", style="danger")]
+])
     await call.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
+
     
 
 if __name__ == '__main__':
