@@ -424,8 +424,8 @@ async def process_daily_gift(call: types.CallbackQuery):
         text = (f"<blockquote><b>You have already claimed today's spin!</b></blockquote>\n\n"
                 f"Please wait another {hours}h {minutes}m before trying to spin the wheel again.")
                 
-        keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-            [types.InlineKeyboardButton(text=f"🔒 {hours}h {minutes}m", callback_data="ignore")],
+                keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
+            [types.InlineKeyboardButton(text=f"Lock [{hours}h] [{minutes}m]", callback_data="ignore", style="success")],
             [types.InlineKeyboardButton(text="Back to Menu", callback_data="menu_back", style="danger")]
         ])
 
