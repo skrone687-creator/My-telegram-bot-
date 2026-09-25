@@ -751,17 +751,36 @@ def process_spin(user_id):
         
 @router.callback_query(F.data == "spin_now")
 async def spin_now(call: types.CallbackQuery):
-    amount = round(random.uniform(0, 1), 2)
-    current_balance = get_balance(call.from_user.id)
-    new_balance = current_balance + amount
-    update_balance(call.from_user.id, amount)
-    text = (f"<blockquote>🎁  Daily Gift Spin Winner!</blockquote>\n\n"
-            f"You won a randomized claim of: 🪙{amount}\n\n"
-            f"Updated Wallet: 🪙{new_balance}")
-    keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-        [types.InlineKeyboardButton(text="Back to Menu", callback_data="main_menu", style="danger")]
-    ])
+    user_id = call.from_user.id
+    status_result = process_spin(user_id)
+
+    if status_result["status"] == "won":
+        amount = status_result["amount"]
+        current_balance = get_balance(user_id)
+        new_balance = current_balance + amount
+        update_balance(user_id, amount)
+        
+        text = (f"<blockquote><b>🎁 daily gift spin winner! 🎁</b>\n\n"
+                f"you won a randomized claim of: <b>{amount}</b>\n\n"
+                f"updated wallet: <b>{new_balance}</b></b></blockquote>")
+                
+        keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
+            [types.InlineKeyboardButton(text="Back to Menu", callback_data="menu_back")]
+        ])
+    else:
+        remaining_time = status_result["remaining_time"]
+        hours = int(remaining_time // 3600)
+        minutes = int((remaining_time % 3600) // 60)
+        
+        text = (f"<blockquote><b>you have already claimed today's spin!</b>\n"
+                f"please wait another {hours}h {minutes}m before trying to spin the wheel again.</blockquote>")
+                
+        keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
+            [types.InlineKeyboardButton(text="Back to Menu", callback_data="menu_back")]
+        ])
+
     await call.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
+
 
 
     
