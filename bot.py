@@ -724,7 +724,6 @@ def process_spin(user_id):
     
     if current_time - last_spin_time >= cooldown:
         amount = round(random.uniform(0.0, 1.0), 2)
-        update_balance(user_id=user_id, amount=amount)
         cursor.execute("INSERT OR REPLACE INTO daily_spin (user_id, last_spin_time) VALUES (?, ?)", (user_id, current_time))
         conn.commit()
         conn.close()
