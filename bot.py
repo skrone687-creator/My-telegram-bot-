@@ -107,29 +107,7 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 router = Router()
-async def send_payment_qr(call: types.CallbackQuery, amount: str):
- # यहाँ अपनी UPI ID डालें
- upi_id = "7318748360@fam"
- upi_url = f"upi://pay?pa={upi_id}&am={amount}&cu=INR"
- 
- qr = qrcode.QRCode(version=1, box_size=10, border=4)
- qr.add_data(upi_url)
- qr.make(fit=True)
- img = qr.make_image(fill_color="black", back_color="white")
- 
- buffer = BytesIO()
- img.save(buffer, format="PNG")
- buffer.seek(0)
- 
- keyboard = InlineKeyboardMarkup(inline_keyboard=[
- [
- InlineKeyboardButton(text="Verify Payment", callback_data="verify_payment", style="success"),
- InlineKeyboardButton(text="Cancel Order", callback_data="cancel_order", style="danger")
- ]
- ])
- 
- await call.message.answer_photo(photo=types.BufferedInputFile(buffer.getvalue(), filename="qr.png"), caption=caption, reply_markup=keyboard)
- await message.answer_photo(photo=types.BufferedInputFile(buffer.getvalue(), filename="qr.png"), caption=caption, reply_markup=keyboard)
+
 def main_menu_kb() -> InlineKeyboardMarkup:
     kb = InlineKeyboardMarkup(inline_keyboard=[])
 
