@@ -504,7 +504,7 @@ async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext
             [
                 types.InlineKeyboardButton(
                     text="VERIFY PAYMENT",
-                    callback_data="verify_payment",
+                    callback_data=f"verify_payment_{amount}",
                     style="success",
                 )
             ],
@@ -809,9 +809,10 @@ if "successful" in body.lower() and "amount" in body.lower():
     update_balance(user_id, amount)
 
 
-@router.callback_query(F.data == "verify_payment")
+@router.callback_query(F.data.startswith("verify_payment_"))
 async def verify_payment(call: types.CallbackQuery):
     user_id = call.from_user.id
+    amount = float(call.data.split("_")[2])
     payment_verified = check_email_for_payment(user_id, amount)
 
     if payment_verified:
@@ -819,6 +820,8 @@ async def verify_payment(call: types.CallbackQuery):
         await call.answer(text="Payment Successful", show_alert=True)
     else:
         await call.answer(text="Payment not found.", show_alert=True)
+
+
 
 
 
