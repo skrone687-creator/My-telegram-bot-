@@ -492,7 +492,7 @@ async def process_buy(message: types.Message):
 async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext):
     amount = callback_query.data.split("_")[2]
     upi_id = "sahilsk892@fam"  # Apni UPI ID yahan dalein
-    upi_link = f"upi://pay?pa={upi_id}&am={amount:.2f}&cu=INR"
+    upi_link = f"upi://pay?pa={upi_id}&am={amount}&cu=INR"
     
     qr = qrcode.QRCode(
     version=None,
