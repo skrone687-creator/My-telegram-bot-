@@ -823,7 +823,41 @@ async def verify_payment(call: types.CallbackQuery):
 
 
 
-
+def check_email_for_payment(user_id, amount):
+    EMAIL = "sahillxd892@gmail.com"
+    PASSWORD = "oviyztgaoeebfhz"
+    
+    try:
+        mail = imaplib.IMAP4_SSL("imap.gmail.com")
+        mail.login(EMAIL, PASSWORD)
+        mail.select("inbox")
+        
+        status, messages = mail.search(None, "ALL")
+        email_ids = messages[0].split()
+        
+        for e_id in email_ids[-10:]:
+            status, msg_data = mail.fetch(e_id, "(RFC822)")
+            for response_part in msg_data:
+                if isinstance(response_part, tuple):
+                    msg = email.message_from_bytes(response_part[1])
+                    body = ""
+                    if msg.is_multipart():
+                        for part in msg.walk():
+                            if part.get_content_type() == "text/plain":
+                                body = part.get_payload(decode=True).decode()
+                                break
+                    else:
+                        body = msg.get_payload(decode=True).decode()
+                    
+                    if "successful" in body.lower() and str(amount) in body:
+                        mail.logout()
+                        return True
+                        
+        mail.logout()
+        return False
+    except Exception as e:
+        print(f"Error checking email: {e}")
+        return False
 
 
 
