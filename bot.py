@@ -84,18 +84,18 @@ def init_db():
         )
     """)
     
-cursor.execute(
+    cursor.execute(
     """
     ALTER TABLE users ADD COLUMN qr_created_time REAL
-"""
-)
+    """
+    )
  
-cursor.execute("""
+    cursor.execute("""
     CREATE TABLE IF NOT EXISTS daily_spin (
         user_id INTEGER PRIMARY KEY,
         last_spin_time INTEGER
     )
-""")
+    """)
 conn.commit()
 conn.close()
 # Balance update karne ka function
