@@ -500,16 +500,16 @@ async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext
     box_size=15,
     border=4,
 )
-qr.add_data(upi_link)
-qr.make(fit=True)
-img = qr.make_image(fill_color="black", back_color="white")
+    qr.add_data(upi_link)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
 
-buffer = BytesIO()
-img.save(buffer, format="PNG")
-buffer.seek(0)
+    buffer = BytesIO()
+    img.save(buffer, format="PNG")
+    buffer.seek(0)
 
 
-    markup = types.InlineKeyboardMarkup(
+        markup = types.InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 types.InlineKeyboardButton(
