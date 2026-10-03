@@ -814,7 +814,7 @@ else:
     body = msg.get_payload(decode=True).decode()
 
 # Check for keywords
-if "successful" in body.lower() and str(amount) in body:
+if "received" in body.lower() and str(amount) in body:
     # Insert logic to update balance here
     update_balance(user_id, amount)
 
@@ -875,7 +875,7 @@ def check_email_for_payment(user_id, amount):
                     else:
                         body = msg.get_payload(decode=True).decode()
                     
-                    if "successful" in body.lower() and str(amount) in body:
+                    if "received" in body.lower() and str(amount) in body:
                         mail.logout()
                         return True
                         
