@@ -96,7 +96,7 @@ cursor.execute("""
         last_spin_time INTEGER
     )
 """)
-    conn.commit()
+conn.commit()
     conn.close()
 # Balance update karne ka function
 def update_balance(user_id: int, amount: float):
@@ -106,7 +106,7 @@ def update_balance(user_id: int, amount: float):
         INSERT INTO users (user_id, balance) VALUES (?, ?)
         ON CONFLICT(user_id) DO UPDATE SET balance = balance + ?
     """, (user_id, amount, amount))
-    conn.commit()
+conn.commit()
     conn.close()
 
 # Balance fetch karne ka function
