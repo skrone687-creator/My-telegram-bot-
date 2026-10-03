@@ -814,7 +814,7 @@ else:
     body = msg.get_payload(decode=True).decode()
 
 # Check for keywords
-if "successful" in body.lower() and "amount" in body.lower():
+if "successful" in body.lower() and str(amount) in body:
     # Insert logic to update balance here
     update_balance(user_id, amount)
 
