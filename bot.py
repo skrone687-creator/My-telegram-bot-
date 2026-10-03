@@ -886,7 +886,79 @@ def check_email_for_payment(user_id, amount):
         return False
 
 
+keyboard = InlineKeyboardMarkup(inline_keyboard=[
+    [
+        InlineKeyboardButton(text="1", callback_data="num_1", style="success"),
+        InlineKeyboardButton(text="2", callback_data="num_2", style="success"),
+        InlineKeyboardButton(text="3", callback_data="num_3", style="success")
+    ],
+    [
+        InlineKeyboardButton(text="4", callback_data="num_4", style="success"),
+        InlineKeyboardButton(text="5", callback_data="num_5", style="success"),
+        InlineKeyboardButton(text="6", callback_data="num_6", style="success")
+    ],
+    [
+        InlineKeyboardButton(text="7", callback_data="num_7", style="success"),
+        InlineKeyboardButton(text="8", callback_data="num_8", style="success"),
+        InlineKeyboardButton(text="9", callback_data="num_9", style="success")
+    ],
+    [
+        InlineKeyboardButton(text="CLEAR", callback_data="clear", style="danger"),
+        InlineKeyboardButton(text="0", callback_data="num_0", style="success"),
+        InlineKeyboardButton(text="BACK", callback_data="back", style="danger")
+    ],
+    [
+        InlineKeyboardButton(text="CONFIRM AMOUNT", callback_data="confirm", style="success")
+    ],
+    [
+        InlineKeyboardButton(text="Return to Quick Amounts", callback_data="back_to_quick", style="danger")
+    ]
+])
 
+@router.callback_query(lambda c: c.data.startswith("num_"))
+async def process_number(call: types.CallbackQuery, state: FSMContext):
+    number = call.data.split("_")[1]
+    data = await state.get_data()
+    current_amount = data.get("amount", "")
+    if current_amount == "0":
+        new_amount = number
+    else:
+        new_amount = current_amount + number
+    await state.update_data(amount=new_amount)
+    await update_keypad(call, new_amount)
+
+@router.callback_query(lambda c: c.data == "clear")
+async def process_clear(call: types.CallbackQuery, state: FSMContext):
+    await state.update_data(amount="0")
+    await update_keypad(call, "0")
+
+@router.callback_query(lambda c: c.data == "back")
+async def process_back(call: types.CallbackQuery, state: FSMContext):
+    data = await state.get_data()
+    current_amount = data.get("amount", "0")
+    if len(current_amount) > 1:
+        new_amount = current_amount[:-1]
+    else:
+        new_amount = "0"
+    await state.update_data(amount=new_amount)
+    await update_keypad(call, new_amount)
+
+@router.callback_query(lambda c: c.data == "confirm")
+async def process_confirm(call: types.CallbackQuery, state: FSMContext):
+    data = await state.get_data()
+    final_amount = data.get("amount", "0")
+    await call.message.answer(f"Amount ₹{final_amount} confirmed!")
+    await call.answer()
+
+async def update_keypad(call: types.CallbackQuery, amount: str):
+    text = (
+        "<blockquote>💰 ENTER CUSTOM AMOUNT</blockquote>\n\n"
+        f"Amount: <b>₹{amount}</b>\n"
+        "Min: <b>₹1.00</b> | Max: <b>₹50,000.00</b>\n"
+        "Use the keypad below to enter amount or type directly in chat."
+    )
+    await call.message.edit_text(text=text, reply_markup=keyboard, parse_mode="HTML")
+    await call.answer()
     
 
 if __name__ == '__main__':
