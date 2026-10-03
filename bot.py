@@ -813,10 +813,6 @@ if msg.is_multipart():
 else:
     body = msg.get_payload(decode=True).decode()
 
-# Check for keywords
-if "successful" in body.lower() and str(amount) in body:
-    # Insert logic to update balance here
-    update_balance(user_id, amount)
 
 
 @router.callback_query(F.data.startswith("verify_payment_"))
@@ -1010,4 +1006,3 @@ if __name__ == '__main__':
     init_db()
     dp.include_router(router)
     asyncio.run(dp.start_polling(bot))
-     
