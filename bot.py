@@ -509,7 +509,7 @@ async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext
     buffer.seek(0)
 
 
-        markup = types.InlineKeyboardMarkup(
+    markup = types.InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 types.InlineKeyboardButton(
