@@ -949,6 +949,11 @@ async def process_confirm(call: types.CallbackQuery, state: FSMContext):
     final_amount = data.get("amount", "0")
     await call.message.answer(f"Amount ₹{final_amount} confirmed!")
     await call.answer()
+    
+@router.callback_query(lambda c: c.data == "custom_amount")
+async def process_custom_amount(call: types.CallbackQuery, state: FSMContext):
+    await state.update_data(amount="0")
+    await update_keypad(call, "0")
 
 async def update_keypad(call: types.CallbackQuery, amount: str):
     text = (
@@ -959,7 +964,7 @@ async def update_keypad(call: types.CallbackQuery, amount: str):
     )
     await call.message.edit_text(text=text, reply_markup=keyboard, parse_mode="HTML")
     await call.answer()
-    
+   
 
 if __name__ == '__main__':
     init_db()
