@@ -530,7 +530,7 @@ async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext
 
     caption_text = (
         "<blockquote><b>📶SAHIL BHAI STORE UPI QR Active</b></blockquote>\n\n"
-        f"Scan & transfer exactly 🪙₹{amount} via your UPI app terminal.\n\n"
+        f"Scan & transfer exactly 🪙₹{amount:.2f} via your UPI app terminal.\n\n"
         f"Tap verify below after completing the core transaction transfer.\n\n"
         "<blockquote><b>⏳QR Session TTL: expires in 5 minutes.</b></blockquote>"
     )
