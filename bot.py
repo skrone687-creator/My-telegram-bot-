@@ -2,7 +2,7 @@ import imaplib
 import email
 import sqlite3
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 import asyncio
 from typing import Optional
@@ -823,6 +823,21 @@ if "successful" in body.lower() and "amount" in body.lower():
 async def verify_payment(call: types.CallbackQuery):
     user_id = call.from_user.id
     amount = float(call.data.split("_")[2])
+    # QR कोड बनने का समय (यह समय डेटाबेस से प्राप्त करें)
+    qr_created_time = datetime.now()  # उदाहरण के लिए वर्तमान समय
+
+    # वर्तमान समय में से QR कोड बनने का समय घटाएं
+    current_time = datetime.now()
+    time_difference = current_time - qr_created_time
+
+    # अगर डिफ़रेंस 5 मिनट से ज़्यादा है, तो पॉप-अप दिखाएं
+if time_difference > timedelta(minutes=5):
+    await call.answer(
+                text="This payment QR asset has expired. Generate a new session.",
+                show_alert=True,
+    )
+    return  # आगे का लॉजिक रन न हो
+    
     payment_verified = check_email_for_payment(user_id, amount)
 
     if payment_verified:
