@@ -829,7 +829,7 @@ async def verify_payment(call: types.CallbackQuery):
         update_balance(user_id, amount)
         await call.answer(text="Payment Successful", show_alert=True)
     else:
-        await call.answer(text="Payment not found.", show_alert=True)
+        await call.answer(text="👑Payment asset not logged on network yet.", show_alert=True)
 
 
 
