@@ -949,8 +949,8 @@ async def process_confirm(call: types.CallbackQuery, state: FSMContext):
     final_amount = int(data.get("amount", "0"))
 
     if 1 <= final_amount <= 50000:
-    text = f"🛍️ SELECT GATEWAY MODE\n💰 Deposit Amount: ₹{final_amount}"
-    keyboard = types.InlineKeyboardMarkup(
+        text = f"🛍️ SELECT GATEWAY MODE\n💰 Deposit Amount: ₹{final_amount}"
+        keyboard = types.InlineKeyboardMarkup(
         inline_keyboard=[
             [
                 types.InlineKeyboardButton(
@@ -964,12 +964,12 @@ async def process_confirm(call: types.CallbackQuery, state: FSMContext):
             ],
         ]
     )
-    await call.message.answer(
+        await call.message.answer(
         text, reply_markup=keyboard, parse_mode="HTML"
     )
-    await call.answer()
-else:
-    await call.answer(
+        await call.answer()
+    else:
+        await call.answer(
         "⚠️ Amount must be between ₹1 and ₹50000", show_alert=True
     )
 
