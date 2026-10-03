@@ -994,6 +994,17 @@ async def update_keypad(call: types.CallbackQuery, amount: str):
     await call.message.edit_text(text=text, reply_markup=keyboard, parse_mode="HTML")
     await call.answer()
    
+@router.callback_query(F.data == "back_to_quick")
+async def back_to_add_balance(call: types.CallbackQuery):
+    text = (
+        "<blockquote><b>💰ADD FUNDS TO WALLET</b></blockquote>\n\n"
+        "Choose a quick amount to add or type/use a customer one below.\n\n"
+        "<blockquote><i>🚀Predefined amounts are faster to process!</i></blockquote>"
+    )
+    await call.message.edit_text(
+        text=text, reply_markup=add_balance_kb(), parse_mode="HTML"
+    )
+    await call.answer()
 
 if __name__ == '__main__':
     init_db()
