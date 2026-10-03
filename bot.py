@@ -820,21 +820,8 @@ async def verify_payment(call: types.CallbackQuery):
     else:
         await call.answer(text="Payment not found.", show_alert=True)
 
-# Assuming this is in your callback query handler
-if call.data == "verify_payment":
-    payment_verified = check_email_for_payment(
-        user_id, amount
-    )  # Your parsing function
 
-    if payment_verified:
-        update_balance(user_id, amount)
-        bot.answer_callback_query(
-            call.id, text="Payment Successful", show_alert=True
-        )
-    else:
-        bot.answer_callback_query(
-            call.id, text="Payment not found.", show_alert=True
-        )
+
 
 
     
