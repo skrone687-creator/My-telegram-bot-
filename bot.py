@@ -84,7 +84,7 @@ def init_db():
         )
     """)
     
-   cursor.execute(
+cursor.execute(
     """
     ALTER TABLE users ADD COLUMN qr_created_time REAL
 """
