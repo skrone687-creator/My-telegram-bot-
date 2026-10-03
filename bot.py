@@ -494,10 +494,15 @@ async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext
     upi_id = "7318748360@fam"  # Apni UPI ID yahan dalein
     upi_link = f"upi://pay?pa={upi_id}&am={amount}&cu=INR"
 
-    img = qrcode.make(upi_link)
-    buffer = BytesIO()
-    img.save(buffer, format="PNG")
-    buffer.seek(0)
+    qr = qrcode.QRCode(
+    version=1,
+    error_correction=qrcode.constants.ERROR_CORRECT_L,
+    box_size=15,
+    border=4,
+)
+    qr.add_data(upi_link)
+    qr.make(fit=True)
+    img = qr.make_image(fill_color="black", back_color="white")
 
     markup = types.InlineKeyboardMarkup(
         inline_keyboard=[
