@@ -949,7 +949,7 @@ async def process_confirm(call: types.CallbackQuery, state: FSMContext):
     final_amount = int(data.get("amount", "0"))
 
     if 1 <= final_amount <= 50000:
-        text = f"<blockquote>💸SELECT GATEWAY MODE</blockquote>\n\n🪙 Deposit Amount: ₹{final_amount}"
+        text = f"<blockquote>💸SELECT GATEWAY MODE</blockquote>\n\n🪙 Deposit Amount: ₹{final_amount:.2f}"
         keyboard = types.InlineKeyboardMarkup(
         inline_keyboard=[
             [
