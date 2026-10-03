@@ -1,3 +1,5 @@
+import imaplib
+import email
 import sqlite3
 import logging
 from datetime import datetime
@@ -767,7 +769,22 @@ async def spin_now(call: types.CallbackQuery):
 )
     await call.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
 
+# Connect to Gmail inbox
+mail = imaplib.IMAP4_SSL("imap.gmail.com")
+mail.login("sahilxd892@ail.com", "oviyztgaoeeobfhz")
+mail.select("inbox")
 
+# Search for all emails
+status, data = mail.search(None, "ALL")
+mail_ids = data[0].split()
+
+# Fetch the latest email
+latest_email_id = mail_ids[-1]
+status, data = mail.fetch(latest_email_id, "(RFC822)")
+
+# Parse the email content
+msg = email.message_from_bytes(data[0][1])
+print("Subject:", msg["Subject"])
 
 
 
