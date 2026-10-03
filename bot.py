@@ -954,7 +954,7 @@ async def process_confirm(call: types.CallbackQuery, state: FSMContext):
         inline_keyboard=[
             [
                 types.InlineKeyboardButton(
-                    text="PAY UPI", callback_data=f"pay_upi_{final_amount}"‚ style=danger"
+                    text="PAY UPI", callback_data=f"pay_upi_{final_amount}"
                 )
             ],
             [
