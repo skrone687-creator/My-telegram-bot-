@@ -949,12 +949,32 @@ async def process_confirm(call: types.CallbackQuery, state: FSMContext):
     final_amount = int(data.get("amount", "0"))
 
     if 1 <= final_amount <= 50000:
-        await call.message.answer(f"Amount ₹{final_amount} confirmed!")
-        await call.answer()
-    else:
-        await call.answer("⚠️Amount must be between ₹1 and ₹50000", show_alert=True)
+    text = f"🛍️ SELECT GATEWAY MODE\n💰 Deposit Amount: ₹{final_amount}"
+    keyboard = types.InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                types.InlineKeyboardButton(
+                    text="PAY UPI", callback_data=f"pay_upi_{final_amount}"
+                )
+            ],
+            [
+                types.InlineKeyboardButton(
+                    text="Cancel Request", callback_data="cancel_request"
+                )
+            ],
+        ]
+    )
+    await call.message.answer(
+        text, reply_markup=keyboard, parse_mode="HTML"
+    )
+    await call.answer()
+else:
+    await call.answer(
+        "⚠️ Amount must be between ₹1 and ₹50000", show_alert=True
+    )
 
-    
+
+
 @router.callback_query(lambda c: c.data == "custom_amount")
 async def process_custom_amount(call: types.CallbackQuery, state: FSMContext):
     await state.update_data(amount="0")
