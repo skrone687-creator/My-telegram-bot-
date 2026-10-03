@@ -97,7 +97,7 @@ cursor.execute("""
     )
 """)
 conn.commit()
-    conn.close()
+conn.close()
 # Balance update karne ka function
 def update_balance(user_id: int, amount: float):
     conn = sqlite3.connect("products.db")
@@ -107,7 +107,7 @@ def update_balance(user_id: int, amount: float):
         ON CONFLICT(user_id) DO UPDATE SET balance = balance + ?
     """, (user_id, amount, amount))
 conn.commit()
-    conn.close()
+conn.close()
 
 # Balance fetch karne ka function
 def get_balance(user_id: int) -> float:
