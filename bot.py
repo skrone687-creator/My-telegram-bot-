@@ -831,12 +831,13 @@ async def verify_payment(call: types.CallbackQuery):
     time_difference = current_time - qr_created_time
 
     # अगर डिफ़रेंस 5 मिनट से ज़्यादा है, तो पॉप-अप दिखाएं
-if time_difference > timedelta(minutes=5):
-    await call.answer(
-                text="This payment QR asset has expired. Generate a new session.",
-                show_alert=True,
-    )
-    return  # आगे का लॉजिक रन न हो
+    if time_difference > timedelta(minutes=5):
+        await call.answer(
+            text="❌This payment QR asset has expired. Generate a new session.",
+            show_alert=True,
+        )
+        return  # आगे का लॉजिक रन न हो
+        
     
     payment_verified = check_email_for_payment(user_id, amount)
 
