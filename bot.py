@@ -535,7 +535,7 @@ async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext
         "<blockquote><b>⏳QR Session TTL: expires in 5 minutes.</b></blockquote>"
     )
 
-    await callback_query.message.answer_photo(
+    await callback_query.message.answer_document(
         types.BufferedInputFile(buffer.getvalue(), filename="qr.png"),
         caption=caption_text,
         parse_mode="HTML",
