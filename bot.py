@@ -96,21 +96,21 @@ def init_db():
         last_spin_time INTEGER
     )
     """)
-conn.commit()
-conn.close()
-# Balance update karne ka function
-def update_balance(user_id: int, amount: float):
+    conn.commit()
+    conn.close()
+    # Balance update karne ka function
+    def update_balance(user_id: int, amount: float):
     conn = sqlite3.connect("products.db")
     cursor = conn.cursor()
     cursor.execute("""
         INSERT INTO users (user_id, balance) VALUES (?, ?)
         ON CONFLICT(user_id) DO UPDATE SET balance = balance + ?
     """, (user_id, amount, amount))
-conn.commit()
-conn.close()
+    conn.commit()
+    conn.close()
 
-# Balance fetch karne ka function
-def get_balance(user_id: int) -> float:
+    # Balance fetch karne ka function
+    def get_balance(user_id: int) -> float:
     conn = sqlite3.connect("products.db")
     cursor = conn.cursor()
     cursor.execute("SELECT balance FROM users WHERE user_id = ?", (user_id,))
