@@ -492,7 +492,7 @@ async def process_buy(message: types.Message):
 async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext):
     amount = callback_query.data.split("_")[2]
     upi_id = "sahilsk892@fam"  # Apni UPI ID yahan dalein
-    upi_link = f"upi://pay?pa={upi_id}&am={amount}&cu=INR"
+    upi_link = f"upi://pay?pa={upi_id}&am={amount:.2f}&cu=INR"
     
     qr = qrcode.QRCode(
     version=None,
@@ -530,7 +530,7 @@ async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext
 
     caption_text = (
         "<blockquote><b>📶SAHIL BHAI STORE UPI QR Active</b></blockquote>\n\n"
-        f"Scan & transfer exactly 🪙₹{amount} via your UPI app terminal.\n\n"
+        f"Scan & transfer exactly 🪙₹{amount:.2f} via your UPI app terminal.\n\n"
         f"Tap verify below after completing the core transaction transfer.\n\n"
         "<blockquote><b>⏳QR Session TTL: expires in 5 minutes.</b></blockquote>"
     )
