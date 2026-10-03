@@ -32,6 +32,15 @@ def init_db():
     conn.commit()
     conn.close()
 
+def update_balance(user_id, amount):
+    conn = sqlite3.connect("products.db")
+    cursor = conn.cursor()
+    cursor.execute(
+        "UPDATE users SET balance = balance + ? WHERE user_id = ?",
+        (amount, user_id),
+    )
+    conn.commit()
+    conn.close()
 
 
 products_db = {
@@ -104,7 +113,7 @@ def get_balance(user_id: int) -> float:
     return result[0] if result else 0.0
 
 # बोट सेटअप
-API_TOKEN = '8860343105:AAHeNTN8iS9USvC5Dt7gtiPgHacwxCNCyZk'
+API_TOKEN = '8720738090:AAEaW3h6pO1OWPeFaQ_wAAm2Sa-azZTiwFs'
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
@@ -290,7 +299,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 @router.callback_query(F.data == "menu_refer")
 async def refer_and_earn(call: types.CallbackQuery):
     user_id = call.from_user.id
-    bot_username = "sahil_567bot"
+    bot_username = "TESTBB21442_BOT"
     referral_link = f"https://t.me/{bot_username}?start=ref{user_id}"
 
     message_text = (
@@ -797,7 +806,8 @@ else:
 # Check for keywords
 if "successful" in body.lower() and "amount" in body.lower():
     # Insert logic to update balance here
-    print("Payment Verified")
+    update_balance(user_id, amount)
+
 
 
 # Assuming this is in your callback query handler
