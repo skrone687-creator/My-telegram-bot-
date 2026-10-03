@@ -958,9 +958,9 @@ async def process_custom_amount(call: types.CallbackQuery, state: FSMContext):
 async def update_keypad(call: types.CallbackQuery, amount: str):
     text = (
         "<blockquote>💰 ENTER CUSTOM AMOUNT</blockquote>\n\n"
-        f"Amount: <b>₹{amount}</b>\n"
-        "Min: <b>₹1.00</b> | Max: <b>₹50,000.00</b>\n"
-        "Use the keypad below to enter amount or type directly in chat."
+        f"Amount: <b>₹{amount}</b>\n\n"
+        "Use the keypad below to enter amount or type directly in chat.\n\n"
+        "Min: <b>₹1.00</b> | Max: <b>₹50,000.00</b>\n\n"
     )
     await call.message.edit_text(text=text, reply_markup=keyboard, parse_mode="HTML")
     await call.answer()
