@@ -972,7 +972,6 @@ async def process_confirm(call: types.CallbackQuery, state: FSMContext):
         await call.answer(
         "⚠️ Amount must be between ₹1 and ₹50000", show_alert=True
     )
-``` Kya aap isko check karne ke liye taiyar hain?
 
 
 
