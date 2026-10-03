@@ -84,11 +84,6 @@ def init_db():
         )
     """)
     
-    cursor.execute(
-    """
-    ALTER TABLE users ADD COLUMN qr_created_time REAL
-    """
-    )
  
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS daily_spin (
