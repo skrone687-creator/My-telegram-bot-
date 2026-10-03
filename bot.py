@@ -90,7 +90,7 @@ cursor.execute(
 """
 )
  
-    cursor.execute("""
+cursor.execute("""
     CREATE TABLE IF NOT EXISTS daily_spin (
         user_id INTEGER PRIMARY KEY,
         last_spin_time INTEGER
