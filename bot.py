@@ -809,6 +809,16 @@ if "successful" in body.lower() and "amount" in body.lower():
     update_balance(user_id, amount)
 
 
+@router.callback_query(F.data == "verify_payment")
+async def verify_payment(call: types.CallbackQuery):
+    user_id = call.from_user.id
+    payment_verified = check_email_for_payment(user_id, amount)
+
+    if payment_verified:
+        update_balance(user_id, amount)
+        await call.answer(text="Payment Successful", show_alert=True)
+    else:
+        await call.answer(text="Payment not found.", show_alert=True)
 
 # Assuming this is in your callback query handler
 if call.data == "verify_payment":
