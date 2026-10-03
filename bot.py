@@ -946,9 +946,14 @@ async def process_back(call: types.CallbackQuery, state: FSMContext):
 @router.callback_query(lambda c: c.data == "confirm")
 async def process_confirm(call: types.CallbackQuery, state: FSMContext):
     data = await state.get_data()
-    final_amount = data.get("amount", "0")
-    await call.message.answer(f"Amount ₹{final_amount} confirmed!")
-    await call.answer()
+    final_amount = int(data.get("amount", "0"))
+
+    if 1 <= final_amount <= 50000:
+        await call.message.answer(f"Amount ₹{final_amount} confirmed!")
+        await call.answer()
+    else:
+        await call.answer("⚠️Amount must be between ₹1 and ₹50000", show_alert=True)
+
     
 @router.callback_query(lambda c: c.data == "custom_amount")
 async def process_custom_amount(call: types.CallbackQuery, state: FSMContext):
