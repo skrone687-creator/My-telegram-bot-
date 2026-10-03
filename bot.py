@@ -784,8 +784,37 @@ status, data = mail.fetch(latest_email_id, "(RFC822)")
 
 # Parse the email content
 msg = email.message_from_bytes(data[0][1])
-print("Subject:", msg["Subject"])
+# Assuming 'msg' is the decoded email message
+body = ""
+if msg.is_multipart():
+    for part in msg.walk():
+        if part.get_content_type() == "text/plain":
+            body = part.get_payload(decode=True).decode()
+            break
+else:
+    body = msg.get_payload(decode=True).decode()
 
+# Check for keywords
+if "successful" in body.lower() and "amount" in body.lower():
+    # Insert logic to update balance here
+    print("Payment Verified")
+
+
+# Assuming this is in your callback query handler
+if call.data == "verify_payment":
+    payment_verified = check_email_for_payment(
+        user_id, amount
+    )  # Your parsing function
+
+    if payment_verified:
+        update_balance(user_id, amount)
+        bot.answer_callback_query(
+            call.id, text="Payment Successful", show_alert=True
+        )
+    else:
+        bot.answer_callback_query(
+            call.id, text="Payment not found.", show_alert=True
+        )
 
 
     
