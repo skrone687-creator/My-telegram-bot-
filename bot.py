@@ -84,6 +84,12 @@ def init_db():
         )
     """)
     
+   cursor.execute(
+    """
+    ALTER TABLE users ADD COLUMN qr_created_time REAL
+"""
+)
+ 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS daily_spin (
         user_id INTEGER PRIMARY KEY,
@@ -491,7 +497,7 @@ async def process_buy(message: types.Message):
 @router.callback_query(F.data.startswith("pay_upi_"))
 async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext):
     amount = callback_query.data.split("_")[2]
-    upi_id = "7318748360@fam"  # Apni UPI ID yahan dalein
+    upi_id = "sahilsk892@fam"  # Apni UPI ID yahan dalein
     upi_link = f"upi://pay?pa={upi_id}&am={amount}&cu=INR"
     
     qr = qrcode.QRCode(
@@ -527,7 +533,17 @@ async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext
             ],
         ]
     )
+    
+    conn = sqlite3.connect("products.db")
+    cursor = conn.cursor()
+    cursor.execute(
+    "UPDATE users SET qr_created_time = ? WHERE user_id = ?",
+    (datetime.now().timestamp(), user_id),
+)
+    conn.commit()
+    conn.close()
 
+    
     caption_text = (
         "<blockquote><b>📶SAHIL BHAI STORE UPI QR Active</b></blockquote>\n\n"
         f"Scan & transfer exactly 🪙₹{amount} via your UPI app terminal.\n\n"
