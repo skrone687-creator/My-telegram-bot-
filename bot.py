@@ -771,7 +771,7 @@ async def spin_now(call: types.CallbackQuery):
 
 # Connect to Gmail inbox
 mail = imaplib.IMAP4_SSL("imap.gmail.com")
-mail.login("sahilxd892@ail.com", "oviyztgaoeeobfhz")
+mail.login("sahilxd892@gmail.com", "oviyztgaoeeobfhz")
 mail.select("inbox")
 
 # Search for all emails
