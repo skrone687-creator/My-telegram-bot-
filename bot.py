@@ -850,7 +850,7 @@ async def verify_payment(call: types.CallbackQuery, state: FSMContext):
         await call.answer(text="Payment Successful", show_alert=True)
     else:
         await call.answer(
-            text="👑Payment not verified yet.", show_alert=True
+            text="👑Payment asset not logged on network yet.", show_alert=True
         )
 
 
