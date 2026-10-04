@@ -17,6 +17,35 @@ from io import BytesIO
 from aiogram import types
 from aiogram import F, Router, types
 import aiohttp
+import hashlib
+import hmac
+import os
+import time
+from flask import Flask, request
+app = Flask(__name__)
+
+@app.post("/webhooks/vyapargateway")
+def webhook():
+    raw_body = request.get_data(cache=False)
+    timestamp = request.headers.get("X-VyaparGateway-Timestamp", "")
+    received = request.headers.get("X-VyaparGateway-Signature", "")
+
+    if not timestamp.isdigit() or abs(time.time() - int(timestamp)) > 300:
+        return {"error": "Stale request"}, 401
+
+    signed = timestamp.encode() + b"." + raw_body
+    expected = hmac.new(
+        os.environ["VG_WEBHOOK_SECRET"].encode(),
+        signed,
+        hashlib.sha256,
+    ).hexdigest()
+    if not hmac.compare_digest(expected, received):
+        return {"error": "Invalid signature"}, 401
+
+    event = request.get_json()
+    # Deduplicate, then match order ID, amount and currency before fulfilment.
+    return "", 204
+    
 def init_db():
     conn = sqlite3.connect("products.db")
     cursor = conn.cursor()
@@ -90,6 +119,15 @@ def init_db():
         last_spin_time INTEGER
     )
 """)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS payments (
+        order_id TEXT PRIMARY KEY,
+        user_id INTEGER,
+        amount REAL,
+        status TEXT
+    )
+""")
+
     conn.commit()
     conn.close()
 # Balance update karne ka function
@@ -788,98 +826,33 @@ async def spin_now(call: types.CallbackQuery):
 )
     await call.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
 
-# Connect to Gmail inbox
-mail = imaplib.IMAP4_SSL("imap.gmail.com")
-mail.login("sahilxd892@gmail.com", "oviyztgaoeeobfhz")
-mail.select("inbox")
 
-# Search for all emails
-status, data = mail.search(None, "ALL")
-mail_ids = data[0].split()
 
-# Fetch the latest email
-latest_email_id = mail_ids[-1]
-status, data = mail.fetch(latest_email_id, "(RFC822)")
-
-# Parse the email content
-msg = email.message_from_bytes(data[0][1])
-# Assuming 'msg' is the decoded email message
-body = ""
-if msg.is_multipart():
-    for part in msg.walk():
-        if part.get_content_type() == "text/plain":
-            body = part.get_payload(decode=True).decode()
-            break
-else:
-    body = msg.get_payload(decode=True).decode()
-
+def check_payment_status(order_id):
+    conn = sqlite3.connect("products.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT status FROM payments WHERE order_id = ?", (order_id,))
+    result = cursor.fetchone()
+    conn.close()
+    return result[0] if result else None
 
 
 @router.callback_query(F.data.startswith("verify_payment_"))
-async def verify_payment(call: types.CallbackQuery):
+async def verify_payment(call: types.CallbackQuery, state: FSMContext):
     user_id = call.from_user.id
-    amount = float(call.data.split("_")[2])
-    # QR कोड बनने का समय (यह समय डेटाबेस से प्राप्त करें)
-    qr_created_time = datetime.now()  # उदाहरण के लिए वर्तमान समय
+    data = await state.get_data()
+    order_id = data.get("order_id")
 
-    # वर्तमान समय में से QR कोड बनने का समय घटाएं
-    current_time = datetime.now()
-    time_difference = current_time - qr_created_time
+    status = check_payment_status(order_id)
 
-    # अगर डिफ़रेंस 5 मिनट से ज़्यादा है, तो पॉप-अप दिखाएं
-    if time_difference > timedelta(minutes=5):
-        await call.answer(
-            text="❌This payment QR asset has expired. Generate a new session.",
-            show_alert=True,
-        )
-        return  # आगे का लॉजिक रन न हो
-        
-    
-    payment_verified = check_email_for_payment(user_id, amount)
-
-    if payment_verified:
+    if status == "success":
         update_balance(user_id, amount)
-        await call.answer(text="Payment Successful", show_alert=True)
+        await call.message.answer(text="Payment Successful", show_alert=True)
     else:
-        await call.answer(text="👑Payment asset not logged on network yet.", show_alert=True)
+        await call.message.answer(
+            text="👑Payment not verified yet.", show_alert=True
+        )
 
-
-
-def check_email_for_payment(user_id, amount):
-    EMAIL = "sahillxd892@gmail.com"
-    PASSWORD = "oviyztgaoeebfhz"
-    
-    try:
-        mail = imaplib.IMAP4_SSL("imap.gmail.com")
-        mail.login(EMAIL, PASSWORD)
-        mail.select("inbox")
-        
-        status, messages = mail.search(None, "ALL")
-        email_ids = messages[0].split()
-        
-        for e_id in email_ids[-10:]:
-            status, msg_data = mail.fetch(e_id, "(RFC822)")
-            for response_part in msg_data:
-                if isinstance(response_part, tuple):
-                    msg = email.message_from_bytes(response_part[1])
-                    body = ""
-                    if msg.is_multipart():
-                        for part in msg.walk():
-                            if part.get_content_type() == "text/plain":
-                                body = part.get_payload(decode=True).decode()
-                                break
-                    else:
-                        body = msg.get_payload(decode=True).decode()
-                    
-                    if "successful" in body.lower() and str(amount) in body:
-                        mail.logout()
-                        return True
-                        
-        mail.logout()
-        return False
-    except Exception as e:
-        print(f"Error checking email: {e}")
-        return False
 
 
 keyboard = InlineKeyboardMarkup(inline_keyboard=[
