@@ -847,9 +847,9 @@ async def verify_payment(call: types.CallbackQuery, state: FSMContext):
 
     if status == "success":
         update_balance(user_id, amount)
-        await call.message.answer(text="Payment Successful", show_alert=True)
+        await call.answer(text="Payment Successful", show_alert=True)
     else:
-        await call.message.answer(
+        await call.answer(
             text="👑Payment not verified yet.", show_alert=True
         )
 
