@@ -637,7 +637,8 @@ async def process_main_menu(call: types.CallbackQuery):
 
     # यहाँ आपका मेन मेन्यू कीबोर्ड कोड होना चाहिए
     current_balance = get_balance(call.from_user.id)
-    await call.message.edit_text(   
+    await call.message.delete()
+    await call.message.answer(
     "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
      "┝🛍️ Buy Now : All Key Purchase & Instant Delivery\n"
