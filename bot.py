@@ -590,7 +590,7 @@ async def process_add_1000(call: types.CallbackQuery, state: FSMContext):
     await call.message.edit_text(text=text, parse_mode="HTML", reply_markup=gateway_kb())
     await call.answer()
     
-@
+
 
 
     
