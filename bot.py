@@ -719,7 +719,7 @@ for plan in plans:
     plans_text += f"┝🪙₹{plan['price']} - {plan['plan_name']}\n"
 
 message_text = (
-    f"<blockquote>{⏳product_name}</blockquote>\n"
+    f"<blockquote>{product_name}</blockquote>\n"
     f"<blockquote>Your Account Tier: {account_tier}</blockquote>\n"
     f"{plans_text}"
     f"<blockquote>Choose your access plan:</blockquote>"
