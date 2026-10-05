@@ -594,9 +594,9 @@ async def process_add_1000(call: types.CallbackQuery, state: FSMContext):
 async def process_pay_upi(call: types.CallbackQuery, state: FSMContext):
     amount = float(call.data.split("_")[2])
     try:
-    await callback_query.message.delete()
-except Exception as e:
-    print(f"Error deleting message: {e}")
+            await callback_query.message.delete()
+    except Exception as e:
+            print(f"Error deleting message: {e}")
 
 
     upi_id = "sahilsk892@fam"
