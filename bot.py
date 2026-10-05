@@ -593,7 +593,7 @@ async def process_add_1000(call: types.CallbackQuery, state: FSMContext):
 @router.callback_query(lambda c: c.data.startswith("pay_upi_"))
 async def process_pay_upi(call: types.CallbackQuery, state: FSMContext):
     amount = float(call.data.split("_")[2])
-    await call.answer()
+    await call.message.delete()
 
     upi_id = "7318748360@fam"
     upi_url = f"upi://pay?pa={upi_id}&am={amount:.2f}&cu=INR"
