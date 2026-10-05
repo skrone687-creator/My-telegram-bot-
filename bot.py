@@ -1,5 +1,3 @@
-import imaplib
-import email
 import sqlite3
 import logging
 from datetime import datetime, timedelta
@@ -17,7 +15,7 @@ from io import BytesIO
 from aiogram import types
 from aiogram import F, Router, types
 import aiohttp
-    
+
 def init_db():
     conn = sqlite3.connect("products.db")
     cursor = conn.cursor()
@@ -714,17 +712,11 @@ async def process_buy_product(call: types.CallbackQuery):
 
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
 
-    plans_text = ""
-for plan in plans:
-    plans_text += f"┝🪙₹{plan['price']} - {plan['plan_name']}\n"
-
-message_text = (
-    f"<blockquote>{product_name}</blockquote>\n"
-    f"<blockquote>Your Account Tier: {account_tier}</blockquote>\n"
-    f"{plans_text}"
-    f"<blockquote>Choose your access plan:</blockquote>"
-)
-
+    message_text = (
+        f"<blockquote><b>{product_name}</b></blockquote>\n"
+        f"<blockquote>Your Account Tier: {account_tier}</blockquote>\n"
+        f"<blockquote><b>Choose your access plan:</b></blockquote>"
+    )
 
     await call.message.edit_text(
         message_text,
