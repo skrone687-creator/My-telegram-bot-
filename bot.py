@@ -593,15 +593,14 @@ async def process_add_1000(call: types.CallbackQuery, state: FSMContext):
 @router.callback_query(lambda c: c.data.startswith("pay_upi_"))
 async def process_pay_upi(call: types.CallbackQuery, state: FSMContext):
     amount = float(call.data.split("_")[2])
+    upi_id = "sahilsk892@fam"
+    upi_url = f"upi://pay?pa={upi_id}&am={amount:.2f}&cu=INR"
     try:
-        await call.answer()
-        print(f"Message ID to delete: {call.message.message_id}")
         await call.message.delete()
     except Exception as e:
         print(f"Error deleting message: {e}")
-    upi_id = "sahilsk892@fam"
-    upi_url = f"upi://pay?pa={upi_id}&am={amount:.2f}&cu=INR"
     await send_upi_qr(call.message, upi_url, amount)
+    await call.answer()
 
 
     
