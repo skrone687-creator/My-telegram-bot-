@@ -360,7 +360,7 @@ async def menu_support(call: types.CallbackQuery):
 @router.callback_query(F.data == "menu_back")
 async def process_menu_back(call: types.CallbackQuery):
     current_balance = get_balance(call.from_user.id)
-    await acll.message.delete()
+    await call.message.delete()
     await call.message.answer(
     "<blockquote><b>🏪 SAHIL BHAI STORE 🔓</b></blockquote>\n\n"
     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
