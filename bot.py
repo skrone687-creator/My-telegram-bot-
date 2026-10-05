@@ -688,34 +688,47 @@ async def process_menu_shop(call: types.CallbackQuery):
 def get_plans_for_product(product_id):
     return plans_db.get(product_id, [])
 
+
+
 @router.callback_query(lambda c: c.data.startswith("buy_product_"))
 async def process_buy_product(call: types.CallbackQuery):
     product_id = call.data.split("_")[2]
     product_name = products_db.get(product_id, "Unknown Product")
     plans = get_plans_for_product(product_id)
-    
-    account_tier = "USER" 
+
+    account_tier = "USER"
 
     keyboard_buttons = []
+    plans_text = ""
     for plan in plans:
-        keyboard_buttons.append([
-            types.InlineKeyboardButton(
-                text=f"{plan['plan_name']} - ₹{plan['price']}",
-                callback_data=f"select_plan_{plan['plan_name']}",
-                style="success"
-            )
-        ])
+        plans_text += f"₹{plan['price']} - {plan['plan_name']}\n"
 
-    keyboard_buttons.append([
-        types.InlineKeyboardButton(text="Back", callback_data="menu_shop", style="danger")
-    ])
+    for plan in plans:
+        keyboard_buttons.append(
+            [
+                types.InlineKeyboardButton(
+                    text=f"{plan['plan_name']} - ₹{plan['price']}",
+                    callback_data=f"select_plan_{plan['plan_name']}",
+                    style="success",
+                )
+            ]
+        )
+
+    keyboard_buttons.append(
+        [
+            types.InlineKeyboardButton(
+                text="Back", callback_data="menu_shop", style="danger"
+            )
+        ]
+    )
 
     keyboard = types.InlineKeyboardMarkup(inline_keyboard=keyboard_buttons)
 
     message_text = (
         f"<blockquote><b>{product_name}</b></blockquote>\n"
         f"<blockquote>Your Account Tier: {account_tier}</blockquote>\n"
-        f"<blockquote><b>Choose your access plan:</b></blockquote>"
+        f"<blockquote>Choose your access plan:</blockquote>\n"
+        f"{plans_text}"
     )
 
     await call.message.edit_text(
