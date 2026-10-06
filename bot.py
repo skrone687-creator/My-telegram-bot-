@@ -992,16 +992,17 @@ async def verify_payment(call: types.CallbackQuery):
     user_id = call.from_user.id
     conn = sqlite3.connect("products.db")
     cursor = conn.cursor()
-    cursor.execute(
-        "SELECT amount FROM transactions WHERE amount = ?", (amount,)
-    )
+    cursor.execute("SELECT amount FROM transactions WHERE amount = ?", (amount,))
     transaction = cursor.fetchone()
     if transaction:
         update_balance(user_id, transaction[0])
-        await call.message.answer("Payment successful!")
+        await call.answer("Payment successful!", show_alert=True)
     else:
-        await call.message.answer("Payment asset not logged on network yet.")
+        await call.answer(
+            "👑Payment asset not logged on network yet.", show_alert=True
+        )
     conn.close()
+
 
 
 
