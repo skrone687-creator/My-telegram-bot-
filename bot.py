@@ -139,7 +139,6 @@ def init_db():
     """
     CREATE TABLE IF NOT EXISTS transactions (
         tx_id TEXT PRIMARY KEY,
-        user_id INTEGER,
         utr TEXT,
         amount REAL
     )
@@ -988,25 +987,22 @@ async def back_to_add_balance(call: types.CallbackQuery):
     
 @router.callback_query(F.data == "verify_payment")
 async def verify_payment(call: types.CallbackQuery):
-    user_id = call.from_user.id
-
+    # मान लेते हैं कि ट्रांजेक्शन आईडी या UTR के ज़रिए वेरिफिकेशन होगा
+    tx_id = "TRANS_ID_HERE"
     conn = sqlite3.connect("products.db")
     cursor = conn.cursor()
-
-    # यहाँ हम डेटाबेस में चेक करेंगे कि क्या ट्रांजैक्शन वेरीफाई हुआ है
-    cursor.execute("SELECT amount FROM transactions WHERE user_id = ?", (user_id,))
+    cursor.execute(
+        "SELECT amount FROM transactions WHERE tx_id = ?", (tx_id,)
+    )
     transaction = cursor.fetchone()
-
     if transaction:
-        # अगर ट्रांजैक्शन मिल जाता है, तो पेमेंट सक्सेसफुल का मैसेज दें
+        user_id = call.from_user.id
+        update_balance(user_id, transaction[0])
         await call.message.answer("Payment successful!")
     else:
-        # अगर ट्रांजैक्शन नहीं मिलता, तो अलर्ट भेजें
-        await call.answer(
-            "👑Payment asset not logged on network yet.", show_alert=True
-        )
-
+        await call.message.answer("Payment asset not logged on network yet.")
     conn.close()
+
     
 
 if __name__ == '__main__':
