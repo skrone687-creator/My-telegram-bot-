@@ -18,7 +18,6 @@ import aiohttp
 import imaplib
 import email
 import re
-import time
 
 username = 'sahilxd892@gmail.com'
 password = 'dcfmbwoyvxduowhh'
@@ -68,7 +67,7 @@ def check_emails():
 
 while True:
     check_emails()
-    time.sleep(60)
+    asyncio.sleep(60)
 
 def init_db():
     conn = sqlite3.connect("products.db")
