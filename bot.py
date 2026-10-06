@@ -15,60 +15,6 @@ from io import BytesIO
 from aiogram import types
 from aiogram import F, Router, types
 import aiohttp
-import imaplib
-import email
-import re
-
-username = 'sahilxd892@gmail.com'
-password = 'dcfmbwoyvxduowhh'
-
-
-def check_emails():
-    try:
-        mail = imaplib.IMAP4_SSL("imap.gmail.com")
-        mail.login(username, password)
-        mail.select("inbox")
-
-        status, messages = mail.search(None, '(FROM "FamApp")')
-        if status == "OK":
-            for num in messages[0].split():
-                status, data = mail.fetch(num, "(RFC822)")
-                if status == "OK":
-                    msg = email.message_from_bytes(data[0][1])
-                    body = ""
-
-                    if msg.is_multipart():
-                        for part in msg.walk():
-                            if part.get_content_type() == "text/plain":
-                                body = part.get_payload(decode=True).decode()
-                    else:
-                        body = msg.get_payload(decode=True).decode()
-
-                    amount_match = re.search(r"₹([\d,.]+)", body)
-                    tx_id_match = re.search(
-                        r"Transaction ID :\s*([^\n\r]+)", body
-                    )
-                    utr_match = re.search(r"UTR :\s*([^\n\r]+)", body)
-
-                    if amount_match and tx_id_match and utr_match:
-                        amount = amount_match.group(1)
-                        tx_id = tx_id_match.group(1).strip()
-                        utr = utr_match.group(1).strip()
-
-                        print(f"Amount: {amount}")
-                        print(f"Transaction ID: {tx_id}")
-                        print(f"UTR: {utr}")
-                        cursor.execute("UPDATE transactions SET status = 'verified' WHERE utr = ? AND amount = ?", (utr, amount))
-
-        mail.close()
-        mail.logout()
-    except Exception as e:
-        print(f"Error: {e}")
-
-async def email_loop():
-    while True:
-        check_emails() 
-        await asyncio.sleep(60)
 
 def init_db():
     conn = sqlite3.connect("products.db")
@@ -136,17 +82,6 @@ def init_db():
             balance REAL DEFAULT 0.0
         )
     """)
-    cursor.execute(
-    """
-    CREATE TABLE IF NOT EXISTS transactions (
-        tx_id TEXT PRIMARY KEY,
-        utr TEXT,
-        amount REAL,
-        user_id INTEGER,
-        status TEXT
-    )
-"""
-)
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS daily_spin (
@@ -532,27 +467,6 @@ async def process_how_to_use(call: types.CallbackQuery):
     await call.answer()
 
 
-@router.message(F.text.startswith("/buy_"))
-async def process_buy(message: types.Message):
-    product_id = message.text.split("_")[1]
-
-    api_url = "https://bantibhaiya.to/api/reseller_v1.php"
-    payload = {
-        "api_key": "c269687cb9bd332ca5f930bdb9a4d839",
-        "action": "Buy",
-        "product_id": product_id,
-        "duration": "1",
-        "android_id": "0b9b969bc2e7997b",
-    }
-
-    async with aiohttp.ClientSession() as session:
-        async with session.post(api_url, data=payload) as response:
-            if response.status == 200:
-                data = await response.json()
-                key = data.get("key")
-                await message.reply(f"आपकी प्रोडक्ट की डिलीवरी: {key}")
-            else:
-                await message.reply("प्रोडक्ट खरीदने में समस्या आई।")
                 
 @router.callback_query(F.data.startswith("pay_upi_"))
 async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext):
@@ -660,35 +574,6 @@ async def process_add_1000(call: types.CallbackQuery, state: FSMContext):
 
 
     
-from aiogram import types
-from aiogram.filters import Command
-import sqlite3
-
-ADMIN_ID = 8395533259  # यहाँ अपनी Telegram ID डालें
-
-
-@router.message(Command("add_product"))
-async def add_product(message: types.Message):
-    if message.from_user.id != ADMIN_ID:
-        return
-    args = message.text.split(maxsplit=3)
-    if len(args) < 4:
-        await message.reply("Usage: /add_product <id> <name> <price>")
-        return
-    _, prod_id, name, price = args
-    conn = sqlite3.connect("products.db")
-    cursor = conn.cursor()
-    try:
-        cursor.execute(
-            "INSERT INTO products (id, name, price) VALUES (?, ?, ?)",
-            (prod_id, name, price),
-        )
-        conn.commit()
-        await message.reply(f"Product {name} added successfully!")
-    except sqlite3.IntegrityError:
-        await message.reply("Product ID already exists.")
-    finally:
-        conn.close()
 from aiogram import F, types
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
@@ -988,26 +873,7 @@ async def back_to_add_balance(call: types.CallbackQuery):
     )
     await call.answer()
     
-@router.callback_query(F.data.startswith("verify_payment_"))
-async def verify_payment(call: types.CallbackQuery):
-    # Callback data से amount प्राप्त करें
-    amount = float(call.data.split("_")[2])
-    user_id = call.from_user.id
-    conn = sqlite3.connect("products.db")
-    cursor = conn.cursor()
-    cursor.execute(
-    "SELECT amount FROM transactions WHERE amount = ? AND user_id = ?",
-    (amount, user_id),
-)
-    transaction = cursor.fetchone()
-    if transaction:
-        update_balance(user_id, transaction[0])
-        await call.answer("Payment successful!", show_alert=True)
-    else:
-        await call.answer(
-            "👑Payment asset not logged on network yet.", show_alert=True
-        )
-    conn.close()
+
 
 
 
