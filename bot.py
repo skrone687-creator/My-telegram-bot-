@@ -64,7 +64,7 @@ def check_emails():
     except Exception as e:
         print(f"Error: {e}")
 
-async def email_loop()
+async def email_loop():
     while True:
         check_emails() 
         await asyncio.sleep(60)
