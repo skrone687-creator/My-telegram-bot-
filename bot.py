@@ -560,8 +560,7 @@ async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext
     amount = float(callback_query.data.split("_")[2])
     upi_id = "sahilsk892@fam"  # Apni UPI ID yahan dalein
     upi_link = f"upi://pay?pa={upi_id}&am={amount}&cu=INR"
-    cursor.execute("INSERT INTO transactions (tx_id, utr, amount, user_id, status) VALUES (?, ?, ?, ?, ?)", (tx_id, utr, amount, user_id, 'pending'))
-
+    
     qr = qrcode.QRCode(
     version=None,
     error_correction=qrcode.constants.ERROR_CORRECT_L,
