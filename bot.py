@@ -15,6 +15,60 @@ from io import BytesIO
 from aiogram import types
 from aiogram import F, Router, types
 import aiohttp
+import imaplib
+import email
+import re
+import time
+
+username = 'sahilxd892@gmail.com'
+password = 'YOUR_APP_PASSWORD'
+
+
+def check_emails():
+    try:
+        mail = imaplib.IMAP4_SSL("imap.gmail.com")
+        mail.login(username, password)
+        mail.select("inbox")
+
+        status, messages = mail.search(None, '(FROM "FamApp")')
+        if status == "OK":
+            for num in messages[0].split():
+                status, data = mail.fetch(num, "(RFC822)")
+                if status == "OK":
+                    msg = email.message_from_bytes(data[0][1])
+                    body = ""
+
+                    if msg.is_multipart():
+                        for part in msg.walk():
+                            if part.get_content_type() == "text/plain":
+                                body = part.get_payload(decode=True).decode()
+                    else:
+                        body = msg.get_payload(decode=True).decode()
+
+                    amount_match = re.search(r"₹([\d,.]+)", body)
+                    tx_id_match = re.search(
+                        r"Transaction ID :\s*([^\n\r]+)", body
+                    )
+                    utr_match = re.search(r"UTR :\s*([^\n\r]+)", body)
+
+                    if amount_match and tx_id_match and utr_match:
+                        amount = amount_match.group(1)
+                        tx_id = tx_id_match.group(1).strip()
+                        utr = utr_match.group(1).strip()
+
+                        print(f"Amount: {amount}")
+                        print(f"Transaction ID: {tx_id}")
+                        print(f"UTR: {utr}")
+
+        mail.close()
+        mail.logout()
+    except Exception as e:
+        print(f"Error: {e}")
+
+
+while True:
+    check_emails()
+    time.sleep(60)
 
 def init_db():
     conn = sqlite3.connect("products.db")
@@ -82,7 +136,16 @@ def init_db():
             balance REAL DEFAULT 0.0
         )
     """)
-    
+    cursor.execute(
+    """
+    CREATE TABLE IF NOT EXISTS transactions (
+        tx_id TEXT PRIMARY KEY,
+        utr TEXT,
+        amount REAL
+    )
+"""
+)
+
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS daily_spin (
         user_id INTEGER PRIMARY KEY,
@@ -922,6 +985,29 @@ async def back_to_add_balance(call: types.CallbackQuery):
         text=text, reply_markup=add_balance_kb(), parse_mode="HTML"
     )
     await call.answer()
+    
+@router.callback_query(F.data == "verify_payment")
+async def verify_payment(call: types.CallbackQuery):
+    user_id = call.from_user.id
+
+    conn = sqlite3.connect("products.db")
+    cursor = conn.cursor()
+
+    # यहाँ हम डेटाबेस में चेक करेंगे कि क्या ट्रांजैक्शन वेरीफाई हुआ है
+    cursor.execute("SELECT amount FROM transactions WHERE user_id = ?", (user_id,))
+    transaction = cursor.fetchone()
+
+    if transaction:
+        # अगर ट्रांजैक्शन मिल जाता है, तो पेमेंट सक्सेसफुल का मैसेज दें
+        await call.message.answer("Payment successful!")
+    else:
+        # अगर ट्रांजैक्शन नहीं मिलता, तो अलर्ट भेजें
+        await call.answer(
+            "👑Payment asset not logged on network yet.", show_alert=True
+        )
+
+    conn.close()
+    
 
 if __name__ == '__main__':
     init_db()
