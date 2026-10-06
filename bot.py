@@ -142,7 +142,8 @@ def init_db():
         tx_id TEXT PRIMARY KEY,
         utr TEXT,
         amount REAL,
-        user_id INTEGER
+        user_id INTEGER,
+        status TEXT
     )
 """
 )
@@ -995,7 +996,10 @@ async def verify_payment(call: types.CallbackQuery):
     user_id = call.from_user.id
     conn = sqlite3.connect("products.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT amount FROM transactions WHERE amount = ?", (amount,))
+    cursor.execute(
+    "SELECT amount FROM transactions WHERE amount = ? AND user_id = ?",
+    (amount, user_id),
+)
     transaction = cursor.fetchone()
     if transaction:
         update_balance(user_id, transaction[0])
