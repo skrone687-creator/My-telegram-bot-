@@ -96,11 +96,11 @@ def update_balance(user_id, amount):
 
 
 products_db = {
-    "62": "DRIPCLIENT FF NONROOT",
+    "62": "DRIP CLIENT FF NONROOT",
     "54": "PATO TEAM FF ALL",
     "48": "PRIME HOOK FF NONROOT",
     "133": "AIM HACK NONROOT ",
-    "150": "DRIPCLIENT WIRE NONROOT ",
+    "150": "DRIP CLIENT WIRE NONROOT ",
     "136": "BALA MODS NONROOT ",
     "155": "XYZ CHEATS NONROOT",
     "159": "ZRAX PANEL NONROOT",
@@ -111,7 +111,7 @@ products_db = {
     "166": "TROLL MODZ ",
 }
 plans_db = {
-    "62": [{"plan_name": "1 HOURS", "price": 15.00}, {"plan_name": "3 HOURS", "price": 30.00}],
+    "62": [{"plan_name": "1 HOURS", "price": 15.00}, {"plan_name": "3 HOURS", "price": 30.00}, {"plan_name": "6 HOURS", "price": 45.00}, {"plan_name": "12 HOURS", "price": 60.00}, {"plan_name": "1 DAYS", "price": 75.00}, {"plan_name": "3 DAYS", "price": 150.00}, {"plan_name": "7 DAYS", "price": 300.00}]
     "54": [{"plan_name": "1 DAYS", "price": 70.00}, {"plan_name": "3 DAYS", "price": 150.00}],
     "48": [{"plan_name": "1 HOURS", "price": 20.00}, {"plan_name": "12 HOURS", "price": 110.00}],
     "133": [{"plan_name": "7 DAYS", "price": 200.00}, {"plan_name": "30 DAYS", "price": 500.00}],
