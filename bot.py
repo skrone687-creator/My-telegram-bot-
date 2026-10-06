@@ -58,6 +58,7 @@ def check_emails():
                         print(f"Amount: {amount}")
                         print(f"Transaction ID: {tx_id}")
                         print(f"UTR: {utr}")
+                        cursor.execute("UPDATE transactions SET status = 'verified' WHERE utr = ? AND amount = ?", (utr, amount))
 
         mail.close()
         mail.logout()
@@ -140,7 +141,8 @@ def init_db():
     CREATE TABLE IF NOT EXISTS transactions (
         tx_id TEXT PRIMARY KEY,
         utr TEXT,
-        amount REAL
+        amount REAL,
+        user_id INTEGER
     )
 """
 )
@@ -557,7 +559,8 @@ async def process_pay_upi(callback_query: types.CallbackQuery, state: FSMContext
     amount = float(callback_query.data.split("_")[2])
     upi_id = "sahilsk892@fam"  # Apni UPI ID yahan dalein
     upi_link = f"upi://pay?pa={upi_id}&am={amount}&cu=INR"
-    
+    cursor.execute("INSERT INTO transactions (tx_id, utr, amount, user_id, status) VALUES (?, ?, ?, ?, ?)", (tx_id, utr, amount, user_id, 'pending'))
+
     qr = qrcode.QRCode(
     version=None,
     error_correction=qrcode.constants.ERROR_CORRECT_L,
