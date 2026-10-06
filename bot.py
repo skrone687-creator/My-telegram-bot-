@@ -21,7 +21,7 @@ import re
 import time
 
 username = 'sahilxd892@gmail.com'
-password = 'YOUR_APP_PASSWORD'
+password = 'dcfmbwoyvxduowhh'
 
 
 def check_emails():
