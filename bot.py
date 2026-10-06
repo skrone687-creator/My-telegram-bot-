@@ -107,7 +107,7 @@ products_db = {
     "151": "ABCD PANEL ",
     "76": "KOS 8 B",
     "78": "SNAKE SOCCE",
-    "63": "DRIPCLIENT ROOT",
+    "63": "DRIP CLIENT ROOT",
     "166": "TROLL MODZ ",
 }
 plans_db = {
@@ -139,6 +139,7 @@ def init_db():
     """
     CREATE TABLE IF NOT EXISTS transactions (
         tx_id TEXT PRIMARY KEY,
+        user_id INTEGER,
         utr TEXT,
         amount REAL
     )
