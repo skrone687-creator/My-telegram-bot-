@@ -105,8 +105,8 @@ products_db = {
     "155": "XYZ CHEATS NONROOT",
     "159": "ZRAX PANEL NONROOT",
     "151": "ABCD PANEL ",
-    "76": "KOS 8 B",
-    "78": "SNAKE SOCCE",
+    "66": "XYZ CHEATS FF ROOT",
+    "155": "XYZ CHEATS FF NONROOT",
     "63": "DRIP CLIENT ROOT",
     "166": "TROLL MODZ ",
 }
@@ -120,8 +120,8 @@ plans_db = {
     "155": [{"plan_name": "12 HOURS", "price": 90.00}, {"plan_name": "1 DAYS", "price": 150.00}],
     "159": [{"plan_name": "1 HOURS", "price": 25.00}, {"plan_name": "6 HOURS", "price": 75.00}],
     "151": [{"plan_name": "1 DAYS", "price": 50.00}, {"plan_name": "7 DAYS", "price": 250.00}],
-    "76": [{"plan_name": "12 HOURS", "price": 60.00}, {"plan_name": "3 DAYS", "price": 200.00}],
-    "78": [{"plan_name": "1 HOURS", "price": 5.00}, {"plan_name": "1 DAYS", "price": 30.00}],
+    "66": [{"plan_name": "12 HOURS", "price": 60.00}, {"plan_name": "3 DAYS", "price": 200.00}],
+    "155": [{"plan_name": "1 HOURS", "price": 5.00}, {"plan_name": "1 DAYS", "price": 30.00}],
     "63": [{"plan_name": "6 HOURS", "price": 50.00}, {"plan_name": "7 DAYS", "price": 280.00}],
     "166": [{"plan_name": "1 DAYS", "price": 80.00}, {"plan_name": "30 DAYS", "price": 600.00}],
 }
