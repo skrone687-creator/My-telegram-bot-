@@ -64,10 +64,10 @@ def check_emails():
     except Exception as e:
         print(f"Error: {e}")
 
-
-while True:
-    check_emails() 
-    await asyncio.sleep(60)
+async def email_loop()
+    while True:
+        check_emails() 
+        await asyncio.sleep(60)
 
 def init_db():
     conn = sqlite3.connect("products.db")
