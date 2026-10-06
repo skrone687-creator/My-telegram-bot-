@@ -985,25 +985,25 @@ async def back_to_add_balance(call: types.CallbackQuery):
     )
     await call.answer()
     
-@router.callback_query(F.data == "verify_payment")
+@router.callback_query(F.data.startswith("verify_payment_"))
 async def verify_payment(call: types.CallbackQuery):
-    # मान लेते हैं कि ट्रांजेक्शन आईडी या UTR के ज़रिए वेरिफिकेशन होगा
-    tx_id = "TRANS_ID_HERE"
+    # Callback data से amount प्राप्त करें
+    amount = float(call.data.split("_")[2])
+    user_id = call.from_user.id
     conn = sqlite3.connect("products.db")
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT amount FROM transactions WHERE tx_id = ?", (tx_id,)
+        "SELECT amount FROM transactions WHERE amount = ?", (amount,)
     )
     transaction = cursor.fetchone()
     if transaction:
-        user_id = call.from_user.id
         update_balance(user_id, transaction[0])
         await call.message.answer("Payment successful!")
     else:
         await call.message.answer("Payment asset not logged on network yet.")
     conn.close()
 
-    
+
 
 if __name__ == '__main__':
     init_db()
