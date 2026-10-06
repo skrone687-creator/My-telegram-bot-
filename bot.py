@@ -66,8 +66,8 @@ def check_emails():
 
 
 while True:
-    check_emails()
-    asyncio.sleep(60)
+    check_emails() 
+   await asyncio.sleep(60)
 
 def init_db():
     conn = sqlite3.connect("products.db")
