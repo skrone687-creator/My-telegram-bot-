@@ -43,18 +43,18 @@ def update_balance(user_id, amount):
 
 
 products_db = {
-    "62": "DRIP CLIENT FF NONROOT",
+    "62": "DRIP CLIENT FF NON ROOT",
     "54": "PATO TEAM FF ALL",
-    "48": "PRIME HOOK FF NONROOT",
-    "127": "SILENT CHEAT FF NONROOT",
+    "48": "PRIME HOOK FF NON ROOT",
+    "127": "SILENT CHEAT FF NON ROOT",
     "133": "AIM HACK NONROOT ",
-    "150": "DRIP CLIENT WIRE NONROOT ",
+    "150": "DRIP CLIENT WIRE NON ROOT ",
     "136": "BALA MODS NONROOT ",
     "155": "XYZ CHEATS NONROOT",
     "159": "ZRAX PANEL NONROOT",
     "151": "ABCD PANEL NON ROOT",
     "66": "XYZ CHEATS FF ROOT",
-    "155": "XYZ CHEATS FF NONROOT",
+    "155": "XYZ CHEATS FF NON ROOT",
     "63": "DRIP CLIENT ROOT",
     "166": "TROLL MODZ NON ROOT",
 }
@@ -835,6 +835,7 @@ async def process_confirm(call: types.CallbackQuery, state: FSMContext):
             ],
         ]
     )
+        await call.message.delete()
         await call.message.answer(
         text, reply_markup=keyboard, parse_mode="HTML"
     )
