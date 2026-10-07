@@ -878,7 +878,7 @@ async def back_to_add_balance(call: types.CallbackQuery):
 async def process_plan_selection(callback_query: types.CallbackQuery, state: FSMContext):
     data_parts = callback_query.data.split("_")
     product_id = data_parts[1]
-    plan_id = data_parts[2]
+    plan_id = data_parts[1]
 
     product_info = get_product_details(product_id) 
     plan_info = get_plan_details(product_id, plan_id)
