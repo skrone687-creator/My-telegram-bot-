@@ -716,39 +716,6 @@ def process_spin(user_id):
         remaining_time = cooldown - (current_time - last_spin_time)
         return {"status": "cooldown", "remaining_time": remaining_time} 
         
-@router.callback_query(F.data == "spin_now")
-async def spin_now(call: types.CallbackQuery):
-    user_id = call.from_user.id
-    status_result = process_spin(user_id)
-
-    if status_result["status"] == "won":
-        amount = status_result["amount"]
-        current_balance = get_balance(user_id)
-        new_balance = current_balance + amount
-        update_balance(user_id, amount)
-        
-        text = (f"<blockquote><b>🎁  Daily Gift Spin Winner! </b></blockquote>\n\n"
-                f"You won a randomized claim of: <b>₹{amount}</b>\n\n"
-                f"Updated Wallet: <b>₹{new_balance}</b>")
-                
-        keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
-            [types.InlineKeyboardButton(text="Back to Menu", callback_data="menu_back", style="danger")]
-        ])
-    else:
-        remaining_time = status_result["remaining_time"]
-        hours = int(remaining_time // 3600)
-        minutes = int((remaining_time % 3600) // 60)
-        
-        text = (
-    f"<b><blockquote>🎁 Daily Lucky Spin Wheel </blockquote></b>\n\n"
-    "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-    "Spin the wheel once every 24 hours and win free balance credited instantly to your wallet!\n\n"
-    "<b>┝🪙Winning Range:</b> ₹0.00 to ₹1.00\n"
-    "<b>┝⏳Spin Limit:</b> 1 spin per 24 hours\n\n"
-    f"<b><blockquote>⏳You have already claimed today's spin! </blockquote></b>\n"
-    f"Please wait another {hours}h {minutes}m before trying to spin the wheel again."
-)
-    await call.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
 
 
 
