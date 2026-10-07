@@ -910,8 +910,8 @@ async def process_plan_selection(callback_query: types.CallbackQuery, state: FSM
         ])
         
 
-        await callback_query.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
-        await callback_query.answer()
+    await callback_query.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
+    await callback_query.answer()
 
 
 
