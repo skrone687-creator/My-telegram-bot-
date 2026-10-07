@@ -835,7 +835,6 @@ async def process_confirm(call: types.CallbackQuery, state: FSMContext):
             ],
         ]
     )
-        await call.message.delete()
         await call.message.answer(
         text, reply_markup=keyboard, parse_mode="HTML"
     )
