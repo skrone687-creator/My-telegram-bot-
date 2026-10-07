@@ -874,7 +874,44 @@ async def back_to_add_balance(call: types.CallbackQuery):
     )
     await call.answer()
     
+@router.callback_query(F.data.startswith("plan_"))
+async def process_plan_selection(callback_query: types.CallbackQuery, state: FSMContext):
+    data_parts = callback_query.data.split("_")
+    product_id = data_parts[1]
+    plan_id = data_parts[2]
 
+    product_info = get_product_details(product_id) 
+    plan_info = get_plan_details(product_id, plan_id)
+
+    product_name = product_info['name']
+    plan_name = plan_info['name']
+    price = plan_info['price']
+
+    user_id = callback_query.from_user.id
+    balance = get_balance(user_id)
+    
+    if balance < price:
+        deficit = price - balance
+        text = f"<blockquote>💰INSUFFICIENT BALANCE</blockquote>💰\n\n" \
+               f"┣  Product: {product_name}\n" \
+               f"┣ Plan: {plan_name}\n" \
+               f"┣ Price: 🪙{price:.2f}\n" \
+               f"┣ Your Balance: 🪙{balance:.2f}\n" \
+               f"┗ Deficit Need: 🪙{deficit:.2f}\n\n" \
+               f"Select your preferred gateway option below to proceed:"
+        
+    keyboard = types.InlineKeyboardMarkup(inline_keyboard=[
+            [
+            types.InlineKeyboardButton(text="PAY UPI", callback_data="pay_upi", style="success")
+            ],
+            [
+            types.InlineKeyboardButton(text="Back to Plans", callback_data="menu_shop", style="danger")
+            ]
+        ])
+        
+
+        await callback_query.message.edit_text(text, reply_markup=keyboard, parse_mode="HTML")
+        await callback_query.answer()
 
 
 
