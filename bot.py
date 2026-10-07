@@ -874,7 +874,7 @@ async def back_to_add_balance(call: types.CallbackQuery):
     )
     await call.answer()
     
-@router.callback_query(F.data.startswith("plan_"))
+@router.callback_query(F.data.startswith("plan"))
 async def process_plan_selection(callback_query: types.CallbackQuery, state: FSMContext):
     data_parts = callback_query.data.split("_")
     product_id = data_parts[1]
