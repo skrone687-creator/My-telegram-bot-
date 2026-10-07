@@ -202,7 +202,7 @@ async def send_welcome(message: types.Message):
      "┝📨 Support : Bot Problem Fixed For Support Admin\n"
      "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-     f"<blockquote>💰 Your Balance:🪙₹{current_balance:.2f}</blockquote>\n\n"  
+     f"<blockquote><b>💰 Your Balance:🪙₹{current_balance:.2f}</b></blockquote>\n\n"  
      "<b>👇 Select an option from the menu below:</b>",
      parse_mode="HTML",
      reply_markup=main_menu_kb(),
@@ -375,7 +375,7 @@ async def process_menu_back(call: types.CallbackQuery):
     "┝📨 Support : Bot Problem Fixed For Support Admin\n"
     "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
     "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-    f"<blockquote>💰 Your  Balance:🪙₹{current_balance:.2f}</blockquote>\n\n"  
+    f"<blockquote><b>💰 Your  Balance:🪙₹{current_balance:.2f}</b></blockquote>\n\n"  
     "<b>👇 Select an option from the menu below:</b>",
     parse_mode="HTML",
     reply_markup=main_menu_kb(),
@@ -598,7 +598,7 @@ async def process_main_menu(call: types.CallbackQuery):
      "┝📨 Support : Bot Problem Fixed For Support Admin\n"
      "┝🎁 Daily Gift : Free Spin and win random balance daily, Only one spin every 24 hours.\n\n"
      "〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️\n\n"
-     f"<blockquote>💰 Your Balance:🪙₹{current_balance:.2f}</blockquote>\n\n"  
+     f"<blockquote><b>💰 Your Balance:🪙₹{current_balance:.2f}</b></blockquote>\n\n"  
      "<b>👇 Select an option from the menu below:</b>",
      parse_mode="HTML",
      reply_markup=main_menu_kb(),
