@@ -813,6 +813,7 @@ async def process_back(call: types.CallbackQuery, state: FSMContext):
 
 @router.callback_query(lambda c: c.data == "confirm")
 async def process_confirm(call: types.CallbackQuery, state: FSMContext):
+    await call.message.delete()
     data = await state.get_data()
     final_amount = int(data.get("amount", "0"))
 
